@@ -1,7 +1,14 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useMember } from '@/service/member/useMember';
+import { v4 as uuidv4 } from 'uuid';
 
 const scenes = {
+  start: {
+    title: '억까가 난무하는 청춘의 인생!',
+    text: '당신의 이름을 입력해주세요.',
+    choices: [],
+  },
   bus: {
     title: 'STAGE #1: 버스 안',
     text: '퇴근 후 한강대교 위로 피어오르는 불꽃놀이를 바라보고 있는 짐돌희\n장원영: 안녕! 혹시 시간 있어?',
@@ -67,24 +74,63 @@ export const Route = createFileRoute('/')({
 });
 
 export default function App() {
-  const [scene, setScene] = useState<keyof typeof scenes>('bus');
+  const [scene, setScene] = useState<keyof typeof scenes>('start');
+  const [playerName, setPlayerName] = useState('');
+  const [formId, setFormId] = useState<string>('');
+  const { createMember } = useMember();
   const current = scenes[scene];
+
+  useEffect(() => {
+    if (scene === 'start') {
+      setFormId(uuidv4());
+    }
+  }, [scene]);
+
+  const handleNameSubmit = async () => {
+    if (!playerName.trim()) return;
+
+    try {
+      await createMember.mutateAsync({ name: playerName, id: formId });
+      setScene('bus');
+    } catch (error) {
+      console.error('Failed to create member:', error);
+    }
+  };
 
   return (
     <div className='min-h-screen flex flex-col items-center justify-center bg-yellow-50 text-center p-6'>
       <h1 className='text-2xl font-bold mb-4'>{current.title}</h1>
       <p className='whitespace-pre-line mb-6'>{current.text}</p>
-      <div className='space-y-2 flex flex-acol gap-2'>
-        {current.choices.map((choice, i) => (
+
+      {scene === 'start' ? (
+        <div className='space-y-4'>
+          <input
+            type="text"
+            value={playerName}
+            onChange={(e) => setPlayerName(e.target.value)}
+            placeholder="이름을 입력하세요"
+            className='px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black'
+          />
           <button
-            key={i}
-            onClick={() => setScene(choice.next as keyof typeof scenes)}
-            className='bg-black text-white px-4 py-2 rounded-2xl shadow-md hover:bg-gray-800'
+            onClick={handleNameSubmit}
+            className='bg-black text-white px-4 py-2 rounded-2xl shadow-md hover:bg-gray-800 w-full'
           >
-            {choice.label}
+            시작하기
           </button>
-        ))}
-      </div>
+        </div>
+      ) : (
+        <div className='space-y-2 flex flex-col gap-2'>
+          {current.choices.map((choice, i) => (
+            <button
+              key={i}
+              onClick={() => setScene(choice.next as keyof typeof scenes)}
+              className='bg-black text-white px-4 py-2 rounded-2xl shadow-md hover:bg-gray-800'
+            >
+              {choice.label}
+            </button>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

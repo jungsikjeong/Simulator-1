@@ -8,7 +8,7 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "gen:types": "npx supabase gen types typescript --project-id jyjzuobcrcrfoftahhay > src/supabase/database.types.ts"
+    "gen:types": "npx supabase gen types typescript --project-id miyhogcslmxibcacvhvz > src/supabase/database.types.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^4.1.0",
@@ -44,6 +44,7 @@
     "@tanstack/react-query-devtools": "^5.66.3",
     "@tanstack/react-router": "^1.105.0",
     "@tanstack/zod-adapter": "^1.109.2",
+    "@types/uuid": "^10.0.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "^1.0.0",
@@ -61,6 +62,7 @@
     "tailwind-merge": "^3.0.1",
     "tailwindcss": "^4.0.6",
     "tailwindcss-animate": "^1.0.7",
+    "uuid": "^11.1.0",
     "vaul": "^1.1.2",
     "zod": "^3.24.2"
   },
