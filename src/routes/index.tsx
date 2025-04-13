@@ -102,6 +102,7 @@ export default function App() {
       <h1 className='text-2xl font-bold mb-4'>{current.title}</h1>
       <p className='whitespace-pre-line mb-6'>{current.text}</p>
 
+
       {scene === 'start' ? (
         <div className='space-y-4'>
           <input
@@ -111,6 +112,7 @@ export default function App() {
             placeholder="이름을 입력하세요"
             className='px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black'
           />
+
           <button
             onClick={handleNameSubmit}
             className='bg-black text-white px-4 py-2 rounded-2xl shadow-md hover:bg-gray-800 w-full'
