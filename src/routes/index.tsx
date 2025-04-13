@@ -74,7 +74,7 @@ export default function App() {
     <div className='min-h-screen flex flex-col items-center justify-center bg-yellow-50 text-center p-6'>
       <h1 className='text-2xl font-bold mb-4'>{current.title}</h1>
       <p className='whitespace-pre-line mb-6'>{current.text}</p>
-      <div className='space-y-2 flex flex-acol gap-2'>
+      <div className='space-y-2 flex flex-col gap-2'>
         {current.choices.map((choice, i) => (
           <button
             key={i}

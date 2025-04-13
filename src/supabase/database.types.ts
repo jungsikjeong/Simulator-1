@@ -9,234 +9,44 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      divider_blocks: {
+      admins: {
         Row: {
-          color: string | null
-          created_at: string | null
+          created_at: string
+          email: string
           id: string
-          style: Database["public"]["Enums"]["divider_style_type"] | null
-          updated_at: string | null
         }
         Insert: {
-          color?: string | null
-          created_at?: string | null
+          created_at?: string
+          email: string
           id?: string
-          style?: Database["public"]["Enums"]["divider_style_type"] | null
-          updated_at?: string | null
         }
         Update: {
-          color?: string | null
-          created_at?: string | null
+          created_at?: string
+          email?: string
           id?: string
-          style?: Database["public"]["Enums"]["divider_style_type"] | null
-          updated_at?: string | null
         }
-        Relationships: [
-          {
-            foreignKeyName: "divider_blocks_id_fkey"
-            columns: ["id"]
-            isOneToOne: true
-            referencedRelation: "store_blocks"
-            referencedColumns: ["block_id"]
-          },
-        ]
+        Relationships: []
       }
-      image_blocks: {
-        Row: {
-          alt_text: string | null
-          created_at: string | null
-          height: number | null
-          id: string
-          image_url: string
-          updated_at: string | null
-          width: number | null
-        }
-        Insert: {
-          alt_text?: string | null
-          created_at?: string | null
-          height?: number | null
-          id?: string
-          image_url: string
-          updated_at?: string | null
-          width?: number | null
-        }
-        Update: {
-          alt_text?: string | null
-          created_at?: string | null
-          height?: number | null
-          id?: string
-          image_url?: string
-          updated_at?: string | null
-          width?: number | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "image_blocks_id_fkey"
-            columns: ["id"]
-            isOneToOne: true
-            referencedRelation: "store_blocks"
-            referencedColumns: ["block_id"]
-          },
-        ]
-      }
-      link_blocks: {
+      members: {
         Row: {
           created_at: string
           id: string
-          is_link_public: boolean
-          link: string
-          styles: string
-          title: string
+          name: string
+          status: Database["public"]["Enums"]["status"]
         }
         Insert: {
           created_at?: string
           id?: string
-          is_link_public?: boolean
-          link: string
-          styles: string
-          title: string
+          name: string
+          status?: Database["public"]["Enums"]["status"]
         }
         Update: {
           created_at?: string
-          id?: string
-          is_link_public?: boolean
-          link?: string
-          styles?: string
-          title?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "link_blocks_id_fkey"
-            columns: ["id"]
-            isOneToOne: true
-            referencedRelation: "store_blocks"
-            referencedColumns: ["block_id"]
-          },
-        ]
-      }
-      member: {
-        Row: {
-          createat: string | null
-          email: string
-          id: string
-          name: string
-        }
-        Insert: {
-          createat?: string | null
-          email: string
-          id?: string
-          name: string
-        }
-        Update: {
-          createat?: string | null
-          email?: string
           id?: string
           name?: string
+          status?: Database["public"]["Enums"]["status"]
         }
         Relationships: []
-      }
-      store_blocks: {
-        Row: {
-          block_id: string
-          block_type: string
-          created_at: string | null
-          id: string
-          order: number
-          store_id: string
-        }
-        Insert: {
-          block_id: string
-          block_type: string
-          created_at?: string | null
-          id?: string
-          order: number
-          store_id: string
-        }
-        Update: {
-          block_id?: string
-          block_type?: string
-          created_at?: string | null
-          id?: string
-          order?: number
-          store_id?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "store_blocks_store_id_fkey"
-            columns: ["store_id"]
-            isOneToOne: false
-            referencedRelation: "stores"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      stores: {
-        Row: {
-          author: string
-          cover_image_alt: string | null
-          cover_image_url: string | null
-          created_at: string | null
-          description: string | null
-          id: string
-          title: string
-          updated_at: string | null
-        }
-        Insert: {
-          author?: string
-          cover_image_alt?: string | null
-          cover_image_url?: string | null
-          created_at?: string | null
-          description?: string | null
-          id?: string
-          title: string
-          updated_at?: string | null
-        }
-        Update: {
-          author?: string
-          cover_image_alt?: string | null
-          cover_image_url?: string | null
-          created_at?: string | null
-          description?: string | null
-          id?: string
-          title?: string
-          updated_at?: string | null
-        }
-        Relationships: []
-      }
-      text_blocks: {
-        Row: {
-          content: string | null
-          created_at: string | null
-          font_size: number | null
-          font_style: string | null
-          id: string
-          updated_at: string | null
-        }
-        Insert: {
-          content?: string | null
-          created_at?: string | null
-          font_size?: number | null
-          font_style?: string | null
-          id?: string
-          updated_at?: string | null
-        }
-        Update: {
-          content?: string | null
-          created_at?: string | null
-          font_size?: number | null
-          font_style?: string | null
-          id?: string
-          updated_at?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "text_blocks_id_fkey"
-            columns: ["id"]
-            isOneToOne: true
-            referencedRelation: "store_blocks"
-            referencedColumns: ["block_id"]
-          },
-        ]
       }
     }
     Views: {
@@ -246,7 +56,7 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      divider_style_type: "none" | "dotted" | "solid" | "point" | "zigzag"
+      status: "in_progress" | "completed" | "pending"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -362,7 +172,7 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
-      divider_style_type: ["none", "dotted", "solid", "point", "zigzag"],
+      status: ["in_progress", "completed", "pending"],
     },
   },
 } as const

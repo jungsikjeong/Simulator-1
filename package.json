@@ -8,7 +8,7 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "gen:types": "npx supabase gen types typescript --project-id jyjzuobcrcrfoftahhay > src/supabase/database.types.ts"
+    "gen:types": "npx supabase gen types typescript --project-id miyhogcslmxibcacvhvz > src/supabase/database.types.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^4.1.0",
@@ -53,6 +53,7 @@
     "lucide-react": "^0.475.0",
     "next-themes": "^0.4.4",
     "react": "^19.0.0",
+    "react-day-picker": "^9.6.6",
     "react-dom": "^19.0.0",
     "react-hook-form": "^7.54.2",
     "react-resizable-panels": "^2.1.7",
@@ -62,6 +63,7 @@
     "tailwindcss": "^4.0.6",
     "tailwindcss-animate": "^1.0.7",
     "vaul": "^1.1.2",
+    "xlsx": "^0.18.5",
     "zod": "^3.24.2"
   },
   "devDependencies": {
