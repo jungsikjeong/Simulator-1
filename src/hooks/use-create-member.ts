@@ -1,14 +1,16 @@
+import { supabase } from '@/lib/supabase';
+import MemberService from '@/service/member/service';
+import type { Tables } from '@/supabase/database.types';
 import { useMutation } from '@tanstack/react-query';
-import { MemberQueryOptions } from '../service/member/queries';
-import type { Database } from '@/supabase/database.types';
 
-type Member = Database['public']['Tables']['members']['Row'];
+type Member = Tables<'members'>;
 
 export const useCreateMember = () => {
+  const memberService = new MemberService(supabase);
+
   return useMutation<Member, Error, { name: string; id: string }>({
-    mutationFn: ({ name, id }) => {
-      const memberQuery = MemberQueryOptions.createMember(name);
-      return memberQuery.mutationFn(id);
+    mutationFn: async ({ name, id }) => {
+      return await memberService.createMember(name, id);
     },
   });
 };

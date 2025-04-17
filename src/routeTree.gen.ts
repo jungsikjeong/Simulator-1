@@ -11,15 +11,15 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as IndexImport } from './routes/index'
+import { Route as AppImport } from './routes/_app'
 import { Route as AdminIndexImport } from './routes/admin/index'
+import { Route as AppIndexImport } from './routes/_app/index'
 import { Route as AuthSigninIndexImport } from './routes/auth/signin/index'
 
 // Create/Update Routes
 
-const IndexRoute = IndexImport.update({
-  id: '/',
-  path: '/',
+const AppRoute = AppImport.update({
+  id: '/_app',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -27,6 +27,12 @@ const AdminIndexRoute = AdminIndexImport.update({
   id: '/admin/',
   path: '/admin/',
   getParentRoute: () => rootRoute,
+} as any)
+
+const AppIndexRoute = AppIndexImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AppRoute,
 } as any)
 
 const AuthSigninIndexRoute = AuthSigninIndexImport.update({
@@ -39,12 +45,19 @@ const AuthSigninIndexRoute = AuthSigninIndexImport.update({
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
+    '/_app': {
+      id: '/_app'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof AppImport
+      parentRoute: typeof rootRoute
+    }
+    '/_app/': {
+      id: '/_app/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof IndexImport
-      parentRoute: typeof rootRoute
+      preLoaderRoute: typeof AppIndexImport
+      parentRoute: typeof AppImport
     }
     '/admin/': {
       id: '/admin/'
@@ -65,42 +78,54 @@ declare module '@tanstack/react-router' {
 
 // Create and export the route tree
 
+interface AppRouteChildren {
+  AppIndexRoute: typeof AppIndexRoute
+}
+
+const AppRouteChildren: AppRouteChildren = {
+  AppIndexRoute: AppIndexRoute,
+}
+
+const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
+
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
+  '': typeof AppRouteWithChildren
+  '/': typeof AppIndexRoute
   '/admin': typeof AdminIndexRoute
   '/auth/signin': typeof AuthSigninIndexRoute
 }
 
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
+  '/': typeof AppIndexRoute
   '/admin': typeof AdminIndexRoute
   '/auth/signin': typeof AuthSigninIndexRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
-  '/': typeof IndexRoute
+  '/_app': typeof AppRouteWithChildren
+  '/_app/': typeof AppIndexRoute
   '/admin/': typeof AdminIndexRoute
   '/auth/signin/': typeof AuthSigninIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/admin' | '/auth/signin'
+  fullPaths: '' | '/' | '/admin' | '/auth/signin'
   fileRoutesByTo: FileRoutesByTo
   to: '/' | '/admin' | '/auth/signin'
-  id: '__root__' | '/' | '/admin/' | '/auth/signin/'
+  id: '__root__' | '/_app' | '/_app/' | '/admin/' | '/auth/signin/'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
+  AppRoute: typeof AppRouteWithChildren
   AdminIndexRoute: typeof AdminIndexRoute
   AuthSigninIndexRoute: typeof AuthSigninIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
+  AppRoute: AppRouteWithChildren,
   AdminIndexRoute: AdminIndexRoute,
   AuthSigninIndexRoute: AuthSigninIndexRoute,
 }
@@ -115,13 +140,20 @@ export const routeTree = rootRoute
     "__root__": {
       "filePath": "__root.tsx",
       "children": [
-        "/",
+        "/_app",
         "/admin/",
         "/auth/signin/"
       ]
     },
-    "/": {
-      "filePath": "index.tsx"
+    "/_app": {
+      "filePath": "_app.tsx",
+      "children": [
+        "/_app/"
+      ]
+    },
+    "/_app/": {
+      "filePath": "_app/index.tsx",
+      "parent": "/_app"
     },
     "/admin/": {
       "filePath": "admin/index.tsx"
