@@ -36,13 +36,13 @@ export default function StartScene({
 
       <button
         onClick={handleNameSubmit}
-        className='bg-black text-white px-4 py-2 rounded-2xl shadow-md hover:bg-gray-800 w-full'
+        className='bg-black text-white px-4 py-2 rounded-2xl shadow-md hover:bg-gray-800'
       >
         시작하기
       </button>
 
       <TypingText
-        text="안녕하세요! 이름을 입력하고 시작하세요."
+        text='안녕하세요! 이름을 입력하고 시작하세요.'
         speed={50}
         delay={0}
         className='text-center text-2xl font-bold font-danjo'
