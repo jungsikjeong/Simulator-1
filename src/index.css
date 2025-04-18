@@ -1,7 +1,28 @@
 @import 'tailwindcss';
 @plugin "tailwindcss-animate";
+/* 내용 글씨체 .content */
+@import url('http://fonts.googleapis.com/earlyaccess/nanumgothic.css');
 
 @custom-variant dark (&:is(.dark *));
+
+/* start화면 제목 글씨체 */
+@font-face {
+  font-family: 'Danjo-bold-Regular';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-1@1.1/Danjo-bold-Regular.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* # 파티1 글씨체*/
+@font-face {
+  font-family: 'SBAggroB';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/SBAggroB.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+
 
 :root {
   --background: oklch(1 0 0);
@@ -37,6 +58,11 @@
   --sidebar-accent-foreground: oklch(0.21 0.006 285.885);
   --sidebar-border: oklch(0.92 0.004 286.32);
   --sidebar-ring: oklch(0.871 0.006 286.286);
+
+  /* 폰트 변수 설정 */
+  --font-danjo: 'Danjo-bold-Regular', sans-serif;
+  --font-nanum: 'Nanum Gothic', sans-serif;
+  --font-sbaggrob: 'SBAggroB', sans-serif;
 }
 
 .dark {
@@ -117,7 +143,33 @@
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
+  }
+
+
+
+  /* 내용 글씨체 */
+  .content {
+    font-family: var(--font-sbaggrob);
+  }
+
+  @layer utilities {
+
+    /* start화면 제목 글씨체 */
+    .font-danjo {
+      font-family: var(--font-danjo);
+    }
+
+    /* # 파티1 글씨체 */
+    .font-party1 {
+      font-family: var(--font-party1);
+    }
+
+    /* 내용 글씨체 */
+    .font-sbaggrob {
+      font-family: var(--font-sbaggrob);
+    }
   }
 }
