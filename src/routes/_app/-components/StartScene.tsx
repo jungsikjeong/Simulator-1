@@ -25,27 +25,27 @@ export default function StartScene({
   };
 
   return (
-    <div className='space-y-4'>
+    <div className="space-y-4">
       <input
-        type='text'
+        type="text"
         value={playerName}
-        onChange={(e) => setPlayerName(e.target.value)}
-        placeholder='이름을 입력하세요'
-        className='px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black'
+        onChange={e => setPlayerName(e.target.value)}
+        placeholder="이름을 입력하세요"
+        className="px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black"
       />
 
       <button
         onClick={handleNameSubmit}
-        className='bg-black text-white px-4 py-2 rounded-2xl shadow-md hover:bg-gray-800'
+        className="bg-black text-white px-4 py-2 rounded-2xl shadow-md hover:bg-gray-800"
       >
         시작하기
       </button>
 
       <TypingText
-        text='안녕하세요! 이름을 입력하고 시작하세요.'
+        text="안녕하세요! 이름을 입력하고 시작하세요."
         speed={50}
         delay={0}
-        className='text-center text-2xl font-bold font-danjo'
+        className="text-center text-2xl font-bold font-danjo"
       />
     </div>
   );
