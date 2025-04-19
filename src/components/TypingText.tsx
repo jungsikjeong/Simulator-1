@@ -11,8 +11,9 @@ interface TypingChunk {
 
 interface TypingTextProps {
   text: TypingChunk[]
+  /** 초당 입력할 글자 수 (default: 18cps) */
+  speed?: number
   delay?: number
-  duration?: number
   className?: string
   isCursorBlinker?: boolean
   onComplete?: () => void
@@ -20,83 +21,67 @@ interface TypingTextProps {
 
 export default function TypingText({
   text,
-  delay = 2.2,
-  duration = 3,
+  speed = 12,
+  delay = 0.5,
   className,
   isCursorBlinker = true,
   onComplete,
 }: TypingTextProps) {
-  const [done, setDone] = useState(false)
-  const [visibleNodes, setVisibleNodes] = useState<React.ReactNode[]>([])
-
-  const fullText = text.map(t => t.content).join('')
+  const [visible, setVisible] = useState<React.ReactNode[]>([])
+  const full = text.map(t => t.content).join('')
   const count = useMotionValue(0)
 
   useEffect(() => {
-    const controls = animate(count, fullText.length, {
+    /* 전체 길이에 맞춰 duration 계산 */
+    const duration = full.length / speed
+
+    const controls = animate(count, full.length, {
       type: 'tween',
       delay,
       duration,
-      ease: 'easeInOut',
+      ease: 'linear', // 속도 균일하게
       onUpdate: latest => {
-        const rounded = Math.round(latest)
+        const len = Math.round(latest)
         let shown = 0
         const parts: React.ReactNode[] = []
 
         for (const [i, chunk] of text.entries()) {
-          if (shown >= rounded) break
-
-          const remaining = rounded - shown
-          const contentToShow = chunk.content.slice(0, remaining)
-          shown += contentToShow.length
-
-          const lines = contentToShow.split('\n')
-          lines.forEach((line, lineIdx) => {
+          if (shown >= len) break
+          const slice = chunk.content.slice(0, len - shown)
+          shown += slice.length
+          slice.split('\n').forEach((line, idx, arr) => {
             parts.push(
-              <span key={`${i}-${lineIdx}`} className={chunk.className}>
+              <span key={`${i}-${idx}`} className={chunk.className}>
                 {line}
               </span>
             )
-            if (lineIdx < lines.length - 1) {
-              parts.push(<br key={`br-${i}-${lineIdx}`} />)
-            }
+            if (idx < arr.length - 1) parts.push(<br key={`br-${i}-${idx}`} />)
           })
         }
-
-        setVisibleNodes(parts)
+        setVisible(parts)
       },
-      onComplete: () => {
-        setDone(true)
-        onComplete?.()
-      },
+      onComplete,
     })
 
+    /* 스킵: Enter 또는 클릭 */
     const skip = () => {
       controls.stop()
-      console.log('fullText:', fullText.length, fullText)
-      count.set(fullText.length)
-      setDone(true)
+      count.set(full.length)
       onComplete?.()
     }
-
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Enter') skip()
-    }
-    const handleClick = () => skip()
-
-    window.addEventListener('keydown', handleKeyDown)
-    window.addEventListener('click', handleClick)
-
+    const kd = (e: KeyboardEvent) => e.key === 'Enter' && skip()
+    window.addEventListener('keydown', kd)
+    window.addEventListener('click', skip)
     return () => {
       controls.stop()
-      window.removeEventListener('keydown', handleKeyDown)
-      window.removeEventListener('click', handleClick)
+      window.removeEventListener('keydown', kd)
+      window.removeEventListener('click', skip)
     }
-  }, [])
+  }, [full, speed, delay, text, onComplete])
 
   return (
     <span className={className}>
-      {visibleNodes}
+      {visible}
       {isCursorBlinker && <CursorBlinker />}
     </span>
   )
