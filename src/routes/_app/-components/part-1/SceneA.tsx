@@ -30,7 +30,7 @@ export default function SceneA({ onSceneChange }: SceneProps) {
               { content: '어? 저기 파티장에서 우울하게 있는 청년이 있어,\n' },
               { content: '그에게 어떤 이야기를 할까?', className: 'font-bold' },
             ]}
-            className="font-nanum text-white text-xl leading-relaxed"
+            className="content text-white text-xl leading-relaxed"
             onComplete={() => setShowChoices(true)}
           />
         </div>
@@ -51,12 +51,9 @@ export default function SceneA({ onSceneChange }: SceneProps) {
               animate={{ scale: 1, y: 0 }}
               transition={{ type: 'spring', damping: 15 }}
             >
-              <h3 className="text-white/80 text-center mb-6 font-nanum text-xl">
-                선택하세요
-              </h3>
               <div className="flex flex-col gap-4">
                 <motion.button
-                  className="py-4 px-6 bg-white/10 hover:bg-white/20 text-white rounded-md font-nanum text-lg transition-colors border border-white/30"
+                  className="py-4 px-6 bg-white/10 hover:bg-white/20 text-white rounded-md content text-lg transition-colors border border-white/30"
                   whileHover={{ scale: 1.03 }}
                   whileTap={{ scale: 0.98 }}
                   onClick={() => onSceneChange('part2')}
@@ -64,7 +61,7 @@ export default function SceneA({ onSceneChange }: SceneProps) {
                   웃으며 인사한다
                 </motion.button>
                 <motion.button
-                  className="py-4 px-6 bg-white/10 hover:bg-white/20 text-white rounded-md font-nanum text-lg transition-colors border border-white/30"
+                  className="py-4 px-6 bg-white/10 hover:bg-white/20 text-white rounded-md content text-lg transition-colors border border-white/30"
                   whileHover={{ scale: 1.03 }}
                   whileTap={{ scale: 0.98 }}
                   onClick={() => onSceneChange('part2')}
