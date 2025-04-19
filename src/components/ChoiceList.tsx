@@ -6,14 +6,15 @@ import { choicePreset, type UIPreset } from '@/lib/uiPresets'
 import { cn } from '@/lib/utils'
 
 interface Choice { key: string; label: string }
+
 interface ChoiceListProps {
     open: boolean
     choices: Choice[]
     onSelect: (key: string) => void
     variant?: UIPreset
-    /** overlay 대신 ‘말풍선 아래에 바로 붙는’ 인라인 모드 */
+    /** true → 말풍선 아래에 붙는 인라인 / false → 오버레이 */
     inline?: boolean
-    className?: string
+    className?: string           // wrapper 오버라이드
 }
 
 export default function ChoiceList({
@@ -26,7 +27,7 @@ export default function ChoiceList({
 }: ChoiceListProps) {
     const preset = choicePreset[variant]
 
-    // 👉 wrapper (overlay vs inline) 스타일 분기
+    /* ── wrapper: overlay vs inline ── */
     const Wrapper: React.FC<{ children: React.ReactNode }> = ({ children }) =>
         inline ? (
             <div className="w-full flex justify-center">{children}</div>
@@ -57,11 +58,15 @@ export default function ChoiceList({
                         transition={{ type: 'spring', damping: 16 }}
                     >
                         {choices.map(c => (
-                            <motion.li key={c.key} whileTap={{ scale: 0.97 }}>
+                            <motion.li key={c.key} whileTap={{ scale: 0.95 }}>
                                 <button
                                     onClick={() => onSelect(c.key)}
                                     className={cn(
-                                        'flex items-center w-full py-3 pl-4 pr-6 rounded-full border transition-colors',
+                                        /* ① 공통 레이아웃 + 애니메이션 */
+                                        'flex items-center w-full py-3 pl-4 pr-6 rounded-full border',
+                                        'transition-transform transition-colors duration-150 ease-out',
+                                        'hover:scale-[1.02] active:scale-100',
+                                        /* ② 프리셋 색상/호버/포커스 */
                                         preset.button,
                                     )}
                                 >
