@@ -2,7 +2,6 @@
 import { SceneComponentMap } from '@/lib/sceneMap'
 import type { SceneKey } from '@/modules/scene-key.type'
 import { createFileRoute } from '@tanstack/react-router'
-import { AnimatePresence } from 'framer-motion'
 import { useCallback, useState } from 'react'
 import StartScene from './-components/StartScene'
 
@@ -23,9 +22,5 @@ export default function App() {
 
   const SceneComponent = SceneComponentMap[scene]
 
-  return (
-    <AnimatePresence>
-      <SceneComponent onSceneChange={handleSceneChange} />
-    </AnimatePresence>
-  )
+  return <SceneComponent onSceneChange={handleSceneChange} />
 }

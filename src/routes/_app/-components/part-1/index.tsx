@@ -34,7 +34,7 @@ export default function SceneA({ onSceneChange }: SceneProps) {
             { content: '어? 저기 파티장에서 우울하게 있는 청년이 있어,\n' },
             { content: '그에게 어떤 이야기를 할까?', className: 'font-bold' },
           ]}
-          className="content text-lg leading-relaxed text-white transition-all duration-300"
+          className="content leading-relaxed text-white transition-all duration-300 sm:text-lg"
           onComplete={() => {
             setTimeout(() => setShowChoices(true), 300)
           }}
@@ -43,36 +43,51 @@ export default function SceneA({ onSceneChange }: SceneProps) {
         <AnimatePresence>
           {showChoices && (
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.3 }}
               className="mt-8 flex flex-col items-center gap-2 text-left"
             >
               <motion.button
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{
+                  default: { duration: 0.3, delay: 0.1 },
+                  scale: { type: 'spring', stiffness: 400, damping: 17 },
+                }}
                 className="content flex w-full cursor-pointer items-center gap-2 rounded-md bg-white/10 px-4 py-2 text-xs text-white transition-colors hover:bg-white/20"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                transition={{ duration: 0.2 }}
-                // onClick={() => onSceneChange('part2')}
+                onClick={() => onSceneChange('part2')}
               >
                 <ChevronRight className="h-4 w-4 flex-shrink-0" />
                 <span>짐빔 하이볼 플레인 건네주기</span>
               </motion.button>
               <motion.button
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{
+                  default: { duration: 0.3, delay: 0.2 },
+                  scale: { type: 'spring', stiffness: 400, damping: 17 },
+                }}
                 className="content flex w-full cursor-pointer items-center gap-2 rounded-md bg-white/10 px-4 py-2 text-xs text-white transition-colors hover:bg-white/20"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                transition={{ duration: 0.2 }}
                 // onClick={() => onSceneChange('part2')}
               >
                 <ChevronRight className="h-4 w-4 flex-shrink-0" />
                 <span>무시하기</span>
               </motion.button>
               <motion.button
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{
+                  default: { duration: 0.3, delay: 0.3 },
+                  scale: { type: 'spring', stiffness: 400, damping: 17 },
+                }}
                 className="content flex w-full cursor-pointer items-center gap-2 rounded-md bg-white/10 px-4 py-2 text-xs text-white transition-colors hover:bg-white/20"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                transition={{ duration: 0.2 }}
                 // onClick={() => onSceneChange('part2')}
               >
                 <ChevronRight className="h-4 w-4 flex-shrink-0" />

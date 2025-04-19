@@ -4,7 +4,10 @@ import { animate, useMotionValue } from 'framer-motion'
 import { useEffect, useState } from 'react'
 import CursorBlinker from './CursorBlinker'
 
-interface TypingChunk { content: string; className?: string }
+interface TypingChunk {
+  content: string
+  className?: string
+}
 
 interface TypingTextProps {
   text: TypingChunk[]
@@ -36,7 +39,7 @@ export default function TypingText({
       type: 'tween',
       delay,
       duration,
-      ease: 'linear',       // 속도 균일하게
+      ease: 'linear', // 속도 균일하게
       onUpdate: latest => {
         const len = Math.round(latest)
         let shown = 0
@@ -50,7 +53,7 @@ export default function TypingText({
             parts.push(
               <span key={`${i}-${idx}`} className={chunk.className}>
                 {line}
-              </span>,
+              </span>
             )
             if (idx < arr.length - 1) parts.push(<br key={`br-${i}-${idx}`} />)
           })
