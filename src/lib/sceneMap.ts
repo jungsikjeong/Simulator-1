@@ -14,7 +14,7 @@ type SceneComponent = (props: SceneProps) => React.JSX.Element
 export const SceneComponentMap: Record<SceneKey, SceneComponent> = {
   start: StartScene,
   part1: SceneA,
-  part2: SceneB,
+  part2: Part2SceneA,
   part2SceneA: Part2SceneA,
   part2_sceneA_ignore: Part2_SceneA_ignore,
 }
