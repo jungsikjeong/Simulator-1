@@ -1,7 +1,8 @@
-import type { SceneKey } from '@/modules'
+import type { SceneKey } from '@/modules/scene-key.type'
 import SceneA from '@/routes/_app/-components/part-1/SceneA'
-import StartScene from '../routes/_app/-components/StartScene'
+import SceneB from '@/routes/_app/-components/part-1/SceneB'
 import type React from 'react'
+import StartScene from '../routes/_app/-components/StartScene'
 
 type SceneProps = {
   onSceneChange: (scene: SceneKey) => void
@@ -13,4 +14,5 @@ type SceneComponent = (props: SceneProps) => React.JSX.Element
 export const SceneComponentMap: Record<SceneKey, SceneComponent> = {
   start: StartScene,
   part1: SceneA,
+  part2: SceneB,
 }

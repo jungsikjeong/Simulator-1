@@ -1,16 +1,16 @@
-import { sceneComponentMap } from '@/lib/sceneMap'
-import type { SceneKey } from '@/modules'
+import { SceneComponentMap } from '@/lib/sceneMap'
+import type { SceneKey } from '@/modules/scene-key.type'
 import { createFileRoute } from '@tanstack/react-router'
+import { AnimatePresence } from 'framer-motion'
 import { useCallback, useState } from 'react'
 import StartScene from './-components/StartScene'
-import { AnimatePresence } from 'framer-motion'
 
 export const Route = createFileRoute('/_app/')({
   component: App,
 })
 
 export default function App() {
-  const [scene, setScene] = useState<SceneKey>('start')
+  const [scene, setScene] = useState<SceneKey>('part1')
 
   const handleSceneChange = useCallback((scene: SceneKey) => {
     setScene(scene)
@@ -20,12 +20,7 @@ export default function App() {
     return <StartScene onSceneChange={handleSceneChange} />
   }
 
-  const SceneComponent = sceneComponentMap[scene]
-
-  if (!SceneComponent) {
-    // TODO :sceneComponentMap 타입을 Record로 바꿧으면 지울것
-    return <div>Scene not found: {scene}</div>
-  }
+  const SceneComponent = SceneComponentMap[scene]
 
   return (
     <AnimatePresence>

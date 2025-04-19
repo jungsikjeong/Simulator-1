@@ -1,28 +1,28 @@
-import { useCreateMember } from '@/hooks/use-create-member';
-import type { SceneKey } from '@/modules';
-import { useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
-import TypingText from '@/components/TypingText';
+import { useCreateMember } from '@/hooks/use-create-member'
+import type { SceneKey } from '@/modules/scene-key.type'
+import { useState } from 'react'
+import { v4 as uuidv4 } from 'uuid'
+import TypingText from '@/components/TypingText'
 
 export default function StartScene({
   onSceneChange,
 }: {
-  onSceneChange: (scene: SceneKey) => void;
+  onSceneChange: (scene: SceneKey) => void
 }) {
-  const [playerName, setPlayerName] = useState('');
-  const createMember = useCreateMember();
+  const [playerName, setPlayerName] = useState('')
+  const createMember = useCreateMember()
 
   const handleNameSubmit = async () => {
-    if (!playerName.trim()) return;
+    if (!playerName.trim()) return
 
     try {
-      const uuid = uuidv4();
-      createMember.mutate({ name: playerName, id: uuid });
-      onSceneChange('bus');
+      const uuid = uuidv4()
+      createMember.mutate({ name: playerName, id: uuid })
+      onSceneChange('part1')
     } catch (error) {
-      console.error('Failed to create member:', error);
+      console.error('Failed to create member:', error)
     }
-  };
+  }
 
   return (
     <div className="space-y-4">
@@ -48,5 +48,5 @@ export default function StartScene({
         className="text-center text-2xl font-bold font-danjo"
       />
     </div>
-  );
+  )
 }
