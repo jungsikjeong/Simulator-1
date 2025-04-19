@@ -3,7 +3,7 @@ import SceneA from '@/routes/_app/-components/part-1/SceneA'
 import SceneB from '@/routes/_app/-components/part-1/SceneB'
 import type React from 'react'
 import StartScene from '../routes/_app/-components/StartScene'
-import Part2_SceneA from '../routes/_app/-components/part-2/SceneA'
+import Part2SceneA from '../routes/_app/-components/part-2/SceneA'
 import Part2_SceneA_ignore from '../routes/_app/-components/part-2/SceneA_ignore'
 type SceneProps = {
   onSceneChange: (scene: SceneKey) => void
@@ -16,6 +16,6 @@ export const SceneComponentMap: Record<SceneKey, SceneComponent> = {
   start: StartScene,
   part1: SceneA,
   part2: SceneB,
-  part2_sceneA: Part2_SceneA,
+  part2SceneA: Part2SceneA,
   part2_sceneA_ignore: Part2_SceneA_ignore,
 }
