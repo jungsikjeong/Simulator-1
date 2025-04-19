@@ -158,14 +158,14 @@
       font-family: var(--font-danjo);
     }
 
-    /* # 파티1 글씨체 */
-    .font-party1 {
-      font-family: var(--font-party1);
+    /* #파티1 같은 섹션 글씨체 */
+    .font-sbaggrob {
+      font-family: var(--font-sbaggrob);
     }
 
     /* 내용 글씨체 */
-    .font-sbaggrob {
-      font-family: var(--font-sbaggrob);
+    .font-nanum {
+      font-family: var(--font-nanum);
     }
   }
 }
