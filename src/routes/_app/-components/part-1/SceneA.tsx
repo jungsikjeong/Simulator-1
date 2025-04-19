@@ -1,7 +1,6 @@
 import DynamicPositionTag from '@/components/DynamicPositionTag'
 import { Button } from '@/components/ui/button'
 import type { SceneKey } from '@/modules/scene-key.type'
-import { motion } from 'framer-motion'
 
 type SceneProps = {
   onSceneChange: (scene: SceneKey) => void
@@ -9,7 +8,7 @@ type SceneProps = {
 
 export default function SceneA({ onSceneChange }: SceneProps) {
   return (
-    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+    <>
       <DynamicPositionTag
         layoutId="party1"
         title="#파티1"
@@ -18,6 +17,6 @@ export default function SceneA({ onSceneChange }: SceneProps) {
       />
 
       <Button onClick={() => onSceneChange('part2')}>파티2</Button>
-    </motion.div>
+    </>
   )
 }
