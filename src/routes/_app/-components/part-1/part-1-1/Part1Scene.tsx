@@ -1,3 +1,3 @@
 export default function Part1Scene() {
-  return <div></div>
+  return <div>테스트</div>
 }

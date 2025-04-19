@@ -58,7 +58,7 @@ export default function SceneA({ onSceneChange }: SceneProps) {
                 className="content flex w-full cursor-pointer items-center gap-2 rounded-md bg-white/10 px-4 py-2 text-xs text-white transition-colors hover:bg-white/20"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                // onClick={() => onSceneChange('part2')}
+                onClick={() => onSceneChange('part2')}
               >
                 <ChevronRight className="h-4 w-4 flex-shrink-0" />
                 <span>짐빔 하이볼 플레인 건네주기</span>

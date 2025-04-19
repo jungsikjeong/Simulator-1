@@ -1,4 +1,5 @@
 'use client'
+
 import { animate, useMotionValue } from 'framer-motion'
 import { useEffect, useState } from 'react'
 import CursorBlinker from './CursorBlinker'
@@ -72,6 +73,7 @@ export default function TypingText({
 
     const skip = () => {
       controls.stop()
+      console.log('fullText:', fullText.length, fullText)
       count.set(fullText.length)
       setDone(true)
       onComplete?.()
