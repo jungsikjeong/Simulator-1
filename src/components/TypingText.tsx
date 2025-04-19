@@ -1,74 +1,101 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { motion } from 'framer-motion';
+'use client'
+import { animate, useMotionValue } from 'framer-motion'
+import { useEffect, useState } from 'react'
+import CursorBlinker from './CursorBlinker'
 
-interface TypingTextProps {
-  text: string;
-  speed?: number;
-  delay?: number;
-  className?: string;
+interface TypingChunk {
+  content: string
+  className?: string
 }
 
-const TypingText: React.FC<TypingTextProps> = ({
+interface TypingTextProps {
+  text: TypingChunk[]
+  delay?: number
+  duration?: number
+  className?: string
+  isCursorBlinker?: boolean
+  onComplete?: () => void
+}
+
+export default function TypingText({
   text,
-  speed = 50,
-  delay = 0,
-  className = '',
-}) => {
-  const [displayText, setDisplayText] = useState('');
-  const [isDone, setIsDone] = useState(false);
+  delay = 2.2,
+  duration = 3,
+  className,
+  isCursorBlinker = true,
+  onComplete,
+}: TypingTextProps) {
+  const [done, setDone] = useState(false)
+  const [visibleNodes, setVisibleNodes] = useState<React.ReactNode[]>([])
 
-  const intervalRef = useRef<NodeJS.Timeout | null>(null);
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
-
-  const skipTyping = () => {
-    if (!isDone) {
-      if (intervalRef.current) clearInterval(intervalRef.current);
-      if (timeoutRef.current) clearTimeout(timeoutRef.current);
-      setDisplayText(text);
-      setIsDone(true);
-    }
-  };
+  const fullText = text.map(t => t.content).join('')
+  const count = useMotionValue(0)
 
   useEffect(() => {
-    let currentIndex = 0;
+    const controls = animate(count, fullText.length, {
+      type: 'tween',
+      delay,
+      duration,
+      ease: 'easeInOut',
+      onUpdate: latest => {
+        const rounded = Math.round(latest)
+        let shown = 0
+        const parts: React.ReactNode[] = []
 
-    timeoutRef.current = setTimeout(() => {
-      intervalRef.current = setInterval(() => {
-        if (currentIndex <= text.length) {
-          setDisplayText(text.slice(0, currentIndex));
-          currentIndex++;
-        } else {
-          clearInterval(intervalRef.current!);
-          setIsDone(true);
+        for (const [i, chunk] of text.entries()) {
+          if (shown >= rounded) break
+
+          const remaining = rounded - shown
+          const contentToShow = chunk.content.slice(0, remaining)
+          shown += contentToShow.length
+
+          const lines = contentToShow.split('\n')
+          lines.forEach((line, lineIdx) => {
+            parts.push(
+              <span key={`${i}-${lineIdx}`} className={chunk.className}>
+                {line}
+              </span>
+            )
+            if (lineIdx < lines.length - 1) {
+              parts.push(<br key={`br-${i}-${lineIdx}`} />)
+            }
+          })
         }
-      }, speed);
-    }, delay);
 
-    const handleSkip = (e: KeyboardEvent | MouseEvent) => {
-      if (e instanceof KeyboardEvent && e.key === 'Enter') skipTyping();
-      if (e instanceof MouseEvent) skipTyping();
-    };
+        setVisibleNodes(parts)
+      },
+      onComplete: () => {
+        setDone(true)
+        onComplete?.()
+      },
+    })
 
-    window.addEventListener('keydown', handleSkip);
-    window.addEventListener('click', handleSkip);
+    const skip = () => {
+      controls.stop()
+      count.set(fullText.length)
+      setDone(true)
+      onComplete?.()
+    }
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Enter') skip()
+    }
+    const handleClick = () => skip()
+
+    window.addEventListener('keydown', handleKeyDown)
+    window.addEventListener('click', handleClick)
 
     return () => {
-      clearTimeout(timeoutRef.current!);
-      clearInterval(intervalRef.current!);
-      window.removeEventListener('keydown', handleSkip);
-      window.removeEventListener('click', handleSkip);
-    };
-  }, [text, speed, delay]);
+      controls.stop()
+      window.removeEventListener('keydown', handleKeyDown)
+      window.removeEventListener('click', handleClick)
+    }
+  }, [])
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      className={className}
-    >
-      {displayText}
-    </motion.div>
-  );
-};
-
-export default TypingText;
+    <span className={className}>
+      {visibleNodes}
+      {isCursorBlinker && <CursorBlinker />}
+    </span>
+  )
+}

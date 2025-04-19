@@ -24,7 +24,7 @@ export default function App() {
 
   return (
     <AnimatePresence>
-      <SceneComponent onSceneChange={handleSceneChange} />;
+      <SceneComponent onSceneChange={handleSceneChange} />
     </AnimatePresence>
   )
 }
