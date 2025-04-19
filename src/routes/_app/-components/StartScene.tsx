@@ -40,13 +40,6 @@ export default function StartScene({
       >
         시작하기
       </button>
-
-      <TypingText
-        text="안녕하세요! 이름을 입력하고 시작하세요."
-        speed={50}
-        delay={0}
-        className="text-center text-2xl font-bold font-danjo"
-      />
     </div>
   )
 }

@@ -1,3 +1,4 @@
+// src/routes/_app/index.tsx
 import { SceneComponentMap } from '@/lib/sceneMap'
 import type { SceneKey } from '@/modules/scene-key.type'
 import { createFileRoute } from '@tanstack/react-router'
@@ -10,7 +11,7 @@ export const Route = createFileRoute('/_app/')({
 })
 
 export default function App() {
-  const [scene, setScene] = useState<SceneKey>('part1')
+  const [scene, setScene] = useState<SceneKey>('part2_sceneA')
 
   const handleSceneChange = useCallback((scene: SceneKey) => {
     setScene(scene)

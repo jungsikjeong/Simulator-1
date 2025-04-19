@@ -1,4 +1,5 @@
 'use client'
+
 import { animate, useMotionValue } from 'framer-motion'
 import { useEffect, useState } from 'react'
 import CursorBlinker from './CursorBlinker'
