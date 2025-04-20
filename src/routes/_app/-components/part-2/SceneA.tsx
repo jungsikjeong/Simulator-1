@@ -22,7 +22,7 @@ export default function Part2SceneA({
     }, [typingDone, onSceneChange])
 
     return (
-        <SceneLayout bg="/home/1_박정민.png" effect="shake">
+        <SceneLayout bg="/home/1_박정민.png" effect="fade">
             <div className="absolute bottom-6 flex w-full justify-center">
                 <DialogueBox
                     chunks={[{ content: '집 없는데?' }]}

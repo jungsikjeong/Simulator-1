@@ -47,7 +47,7 @@ export default function ChoiceList({
                 <Wrapper>
                     <motion.ul
                         className={cn(
-                            'space-y-3 w-[88%] max-w-md rounded-xl border',
+                            'space-y-3 w-[90%] max-w-md rounded-xl border',
                             preset.wrapper,
                             className,
                         )}
