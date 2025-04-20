@@ -44,7 +44,7 @@ export default function SceneA({ onSceneChange }: SceneProps) {
               typingDelay={0.5}
               variant="light"
               className="mb-20 px-0 py-6"
-              typingTextClassName="text-sm sm:text-base leading-relaxed"
+              typingTextClassName="text-base sm:text-xl leading-relaxed"
               onComplete={() => setChoiceOpen(true)}
               isTouchable={choiceOpen}
             />

@@ -63,7 +63,11 @@ export default function ChoiceList({
             {choices.map(c => (
               <motion.li key={c.key} whileTap={{ scale: 0.95 }}>
                 <button
-                  onClick={() => onSelect(c.key)}
+                  onClick={e => {
+                    e.stopPropagation() // 클릭 이벤트 전파 방지
+                    onSelect(c.key)
+                  }}
+                  onMouseDown={e => e.stopPropagation()}
                   className={cn(
                     /* ① 공통 레이아웃 + 애니메이션 */
                     'flex w-full cursor-pointer items-center rounded-full border py-3 pr-6 pl-4 transition-all duration-150 ease-out hover:scale-[1.02] active:scale-100',

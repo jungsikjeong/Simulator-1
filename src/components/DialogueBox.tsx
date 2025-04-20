@@ -5,6 +5,7 @@ import { cn } from '@/lib/utils'
 import { AnimatePresence, motion } from 'framer-motion'
 import { MousePointerClick } from 'lucide-react'
 import TypingText from './TypingText'
+import { useState } from 'react'
 
 interface DialogueBoxProps {
   chunks: { content: string; className?: string }[]
@@ -16,7 +17,7 @@ interface DialogueBoxProps {
   isCursorBlinker?: boolean
   typingTextClassName?: string
   isTouchable: boolean
-  onTouch?: () => void
+  onTouchSceneChange?: () => void
 }
 
 export default function DialogueBox({
@@ -29,8 +30,10 @@ export default function DialogueBox({
   isCursorBlinker,
   typingTextClassName,
   isTouchable,
-  onTouch,
+  onTouchSceneChange,
 }: DialogueBoxProps) {
+  const [isComplete, setIsComplete] = useState(false)
+
   return (
     <div
       className={cn(
@@ -38,12 +41,15 @@ export default function DialogueBox({
         dialoguePreset[variant],
         className
       )}
-      onClick={onTouch}
+      onClick={isComplete ? onTouchSceneChange : undefined}
     >
       <TypingText
         text={chunks}
         className={cn('text-base leading-relaxed', typingTextClassName)}
-        onComplete={onComplete}
+        onComplete={() => {
+          setIsComplete(true)
+          onComplete?.()
+        }}
         speed={typingSpeed}
         delay={typingDelay}
         isCursorBlinker={isCursorBlinker}
