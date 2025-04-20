@@ -27,7 +27,7 @@ export default function Part2SceneBFail1({
 
                 {typingDone && (
                     <div
-                        onClick={() => onSceneChange('start')}
+                        onClick={() => onSceneChange('part1')}
                         className="w-[90%] max-w-xl rounded-xl border p-6 bg-white/20 backdrop-blur-sm cursor-pointer transition hover:bg-white/30"
                     >
                         <p className="text-base leading-relaxed text-center">
