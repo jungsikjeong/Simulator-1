@@ -3,9 +3,7 @@
 import { dialoguePreset, type UIPreset } from '@/lib/uiPresets'
 import { cn } from '@/lib/utils'
 import { AnimatePresence, motion } from 'framer-motion'
-import { MousePointerClick } from 'lucide-react'
 import TypingText from './TypingText'
-import { useState } from 'react'
 
 interface DialogueBoxProps {
   chunks: { content: string; className?: string }[]
@@ -17,7 +15,6 @@ interface DialogueBoxProps {
   isCursorBlinker?: boolean
   typingTextClassName?: string
   isTouchable: boolean
-  onTouchSceneChange?: () => void
 }
 
 export default function DialogueBox({
@@ -30,26 +27,19 @@ export default function DialogueBox({
   isCursorBlinker,
   typingTextClassName,
   isTouchable,
-  onTouchSceneChange,
 }: DialogueBoxProps) {
-  const [isComplete, setIsComplete] = useState(false)
-
   return (
     <div
       className={cn(
-        'relative mx-auto w-[90%] max-w-xl rounded-xl border p-6',
+        'relative mx-auto w-[90%] max-w-xl rounded-xl border p-5',
         dialoguePreset[variant],
         className
       )}
-      onClick={isComplete ? onTouchSceneChange : undefined}
     >
       <TypingText
         text={chunks}
         className={cn('text-base leading-relaxed', typingTextClassName)}
-        onComplete={() => {
-          setIsComplete(true)
-          onComplete?.()
-        }}
+        onComplete={onComplete}
         speed={typingSpeed}
         delay={typingDelay}
         isCursorBlinker={isCursorBlinker}
@@ -58,11 +48,11 @@ export default function DialogueBox({
       <AnimatePresence>
         {!isTouchable && (
           <motion.div
-            className="absolute right-5 bottom-0 flex items-center justify-end"
+            className="absolute right-4 bottom-2 flex items-center justify-end text-xs opacity-70"
             animate={{
-              opacity: [1, 0, 1],
+              opacity: [0.7, 0.4, 0.7],
               transition: {
-                duration: 3,
+                duration: 1.5,
                 repeat: Infinity,
                 ease: 'easeInOut',
               },
@@ -70,7 +60,7 @@ export default function DialogueBox({
             initial={{ opacity: 0 }}
             exit={{ opacity: 0, transition: { duration: 0.5 } }}
           >
-            <MousePointerClick className="h-4 w-4" /> touch
+            <span className="mr-1">▶︎</span> touch
           </motion.div>
         )}
       </AnimatePresence>

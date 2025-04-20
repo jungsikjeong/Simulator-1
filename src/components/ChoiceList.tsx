@@ -1,9 +1,8 @@
 'use client'
 
-import { AnimatePresence, motion } from 'framer-motion'
-import { ChevronRight } from 'lucide-react'
 import { choicePreset, type UIPreset } from '@/lib/uiPresets'
 import { cn } from '@/lib/utils'
+import { AnimatePresence, motion } from 'framer-motion'
 
 interface Choice {
   key: string
@@ -18,6 +17,7 @@ interface ChoiceListProps {
   /** true → 말풍선 아래에 붙는 인라인 / false → 오버레이 */
   inline?: boolean
   className?: string // wrapper 오버라이드
+  textClassName?: string // 버튼 텍스트 클래스 오버라이드
 }
 
 export default function ChoiceList({
@@ -27,6 +27,7 @@ export default function ChoiceList({
   variant = 'light',
   inline = false,
   className,
+  textClassName = 'text-base',
 }: ChoiceListProps) {
   const preset = choicePreset[variant]
 
@@ -51,7 +52,7 @@ export default function ChoiceList({
         <Wrapper>
           <motion.ul
             className={cn(
-              'w-[88%] max-w-md space-y-3 rounded-xl border p-6',
+              'mb-4 w-[90%] max-w-md space-y-3 rounded-xl border',
               preset.wrapper,
               className
             )}
@@ -63,20 +64,20 @@ export default function ChoiceList({
             {choices.map(c => (
               <motion.li key={c.key} whileTap={{ scale: 0.95 }}>
                 <button
-                  onClick={e => {
-                    e.stopPropagation() // 클릭 이벤트 전파 방지
-                    onSelect(c.key)
-                  }}
-                  onMouseDown={e => e.stopPropagation()}
+                  onClick={() => onSelect(c.key)}
                   className={cn(
                     /* ① 공통 레이아웃 + 애니메이션 */
-                    'flex w-full cursor-pointer items-center rounded-full border py-3 pr-6 pl-4 transition-all duration-150 ease-out hover:scale-[1.02] active:scale-100',
+                    'flex w-full cursor-pointer items-center rounded-full border px-2 py-1 transition-all duration-150 ease-out hover:scale-[1.02] active:scale-100 sm:py-3 sm:pr-6 sm:pl-5',
                     /* ② 프리셋 색상/호버/포커스 */
                     preset.button
                   )}
                 >
-                  <ChevronRight className="mr-3 h-5 w-5 shrink-0" />
-                  <span className="text-base">{c.label}</span>
+                  <div className="mr-3 flex h-5 w-5 shrink-0 items-center justify-center">
+                    <span className="text-sm">▶</span>
+                  </div>
+                  <span className={cn(textClassName, 'text-sm sm:text-base')}>
+                    {c.label}
+                  </span>
                 </button>
               </motion.li>
             ))}
