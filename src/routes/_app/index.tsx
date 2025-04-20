@@ -10,7 +10,7 @@ export const Route = createFileRoute('/_app/')({
 })
 
 export default function App() {
-  const [scene, setScene] = useState<SceneKey>('part1SceneB')
+  const [scene, setScene] = useState<SceneKey>('start')
 
   const handleSceneChange = useCallback((scene: SceneKey) => {
     setScene(scene)

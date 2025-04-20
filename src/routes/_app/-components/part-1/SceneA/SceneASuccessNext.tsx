@@ -11,7 +11,7 @@ type SceneProps = {
 }
 
 export default function SceneASuccessNext({ onSceneChange }: SceneProps) {
-  const [typingDone, setTypingDone] = useState(false)
+  const [_, setTypingDone] = useState(false)
 
   return (
     <SceneLayout bg="/party/5_박정민.png" effect="shake">

@@ -1,4 +1,4 @@
-import type { IScenes } from '@/modules';
+import type { IScenes } from '@/modules'
 
 export const scenes: IScenes = {
   start: {
@@ -64,4 +64,4 @@ export const scenes: IScenes = {
     text: '장원영은 조용히 자리를 떠났다. 다시 선택해보자!',
     choices: [{ label: '다시 시작하기', next: 'bus' }],
   },
-};
+}

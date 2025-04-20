@@ -11,7 +11,7 @@ type SceneProps = {
 }
 
 export default function SceneBSuccess({ onSceneChange }: SceneProps) {
-  const [typingDone, setTypingDone] = useState(false)
+  const [_, setTypingDone] = useState(false)
 
   return (
     <SceneLayout bg="/party/7_장원영.png" effect="zoom">
