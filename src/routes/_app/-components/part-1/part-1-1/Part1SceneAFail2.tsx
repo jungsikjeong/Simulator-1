@@ -12,12 +12,13 @@ type SceneProps = {
   onSceneChange: (scene: SceneKey) => void
 }
 
-export default function SceneA({ onSceneChange }: SceneProps) {
+export default function Part1SceneAFail2({ onSceneChange }: SceneProps) {
   const [choiceOpen, setChoiceOpen] = useState(false)
   const [isChapterTitle, setIsChapterTitle] = useState(false)
 
   return (
     <SceneLayout bg="/party/1_박정민.png" effect="fade">
+      실패페이지2
       <div className="relative flex h-screen flex-col justify-end overflow-hidden bg-cover bg-center">
         <DynamicPositionTag
           layoutId="chapter-title"
@@ -56,9 +57,9 @@ export default function SceneA({ onSceneChange }: SceneProps) {
           inline
           variant="glass"
           choices={[
-            { key: 'success', label: '짐빔 하이볼 플레인 건네주기' },
-            { key: 'fail1', label: '무시하기' },
-            { key: 'fail2', label: '친구들과 가서 말 걸어보기' },
+            { key: 'enjoy', label: '짐빔 하이볼 플레인 건네주기' },
+            { key: 'cheongyak', label: '무시하기' },
+            { key: 'lotto', label: '친구들과 가서 말 걸어보기' },
           ]}
           onSelect={(k: string) => {
             const sceneMap: Record<string, SceneKey> = {

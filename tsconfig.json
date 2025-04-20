@@ -1,5 +1,9 @@
 {
-  "include": ["**/*.ts", "**/*.tsx"],
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    "src/routes/_app/-components/part-1/part-1-1/Part1SceneA"
+  ],
   "compilerOptions": {
     "target": "ES2022",
     "jsx": "react-jsx",
@@ -22,7 +26,7 @@
     "noUncheckedSideEffectImports": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"],
+      "@/*": ["./src/*"]
     }
   }
 }
