@@ -1,5 +1,5 @@
 import { cn } from '@/lib/utils'
-import { motion, LayoutGroup } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
 
 interface IDynamicPositionTagProps {
@@ -7,6 +7,7 @@ interface IDynamicPositionTagProps {
   className?: string
   className2?: string
   title: string
+  onMinimize?: () => void
 }
 
 export default function DynamicPositionTag({
@@ -14,6 +15,7 @@ export default function DynamicPositionTag({
   className,
   className2,
   title,
+  onMinimize,
 }: IDynamicPositionTagProps) {
   const [minimized, setMinimized] = useState(false)
   const [key, setKey] = useState(Math.random())
@@ -24,10 +26,11 @@ export default function DynamicPositionTag({
 
     const timer = setTimeout(() => {
       setMinimized(true) // 일정 시간 후에 위치와 크기 바뀜
+      onMinimize?.()
     }, 2000)
 
     return () => clearTimeout(timer)
-  }, [])
+  }, [onMinimize])
 
   const initialAnimationVariants = {
     hidden: { opacity: 0, scale: 0.9 },
@@ -43,6 +46,23 @@ export default function DynamicPositionTag({
 
   return (
     <>
+      <AnimatePresence>
+        {/* 오버레이 */}
+        {!minimized && (
+          <motion.div
+            className="absolute inset-0 z-10 bg-black/40"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            onClick={() => {
+              setMinimized(true)
+              onMinimize?.()
+            }}
+          />
+        )}
+      </AnimatePresence>
+
       {!minimized ? (
         <motion.div
           layoutId={`${layoutId}-${key}`}
