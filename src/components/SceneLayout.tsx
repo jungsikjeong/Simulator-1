@@ -7,14 +7,17 @@ import {
     type Variants,
 } from 'framer-motion'
 import type { PropsWithChildren } from 'react'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import SoundControl from './SoundControl'
 
 export type TransitionEffect = 'fade' | 'shake' | 'zoom' | 'flash' | 'slide' | 'crossFade'
+export type SoundEffect = 'shalala' | null
 
 interface SceneLayoutProps extends PropsWithChildren {
     bg: string
     effect?: TransitionEffect
     onSkip?: () => void
+    soundEffect?: SoundEffect
 }
 
 /** 효과별 variant 정의 */
@@ -82,7 +85,24 @@ export default function SceneLayout({
     effect = 'fade',
     onSkip,
     children,
+    soundEffect = null,
 }: SceneLayoutProps) {
+    const [isMuted, setIsMuted] = useState(false)
+
+    useEffect(() => {
+        const savedMuteState = localStorage.getItem('isMuted')
+        if (savedMuteState) {
+            setIsMuted(JSON.parse(savedMuteState))
+        }
+    }, [])
+
+    useEffect(() => {
+        if (soundEffect && !isMuted) {
+            const audio = new Audio(`/sounds/${soundEffect}.mp3`)
+            audio.play().catch(error => console.log('오디오 재생 실패:', error))
+        }
+    }, [soundEffect, isMuted])
+
     /* Esc 스킵 */
     useEffect(() => {
         const h = (e: KeyboardEvent) => e.key === 'Escape' && onSkip?.()
@@ -103,6 +123,7 @@ export default function SceneLayout({
                 exit={exit as TargetAndTransition}
                 transition={transition ?? { duration: effect === 'flash' ? 0.4 : 0.6 }}
             >
+                <SoundControl />
                 {children}
             </motion.div>
         </AnimatePresence>

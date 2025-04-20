@@ -22,7 +22,7 @@ export default function Part2SceneC({
     }, [typingDone, onSceneChange])
 
     return (
-        <SceneLayout bg="/home/3_장원영.png" effect="flash">
+        <SceneLayout bg="/home/3_장원영.png" effect="flash" soundEffect="shalala">
             <div className="absolute bottom-6 flex w-full justify-center">
                 <DialogueBox
                     chunks={[{ content: '밖에서 여유롭게 짐빔 하이볼!' }]}
