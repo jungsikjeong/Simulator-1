@@ -44,7 +44,7 @@ export default function SceneA({ onSceneChange }: SceneProps) {
               typingDelay={0.5}
               variant="light"
               className="mb-20 px-0 py-6"
-              typingTextClassName="text-base sm:text-xl leading-relaxed"
+              typingTextClassName="text-sm sm:text-xl leading-relaxed"
               onComplete={() => setChoiceOpen(true)}
               isTouchable={choiceOpen}
             />
@@ -54,19 +54,24 @@ export default function SceneA({ onSceneChange }: SceneProps) {
         <ChoiceList
           open={choiceOpen}
           inline
-          variant="glass"
+          variant="light"
           choices={[
             { key: 'success', label: '짐빔 하이볼 플레인 건네주기' },
             { key: 'fail1', label: '무시하기' },
             { key: 'fail2', label: '친구들과 가서 말 걸어보기' },
           ]}
-          onSelect={(k: string) => {
-            const sceneMap: Record<string, SceneKey> = {
-              success: 'part1SceneASuccess',
-              fail1: 'part1SceneAFail1',
-              fail2: 'part1SceneAFail2',
+          onSelect={k => {
+            switch (k) {
+              case 'success':
+                onSceneChange('part1SceneASuccess')
+                break
+              case 'fail1':
+                onSceneChange('part1SceneAFail1')
+                break
+              case 'fail2':
+                onSceneChange('part1SceneAFail2')
+                break
             }
-            onSceneChange(sceneMap[k])
           }}
         />
       </div>

@@ -15,6 +15,7 @@ interface DialogueBoxProps {
   isCursorBlinker?: boolean
   typingTextClassName?: string
   isTouchable: boolean
+  onTouchSceneChange?: () => void
 }
 
 export default function DialogueBox({
@@ -27,6 +28,7 @@ export default function DialogueBox({
   isCursorBlinker,
   typingTextClassName,
   isTouchable,
+  onTouchSceneChange,
 }: DialogueBoxProps) {
   return (
     <div
@@ -35,6 +37,7 @@ export default function DialogueBox({
         dialoguePreset[variant],
         className
       )}
+      onClick={onTouchSceneChange}
     >
       <TypingText
         text={chunks}

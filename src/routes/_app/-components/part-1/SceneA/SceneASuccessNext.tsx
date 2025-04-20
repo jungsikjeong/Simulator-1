@@ -1,25 +1,22 @@
 'use client'
 
-import ChoiceList from '@/components/ChoiceList'
 import DialogueBox from '@/components/DialogueBox'
 import SceneLayout from '@/components/SceneLayout'
 import type { SceneKey } from '@/modules/scene-key.type'
 import { motion } from 'framer-motion'
 import { useState } from 'react'
-import { v4 as uuidv4 } from 'uuid'
 
 type SceneProps = {
   onSceneChange: (scene: SceneKey) => void
 }
 
-export default function Part1SceneAFail1({ onSceneChange }: SceneProps) {
-  const [choiceOpen, setChoiceOpen] = useState(false)
+export default function SceneASuccessNext({ onSceneChange }: SceneProps) {
+  const [typingDone, setTypingDone] = useState(false)
 
   return (
-    <SceneLayout bg="/party/3_장원영.png" effect="fade">
+    <SceneLayout bg="/party/5_박정민.png" effect="shake">
       <div className="relative flex h-screen flex-col justify-end overflow-hidden bg-cover bg-center">
         <motion.div
-          key={`dialogue-animation-${uuidv4()}`}
           initial={{
             opacity: 0,
             y: 50,
@@ -46,37 +43,22 @@ export default function Part1SceneAFail1({ onSceneChange }: SceneProps) {
           }}
         >
           <DialogueBox
-            key={`dialogue-box-${uuidv4()}`}
             chunks={[
               {
-                content: '분명 좋은 응원 방법이 있지 않을까?\n',
-                className: 'font-bold',
-              },
-              {
-                content: '한번 더 나를 위해 고민해주겠어?',
+                content: '친구 없는데?',
               },
             ]}
             typingDelay={0.5}
             variant="light"
-            className="mb-20 px-0 py-6 transition-transform duration-200"
-            typingTextClassName="text-base sm:text-2xl leading-relaxed"
-            onComplete={() => setChoiceOpen(true)}
-            isTouchable={choiceOpen}
+            className="mb-20 cursor-pointer px-0 py-6 transition-transform duration-200"
+            typingTextClassName="text-base sm:text-xl leading-relaxed"
+            onComplete={() => setTypingDone(true)}
+            isTouchable={false}
+            onTouchSceneChange={() => {
+              onSceneChange('part1SceneB')
+            }}
           />
         </motion.div>
-
-        <ChoiceList
-          open={choiceOpen}
-          inline
-          variant="glass"
-          choices={[{ key: 'part1', label: '[다시하기]' }]}
-          onSelect={(k: string) => {
-            const sceneMap: Record<string, SceneKey> = {
-              part1: 'part1',
-            }
-            onSceneChange(sceneMap[k])
-          }}
-        />
       </div>
     </SceneLayout>
   )

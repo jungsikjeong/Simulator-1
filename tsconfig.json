@@ -2,7 +2,7 @@
   "include": [
     "**/*.ts",
     "**/*.tsx",
-    "src/routes/_app/-components/part-1/part-1-1/Part1SceneA"
+    "src/routes/_app/-components/part-1/SceneA/Part1SceneA"
   ],
   "compilerOptions": {
     "target": "ES2022",

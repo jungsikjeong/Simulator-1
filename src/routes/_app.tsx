@@ -6,7 +6,7 @@ export const Route = createFileRoute('/_app')({
 
 function RouteComponent() {
   return (
-    <div className="h-screen max-w-md md:max-w-lg lg:max-w-xl mx-auto text-center relative">
+    <div className="relative mx-auto h-screen max-w-md overflow-hidden text-center md:max-w-lg lg:max-w-xl">
       <main>
         <Outlet />
       </main>
