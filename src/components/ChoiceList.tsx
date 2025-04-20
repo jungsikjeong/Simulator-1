@@ -1,7 +1,6 @@
 'use client'
 
 import { AnimatePresence, motion } from 'framer-motion'
-import { ChevronRight } from 'lucide-react'
 import { choicePreset, type UIPreset } from '@/lib/uiPresets'
 import { cn } from '@/lib/utils'
 
@@ -48,7 +47,7 @@ export default function ChoiceList({
                 <Wrapper>
                     <motion.ul
                         className={cn(
-                            'space-y-3 w-[88%] max-w-md p-6 rounded-xl border',
+                            'space-y-3 w-[88%] max-w-md rounded-xl border',
                             preset.wrapper,
                             className,
                         )}
@@ -63,14 +62,16 @@ export default function ChoiceList({
                                     onClick={() => onSelect(c.key)}
                                     className={cn(
                                         /* ① 공통 레이아웃 + 애니메이션 */
-                                        'flex items-center w-full py-3 pl-4 pr-6 rounded-full border',
+                                        'flex items-center w-full py-3 pl-5 pr-6 rounded-full border',
                                         'transition-transform transition-colors duration-150 ease-out',
                                         'hover:scale-[1.02] active:scale-100',
                                         /* ② 프리셋 색상/호버/포커스 */
                                         preset.button,
                                     )}
                                 >
-                                    <ChevronRight className="w-5 h-5 mr-3 shrink-0" />
+                                    <div className="mr-3 flex h-5 w-5 shrink-0 items-center justify-center">
+                                        <span className="text-sm">▶</span>
+                                    </div>
                                     <span className="text-base">{c.label}</span>
                                 </button>
                             </motion.li>
