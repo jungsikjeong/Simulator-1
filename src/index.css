@@ -23,6 +23,15 @@
   font-style: normal;
 }
 
+/* 네오동근 Pro 폰트 */
+@font-face {
+  font-family: 'NeoDunggeunmoPro';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/NeoDunggeunmoPro-Regular.woff2')
+    format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
 :root {
   --background: oklch(1 0 0);
   --foreground: oklch(0.141 0.005 285.823);
@@ -62,6 +71,7 @@
   --font-danjo: 'Danjo-bold-Regular', sans-serif;
   --font-nanum: 'Nanum Gothic', sans-serif;
   --font-sbaggrob: 'SBAggroB', sans-serif;
+  --font-neo: 'NeoDunggeunmoPro', sans-serif;
 }
 
 .dark {
@@ -145,6 +155,7 @@
 
   body {
     @apply bg-background text-foreground;
+    font-family: var(--font-neo); /* 기본 폰트를 네오동근 Pro로 설정 */
   }
 
   /* 내용 글씨체 */
@@ -161,11 +172,6 @@
     /* #파티1 같은 섹션 글씨체 */
     .font-sbaggrob {
       font-family: var(--font-sbaggrob);
-    }
-
-    /* 내용 글씨체 */
-    .font-nanum {
-      font-family: var(--font-nanum);
     }
   }
 }

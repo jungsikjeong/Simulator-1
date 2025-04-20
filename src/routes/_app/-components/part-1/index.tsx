@@ -1,28 +1,67 @@
 'use client'
 
+import DialogueBox from '@/components/DialogueBox'
 import DynamicPositionTag from '@/components/DynamicPositionTag'
-import TypingText from '@/components/TypingText'
+import SceneLayout from '@/components/SceneLayout'
 import type { SceneKey } from '@/modules/scene-key.type'
+import { motion } from 'framer-motion'
 import { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { ChevronRight } from 'lucide-react'
 
 type SceneProps = {
   onSceneChange: (scene: SceneKey) => void
 }
 
 export default function SceneA({ onSceneChange }: SceneProps) {
-  const [showChoices, setShowChoices] = useState(false)
+  const [choiceOpen, setChoiceOpen] = useState(false)
 
   return (
-    <div className="relative flex h-screen flex-col justify-end overflow-hidden bg-[url('/party/1_박정민.png')] bg-cover bg-center">
-      <DynamicPositionTag
-        layoutId="party1"
-        title="#파티1"
-        className="absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] text-4xl font-bold"
-        className2="absolute top-4 left-4 text-sm font-semibold text-white"
-      />
+    <SceneLayout bg="/party/1_박정민.png" effect="fade">
+      <div className="relative flex h-screen flex-col justify-end overflow-hidden bg-cover bg-center">
+        <DynamicPositionTag
+          layoutId="party1"
+          title="#파티1"
+          className="absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] text-4xl font-bold"
+          className2="absolute top-4 left-4 text-sm font-semibold text-white"
+        />
 
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5, delay: 2.2 }}
+        >
+          <DialogueBox
+            chunks={[
+              { content: '어? 저기 파티장에서 우울하게 있는 청년이 있어,\n' },
+              { content: '그에게 어떤 이야기를 할까?', className: 'font-bold' },
+            ]}
+            typingDelay={2.2}
+            variant="light"
+            className="mb-20 px-0 py-6"
+            typingTextClassName="text-sm sm:text-base leading-relaxed"
+            onComplete={() => setChoiceOpen(true)}
+            isTouchable={choiceOpen}
+          />
+        </motion.div>
+
+        {/* <ChoiceList
+          open={choiceOpen}
+          inline
+          variant="vintage"
+          choices={[
+            { key: 'enjoy', label: '짐빔 하이볼 플레인 건네주기' },
+            { key: 'cheongyak', label: '무시하기' },
+            { key: 'lotto', label: '친구들과 가서 말 걸어보기' },
+          ]}
+          onSelect={k =>
+            onSceneChange(
+              k === 'enjoy'
+                ? ('part2SceneB' as SceneKey)
+                : ('part2SceneBIgnore' as SceneKey)
+            )
+          }
+        /> */}
+
+        {/* 
       <motion.div
         initial={{ opacity: 0, y: 100 }}
         animate={{ opacity: 1, y: 0 }}
@@ -96,7 +135,8 @@ export default function SceneA({ onSceneChange }: SceneProps) {
             </motion.div>
           )}
         </AnimatePresence>
-      </motion.div>
-    </div>
+      </motion.div> */}
+      </div>
+    </SceneLayout>
   )
 }
