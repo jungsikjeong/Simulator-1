@@ -2,9 +2,9 @@
 
 import { dialoguePreset, type UIPreset } from '@/lib/uiPresets'
 import { cn } from '@/lib/utils'
-import TypingText from './TypingText'
-import { motion } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
 import { MousePointerClick } from 'lucide-react'
+import TypingText from './TypingText'
 
 interface DialogueBoxProps {
   chunks: { content: string; className?: string }[]
@@ -46,21 +46,25 @@ export default function DialogueBox({
         isCursorBlinker={isCursorBlinker}
       />
 
-      {!isTouchable && (
-        <motion.div
-          className="absolute right-5 bottom-0 flex items-center justify-end"
-          animate={{
-            opacity: [1, 0, 1],
-            transition: {
-              duration: 3,
-              repeat: Infinity,
-              ease: 'easeInOut',
-            },
-          }}
-        >
-          <MousePointerClick className="h-4 w-4" /> touch
-        </motion.div>
-      )}
+      <AnimatePresence>
+        {!isTouchable && (
+          <motion.div
+            className="absolute right-5 bottom-0 flex items-center justify-end"
+            animate={{
+              opacity: [1, 0, 1],
+              transition: {
+                duration: 3,
+                repeat: Infinity,
+                ease: 'easeInOut',
+              },
+            }}
+            initial={{ opacity: 0 }}
+            exit={{ opacity: 0, transition: { duration: 0.5 } }}
+          >
+            <MousePointerClick className="h-4 w-4" /> touch
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   )
 }
