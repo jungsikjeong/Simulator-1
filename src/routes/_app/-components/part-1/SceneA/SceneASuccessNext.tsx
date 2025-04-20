@@ -11,7 +11,7 @@ type SceneProps = {
 }
 
 export default function SceneASuccessNext({ onSceneChange }: SceneProps) {
-  const [_, setTypingDone] = useState(false)
+  const [typingDone, setTypingDone] = useState(false)
 
   return (
     <SceneLayout bg="/party/5_박정민.png" effect="shake">
@@ -55,7 +55,7 @@ export default function SceneASuccessNext({ onSceneChange }: SceneProps) {
             onComplete={() => setTypingDone(true)}
             isTouchable={false}
             onTouchSceneChange={() => {
-              onSceneChange('part1SceneB')
+              typingDone && onSceneChange('part1SceneB')
             }}
           />
         </motion.div>

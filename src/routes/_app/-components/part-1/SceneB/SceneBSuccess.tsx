@@ -11,7 +11,7 @@ type SceneProps = {
 }
 
 export default function SceneBSuccess({ onSceneChange }: SceneProps) {
-  const [_, setTypingDone] = useState(false)
+  const [typingDone, setTypingDone] = useState(false)
 
   return (
     <SceneLayout bg="/party/7_장원영.png" effect="zoom" soundEffect="shalala">
@@ -55,7 +55,7 @@ export default function SceneBSuccess({ onSceneChange }: SceneProps) {
             onComplete={() => setTypingDone(true)}
             isTouchable={false}
             onTouchSceneChange={() => {
-              onSceneChange('part2')
+              typingDone && onSceneChange('part2')
             }}
           />
         </motion.div>
