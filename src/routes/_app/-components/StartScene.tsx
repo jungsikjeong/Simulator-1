@@ -43,6 +43,12 @@ export default function StartScene({
     }
   }
 
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter' && playerName.trim()) {
+      handleNameSubmit()
+    }
+  }
+
   function setTypingDone(done: boolean): void {
     setIntroDone(done)
   }
@@ -92,6 +98,8 @@ export default function StartScene({
             { content: '도와줄래?' },
           ]}
           variant="start"
+          className='p-5'
+          typingTextClassName='text-sm sm:text-lg leading-relaxed'
           onComplete={() => setTypingDone(true)}
           isTouchable={true}
         />
@@ -109,6 +117,7 @@ export default function StartScene({
             type="text"
             value={playerName}
             onChange={e => setPlayerName(e.target.value)}
+            onKeyPress={handleKeyPress}
             placeholder="조언자 이름을 입력하세요"
             className="px-4 py-3 rounded-full border-2 border-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-500 w-full shadow-lg text-center bg-white/90 backdrop-blur-sm text-gray-800"
             maxLength={12}

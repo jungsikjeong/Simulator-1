@@ -15,47 +15,29 @@ export default function SceneAFail1({ onSceneChange }: SceneProps) {
 
   return (
     <SceneLayout bg="/party/3_장원영.png" effect="fade">
-      <div className="relative flex h-screen flex-col justify-end overflow-hidden bg-cover bg-center">
+      <div className="relative flex h-screen flex-col justify-end overflow-hidden pb-12">
+        {/* Optional overlay for better readability */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent pointer-events-none" />
+
         <motion.div
-          initial={{
-            opacity: 0,
-            y: 50,
-            scale: 0.9,
-          }}
-          animate={{
-            opacity: 1,
-            y: 0,
-            scale: 1,
-          }}
+          initial={{ opacity: 0, y: 50, scale: 0.9 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{
             duration: 0.8,
             ease: 'easeOut',
-            y: {
-              type: 'spring',
-              damping: 15,
-              stiffness: 100,
-            },
-            scale: {
-              type: 'spring',
-              damping: 20,
-              stiffness: 100,
-            },
+            y: { type: 'spring', damping: 15, stiffness: 100 },
+            scale: { type: 'spring', damping: 20, stiffness: 100 },
           }}
         >
           <DialogueBox
             chunks={[
-              {
-                content: '분명 좋은 응원 방법이 있지 않을까?\n',
-                className: 'font-bold',
-              },
-              {
-                content: '한번 더 나를 위해 고민해주겠어?',
-              },
+              { content: '분명 좋은 응원 방법이 있지 않을까?\n', className: 'font-bold' },
+              { content: '한번 더 나를 위해 고민해주겠어?' },
             ]}
             typingDelay={0.5}
-            variant="light"
-            className="mb-20 px-0 py-6 transition-transform duration-200"
-            typingTextClassName="text-base sm:text-2xl leading-relaxed"
+            variant="fail"
+            className={typingDone ? "mb-5 p-5" : "mb-20 p-5"}
+            typingTextClassName="text-base sm:text-lg leading-relaxed"
             onComplete={() => setTypingDone(true)}
             isTouchable={typingDone}
           />
@@ -64,25 +46,24 @@ export default function SceneAFail1({ onSceneChange }: SceneProps) {
         {typingDone && (
           <div className="flex justify-center">
             <motion.div
-              initial={{ opacity: 0, y: 10 }}
+              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5, duration: 0.5 }}
-              className="mb-4 w-[90%] max-w-xl"
+              transition={{ delay: 0.3, duration: 0.5 }}
+              className="w-[90%] max-w-xl"
             >
-              <div
-                onClick={() => onSceneChange('part1')}
-                className="flex w-full flex-col items-center justify-center gap-1 rounded-xl border border-gray-200/50 bg-white/80 px-6 py-4 text-gray-800 shadow-sm transition-all duration-200 hover:bg-white/90 hover:shadow-md"
-              >
-                <div className="text-sm font-medium sm:text-base">
+              <div className="w-full rounded-xl bg-white/80 px-5 py-5 shadow backdrop-blur-sm">
+                <div className="mb-4 text-center text-gray-700 text-sm sm:text-base">
                   아차차... 조금 더 분발해보자!!
                 </div>
+
                 <motion.button
-                  whileTap={{ scale: 0.95 }}
-                  whileHover={{ scale: 1.05 }}
-                  className="mt-1 flex cursor-pointer items-center font-semibold text-blue-600"
+                  onClick={() => onSceneChange('part1')}
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.97 }}
+                  className="group flex w-full items-center justify-center gap-2 rounded-full bg-blue-500 py-3.5 text-white transition-all hover:bg-blue-600 hover:shadow-md"
                 >
-                  <span className="mr-1">▶</span>
-                  <span>다시하기</span>
+                  <span className="flex h-5 w-5 items-center justify-center rounded-full bg-white/20 text-xs group-hover:bg-white/30">▶</span>
+                  <span className="font-medium">다시하기</span>
                 </motion.button>
               </div>
             </motion.div>

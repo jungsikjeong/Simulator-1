@@ -13,7 +13,7 @@ export default function Part2SceneB({
 
     return (
         <SceneLayout bg="/home/2_장원영.png" effect="shake">
-            <div className="absolute bottom-6 flex w-full flex-col items-center gap-4">
+            <div className={`absolute ${choiceOpen ? 'bottom-2' : 'bottom-20'} flex w-full flex-col items-center gap-4`}>
                 <DialogueBox
                     chunks={[
                         { content: '앗...\n' },
@@ -23,6 +23,8 @@ export default function Part2SceneB({
                         { content: '어떻게 하는게 좋을까?' },
                     ]}
                     variant="light"
+                    className='p-5'
+                    typingTextClassName="text-sm sm:text-xl leading-relaxed"
                     onComplete={() => setChoiceOpen(true)} isTouchable={false} />
 
                 <ChoiceList

@@ -16,38 +16,40 @@ export default function SceneBMain({ onSceneChange }: SceneProps) {
 
   return (
     <SceneLayout bg="/party/6_장원영.png" effect="fade">
-      <div className="relative flex h-screen flex-col justify-end overflow-hidden bg-cover bg-center">
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5 }}
-        >
-          <DialogueBox
-            chunks={[
-              {
-                content: '어엇.. [나락감지]\n',
-              },
-              {
-                content: 'ㄷ..당황하지 말자\n',
-              },
-              {
-                content: '\n',
-              },
-              {
-                content: '당황한 기색없이 이렇게 말한다\n',
-              },
-              {
-                content: '"그거 참 잘됐다!"',
-              },
-            ]}
-            typingDelay={0.5}
-            variant="light"
-            className="mb-20 px-0 py-2 sm:py-4"
-            typingTextClassName="text-base sm:text-xl leading-relaxed"
-            onComplete={() => setChoiceOpen(true)}
-            isTouchable={choiceOpen}
-          />
-        </motion.div>
+      <div className={`absolute ${choiceOpen ? 'bottom-2' : 'bottom-20'} flex w-full flex-col items-center gap-4`}>
+        <div className="w-full max-w-xl">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+          >
+            <DialogueBox
+              chunks={[
+                {
+                  content: '어엇.. [나락감지]\n',
+                },
+                {
+                  content: 'ㄷ..당황하지 말자\n',
+                },
+                {
+                  content: '\n',
+                },
+                {
+                  content: '당황한 기색없이 이렇게 말한다\n',
+                },
+                {
+                  content: '"그거 참 잘됐다!"',
+                },
+              ]}
+              typingDelay={0.5}
+              variant="light"
+              className='p-5'
+              typingTextClassName="text-base sm:text-xl leading-relaxed"
+              onComplete={() => setChoiceOpen(true)}
+              isTouchable={choiceOpen}
+            />
+          </motion.div>
+        </div>
 
         <ChoiceList
           open={choiceOpen}
