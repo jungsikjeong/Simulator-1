@@ -1,3 +1,4 @@
+// src/routes/_app/-components/StartScene.tsx
 import { useCreateMember } from '@/hooks/use-create-member'
 import type { SceneKey } from '@/modules/scene-key.type'
 import { useState } from 'react'

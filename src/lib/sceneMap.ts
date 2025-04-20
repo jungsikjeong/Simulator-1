@@ -4,6 +4,10 @@ import type React from 'react'
 import StartScene from '../routes/_app/-components/StartScene'
 import Part2SceneA from '../routes/_app/-components/part-2/SceneA'
 import Part2SceneB from '../routes/_app/-components/part-2/SceneB'
+import Part2SceneBFail1 from '../routes/_app/-components/part-2/SceneBFail1'
+import Part2SceneBFail2 from '../routes/_app/-components/part-2/SceneBFail2'
+import Part2SceneC from '../routes/_app/-components/part-2/SceneC'
+
 type SceneProps = {
   onSceneChange: (scene: SceneKey) => void
 }
@@ -14,7 +18,9 @@ type SceneComponent = (props: SceneProps) => React.JSX.Element
 export const SceneComponentMap: Record<SceneKey, SceneComponent> = {
   start: StartScene,
   part1: SceneA,
-  part2: Part2SceneA,
   part2SceneA: Part2SceneA,
   part2SceneB: Part2SceneB,
+  part2SceneBFail1: Part2SceneBFail1,
+  part2SceneBFail2: Part2SceneBFail2,
+  part2SceneC: Part2SceneC,
 }
