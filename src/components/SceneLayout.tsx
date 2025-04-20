@@ -11,7 +11,7 @@ import { useEffect, useState } from 'react'
 import SoundControl from './SoundControl'
 
 export type TransitionEffect = 'fade' | 'shake' | 'zoom' | 'flash' | 'slide' | 'crossFade'
-export type SoundEffect = 'shalala' | null
+export type SoundEffect = 'shalala' | '뾰로롱' | '또로롱' | null
 
 interface SceneLayoutProps extends PropsWithChildren {
     bg: string
