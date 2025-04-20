@@ -14,7 +14,7 @@ export default function SceneBSuccess({ onSceneChange }: SceneProps) {
   const [_, setTypingDone] = useState(false)
 
   return (
-    <SceneLayout bg="/party/7_장원영.png" effect="zoom">
+    <SceneLayout bg="/party/7_장원영.png" effect="zoom" soundEffect="shalala">
       <div className="relative flex h-screen flex-col justify-end overflow-hidden bg-cover bg-center">
         <motion.div
           initial={{
