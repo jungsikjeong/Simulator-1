@@ -1,10 +1,9 @@
-import { useState } from 'react'
-import SceneLayout from '@/components/SceneLayout'
-import DialogueBox from '@/components/DialogueBox'
 import ChoiceList from '@/components/ChoiceList'
+import DialogueBox from '@/components/DialogueBox'
+import SceneLayout from '@/components/SceneLayout'
 import type { SceneKey } from '@/modules/scene-key.type'
-import DynamicPositionTag from '@/components/DynamicPositionTag'
 import { motion } from 'framer-motion'
+import { useState } from 'react'
 
 export default function Part2SceneB({
   onSceneChange,
@@ -12,21 +11,14 @@ export default function Part2SceneB({
   onSceneChange: (scene: SceneKey) => void
 }) {
   const [choiceOpen, setChoiceOpen] = useState(false)
-  const [isChapterTitle, setIsChapterTitle] = useState(false)
-
 
   return (
     <SceneLayout bg="/party/1_박정민.png" effect="fade">
-      <DynamicPositionTag
-        layoutId="chapter-title"
-        title="#파트1"
-        className="absolute top-1/2 left-1/2 z-20 -translate-x-1/2 -translate-y-1/2 text-4xl text-white"
-        className2="absolute left-4 top-4 text-lg text-white"
-        onMinimize={() => setIsChapterTitle(true)}
-      />
-      <div className={`absolute ${choiceOpen ? 'bottom-2' : 'bottom-20'} flex w-full flex-col items-center gap-4`}>
+      <div
+        className={`absolute ${choiceOpen ? 'bottom-2' : 'bottom-20'} flex w-full flex-col items-center gap-4`}
+      >
         <div className="w-full max-w-xl">
-          {isChapterTitle && <motion.div
+          <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5 }}
@@ -41,11 +33,12 @@ export default function Part2SceneB({
                 },
               ]}
               variant="light"
-              className='p-5'
+              className="p-5"
               typingTextClassName="text-sm sm:text-xl leading-relaxed"
               onComplete={() => setChoiceOpen(true)}
-              isTouchable={false} />
-          </motion.div>}
+              isTouchable={false}
+            />
+          </motion.div>
         </div>
 
         <ChoiceList
