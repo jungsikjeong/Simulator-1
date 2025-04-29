@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 
 // 반짝임 아이템의 타입을 명시적으로 정의
 interface Sparkle {
@@ -12,11 +12,13 @@ interface Sparkle {
 const EnhancedSparkleEffect = () => {
     // 타입을 명시적으로 지정하여 TypeScript 오류 해결
     const [sparkles, setSparkles] = useState<Sparkle[]>([]);
+    const containerRef = useRef<HTMLDivElement>(null);
 
     // Generate random position within container
-    const random = (min: number, max: number): number => Math.floor(Math.random() * (max - min)) + min;
+    const random = (min: number, max: number): number =>
+        min + Math.random() * (max - min);
 
-    // 부드러운 골드/크림 색상 팔레트
+    // 더 부드러운 파스텔 골드/크림 색상 팔레트
     const sparkleColors = [
         '#FFC700', // Gold
         '#FFFCEB', // Soft white
@@ -32,18 +34,23 @@ const EnhancedSparkleEffect = () => {
 
     // 부드러운 반짝임 생성
     const createSparkle = (): Sparkle => {
-        // 더 균일한 크기 범위
-        const size = random(10, 32);
+        // 더 변화있는 크기 범위 (작은 것부터 큰 것까지)
+        const size = random(8, 35);
         // 랜덤한 색상 선택
         const color = sparkleColors[Math.floor(Math.random() * sparkleColors.length)];
-        // 애니메이션 지속 시간
-        const duration = random(6, 12); // 더 긴 지속시간으로 천천히 움직이게
-        // 랜덤한 지연 시작
-        const delay = random(0, 5);
+        // 애니메이션 지속 시간 (더 긴 지속시간)
+        const duration = random(10, 25);
+        // 랜덤한 지연 시작 (더 긴 범위)
+        const delay = random(0, 15);
+        // 더 긴 투명도 전환
+        const fadeInDuration = random(2, 5);
 
-        // 부드러운 글로우 효과 (확률 낮춤)
-        const hasGlow = random(1, 5) === 1; // 20% 확률
-        let filter = hasGlow ? 'brightness(1.2) drop-shadow(0 0 2px rgba(255,255,220,0.5))' : '';
+        // 글로우 효과 (확률 높임)
+        const hasGlow = Math.random() < 0.35; // 35% 확률
+        const glowIntensity = random(0.3, 0.8);
+        let filter = hasGlow
+            ? `brightness(1.2) drop-shadow(0 0 ${random(2, 6)}px rgba(255,250,220,${glowIntensity}))`
+            : '';
 
         return {
             id: String(Date.now() + random(0, 10000)),
@@ -52,45 +59,66 @@ const EnhancedSparkleEffect = () => {
             size,
             style: {
                 position: 'absolute',
-                top: random(0, 100) + '%',
-                left: random(0, 100) + '%',
-                opacity: random(60, 90) / 100, // 최대 투명도 낮춤
-                transform: `rotate(${random(0, 360)}deg) scale(${random(90, 110) / 100})`, // 스케일 범위 축소
-                animation: `sparkle-float ${duration}s ease-in-out ${delay}s infinite alternate`,
-                zIndex: random(1, 3),
+                top: `${random(0, 100)}%`,
+                left: `${random(0, 100)}%`,
+                opacity: 0, // 시작은 투명하게
+                transform: `rotate(${random(0, 360)}deg) scale(${random(0.8, 1.2)})`,
+                animation: `
+                    sparkle-fade-in ${fadeInDuration}s ease-out forwards,
+                    sparkle-float ${duration}s ease-in-out ${delay}s infinite alternate,
+                    sparkle-pulse ${random(3, 8)}s ease-in-out infinite alternate
+                `,
+                zIndex: Math.floor(random(1, 5)),
                 filter,
-                transition: 'all 1s ease', // 더 긴 전환 시간
+                transition: 'all 3s cubic-bezier(0.4, 0, 0.2, 1)', // 더 부드러운 베지어 커브
+                willChange: 'transform, opacity', // 성능 최적화
             }
         };
     };
 
     // 많은 초기 반짝임과 천천히 추가
     useEffect(() => {
-        const SPARKLE_LIMIT = 100; // 최대 반짝임 수 조절
+        const SPARKLE_LIMIT = 150; // 최대 반짝임 수 증가
 
-        // 초기에 즉시 반짝임 추가 (30개)
-        const initialSparkles = Array.from({ length: 30 }, () => createSparkle());
+        // 초기에 즉시 반짝임 추가 (50개로 증가)
+        const initialSparkles = Array.from({ length: 50 }, () => createSparkle());
         setSparkles(initialSparkles);
 
-        // 천천히 반짝임 추가 (간격 늘림)
-        const interval = setInterval(() => {
-            setSparkles(prev => {
-                // 한 번에 1개만 추가
-                const newSparkle = createSparkle();
+        // 개별 타이머로 랜덤하게 반짝임 추가 (더 자연스러운 추가 방식)
+        const addSparkleRandomly = () => {
+            const timeout = setTimeout(() => {
+                setSparkles(prev => {
+                    // 새 반짝임 생성
+                    const newSparkle = createSparkle();
 
-                // 최대 개수 초과 시 가장 오래된 것부터 제거
-                if (prev.length >= SPARKLE_LIMIT) {
-                    return [...prev.slice(1), newSparkle]; // 맨 앞의 하나만 제거
-                }
-                return [...prev, newSparkle];
-            });
-        }, 400); // 더 긴 간격으로 추가
+                    // 최대 개수 초과 시 가장 오래된 것부터 제거
+                    if (prev.length >= SPARKLE_LIMIT) {
+                        // 가장 오래된 것 몇 개 제거 (1~3개 랜덤하게)
+                        const removeCount = Math.floor(random(1, 4));
+                        return [...prev.slice(removeCount), newSparkle];
+                    }
+                    return [...prev, newSparkle];
+                });
 
-        return () => clearInterval(interval);
+                // 재귀적으로 다음 추가 예약 (랜덤 간격)
+                addSparkleRandomly();
+            }, random(200, 800)); // 추가 간격을 랜덤하게 설정
+
+            return timeout;
+        };
+
+        const timeout = addSparkleRandomly();
+
+        return () => clearTimeout(timeout);
     }, []);
 
     return (
-        <div className="absolute inset-0 overflow-hidden pointer-events-none z-10">
+        <div ref={containerRef} className="absolute inset-0 overflow-hidden pointer-events-none z-10">
+            {/* 부드러운 배경 효과 레이어 (먼저 렌더링) */}
+            <div className="absolute inset-0 bg-gradient-radial from-transparent to-transparent opacity-50"></div>
+            <div className="shimmer-particles"></div>
+            <div className="glow-overlay"></div>
+
             {/* 모든 반짝임 효과 */}
             {sparkles.map(sparkle => (
                 <div
@@ -98,88 +126,108 @@ const EnhancedSparkleEffect = () => {
                     className="absolute"
                     style={sparkle.style}
                 >
-                    {random(1, 10) <= 8 ? (
-                        // 80% 확률로 별 모양 (기본)
-                        <svg
-                            width={sparkle.size}
-                            height={sparkle.size}
-                            viewBox="0 0 68 68"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                        >
-                            <g filter="url(#filter0_f)">
-                                <path
-                                    d="M34 4L38.8747 25.1253L60 30L38.8747 34.8747L34 56L29.1253 34.8747L8 30L29.1253 25.1253L34 4Z"
-                                    fill={sparkle.color}
-                                />
-                            </g>
+                    <svg
+                        width={sparkle.size}
+                        height={sparkle.size}
+                        viewBox="0 0 68 68"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <g filter="url(#filter0_f)">
                             <path
-                                d="M34 8L37.8746 24.1254L54 28L37.8746 31.8746L34 48L30.1254 31.8746L14 28L30.1254 24.1254L34 8Z"
-                                fill="white"
-                                fillOpacity="0.8"
+                                d="M34 4L38.8747 25.1253L60 30L38.8747 34.8747L34 56L29.1253 34.8747L8 30L29.1253 25.1253L34 4Z"
+                                fill={sparkle.color}
                             />
-                            <defs>
-                                <filter
-                                    id="filter0_f"
-                                    x="0"
-                                    y="0"
-                                    width="68"
-                                    height="68"
-                                    filterUnits="userSpaceOnUse"
-                                    colorInterpolationFilters="sRGB"
-                                >
-                                    <feFlood floodOpacity="0" result="BackgroundImageFix" />
-                                    <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
-                                    <feGaussianBlur stdDeviation="4" result="effect1_foregroundBlur" />
-                                </filter>
-                            </defs>
-                        </svg>
-                    ) : (
-                        // 20% 확률로 작은 다이아몬드 모양
-                        <svg
-                            width={sparkle.size}
-                            height={sparkle.size}
-                            viewBox="0 0 68 68"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                        >
-                            <g filter="url(#filter1_f)">
-                                <rect x="14" y="14" width="40" height="40" rx="2" transform="rotate(45 34 34)" fill={sparkle.color} />
-                            </g>
-                            <rect x="19" y="19" width="30" height="30" rx="1" transform="rotate(45 34 34)" fill="white" fillOpacity="0.9" />
-                            <defs>
-                                <filter
-                                    id="filter1_f"
-                                    x="0"
-                                    y="0"
-                                    width="68"
-                                    height="68"
-                                    filterUnits="userSpaceOnUse"
-                                    colorInterpolationFilters="sRGB"
-                                >
-                                    <feFlood floodOpacity="0" result="BackgroundImageFix" />
-                                    <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
-                                    <feGaussianBlur stdDeviation="5" result="effect1_foregroundBlur" />
-                                </filter>
-                            </defs>
-                        </svg>
-                    )}
+                        </g>
+                        <path
+                            d="M34 8L37.8746 24.1254L54 28L37.8746 31.8746L34 48L30.1254 31.8746L14 28L30.1254 24.1254L34 8Z"
+                            fill="white"
+                            fillOpacity="0.8"
+                        />
+                        <defs>
+                            <filter
+                                id="filter0_f"
+                                x="0"
+                                y="0"
+                                width="68"
+                                height="68"
+                                filterUnits="userSpaceOnUse"
+                                colorInterpolationFilters="sRGB"
+                            >
+                                <feFlood floodOpacity="0" result="BackgroundImageFix" />
+                                <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
+                                <feGaussianBlur stdDeviation="4" result="effect1_foregroundBlur" />
+                            </filter>
+                        </defs>
+                    </svg>
                 </div>
             ))}
-
-            {/* 부드러운 배경 반짝임 */}
-            <div className="shimmer-particles"></div>
-            <div className="glow-overlay"></div>
 
             {/* style jsx 오류 해결을 위해 일반 style 태그 사용 */}
             <style dangerouslySetInnerHTML={{
                 __html: `
+                @keyframes sparkle-fade-in {
+                    0% { opacity: 0; }
+                    100% { opacity: 0.85; }
+                }
+                
                 @keyframes sparkle-float {
-                    0% { transform: translate(0, 0) rotate(0deg) scale(1); opacity: 0.6; }
-                    25% { transform: translate(5px, -8px) rotate(15deg) scale(1.05); opacity: 0.8; }
-                    50% { transform: translate(8px, 5px) rotate(30deg) scale(0.98); opacity: 0.9; }
-                    75% { transform: translate(-5px, 3px) rotate(-15deg) scale(1.02); opacity: 0.8; }
-                    100% { transform: translate(0, 0) rotate(0deg) scale(1); opacity: 0.6; }
+                    0% { 
+                        transform: translate(0, 0) rotate(0deg) scale(1);
+                    }
+                    10% { 
+                        transform: translate(2px, -3px) rotate(5deg) scale(1.01);
+                    }
+                    20% { 
+                        transform: translate(4px, -6px) rotate(10deg) scale(1.02);
+                    }
+                    30% { 
+                        transform: translate(6px, -4px) rotate(15deg) scale(1.03);
+                    }
+                    40% { 
+                        transform: translate(8px, -2px) rotate(20deg) scale(1.04);
+                    }
+                    50% { 
+                        transform: translate(6px, 2px) rotate(15deg) scale(1.03);
+                    }
+                    60% { 
+                        transform: translate(4px, 4px) rotate(10deg) scale(1.02);
+                    }
+                    70% { 
+                        transform: translate(2px, 6px) rotate(5deg) scale(1.01);
+                    }
+                    80% { 
+                        transform: translate(-2px, 4px) rotate(-5deg) scale(0.99);
+                    }
+                    90% { 
+                        transform: translate(-4px, 2px) rotate(-10deg) scale(0.98);
+                    }
+                    100% { 
+                        transform: translate(0, 0) rotate(0deg) scale(1);
+                    }
+                }
+                
+                @keyframes sparkle-pulse {
+                    0% { 
+                        opacity: 0.6; 
+                        filter: brightness(0.9);
+                    }
+                    25% { 
+                        opacity: 0.8; 
+                        filter: brightness(1.1);
+                    }
+                    50% { 
+                        opacity: 0.9; 
+                        filter: brightness(1.2);
+                    }
+                    75% { 
+                        opacity: 0.8; 
+                        filter: brightness(1.1);
+                    }
+                    100% { 
+                        opacity: 0.6; 
+                        filter: brightness(0.9);
+                    }
                 }
                 
                 .shimmer-particles {
@@ -189,13 +237,17 @@ const EnhancedSparkleEffect = () => {
                     right: 0;
                     bottom: 0;
                     background-image: 
-                        radial-gradient(circle at center, white 0.5px, transparent 1px),
-                        radial-gradient(circle at center, rgba(255, 255, 255, 0.8) 0.3px, transparent 0.6px),
-                        radial-gradient(circle at center, rgba(255, 240, 180, 0.7) 0.4px, transparent 0.8px);
-                    background-size: 120px 120px, 100px 100px, 80px 80px;
-                    background-position: 0 0, 30px 30px, 15px 15px;
-                    opacity: 0.6;
-                    animation: shimmer 10s ease-in-out infinite;
+                        radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.7) 0.1px, transparent 0.5px),
+                        radial-gradient(circle at 75% 50%, rgba(255, 255, 255, 0.6) 0.1px, transparent 0.4px),
+                        radial-gradient(circle at 40% 70%, rgba(255, 250, 220, 0.5) 0.2px, transparent 0.6px),
+                        radial-gradient(circle at 60% 20%, rgba(255, 240, 180, 0.5) 0.1px, transparent 0.5px),
+                        radial-gradient(circle at 90% 85%, rgba(255, 240, 200, 0.4) 0.1px, transparent 0.5px);
+                    background-size: 150px 150px, 120px 120px, 100px 100px, 80px 80px, 140px 140px;
+                    background-position: 0 0, 30px 30px, 15px 15px, 45px 45px, 20px 20px;
+                    opacity: 0.3;
+                    animation: shimmer 20s ease-in-out infinite alternate;
+                    mix-blend-mode: screen;
+                    transform: translateZ(0); /* 하드웨어 가속 */
                 }
                 
                 .glow-overlay {
@@ -204,21 +256,58 @@ const EnhancedSparkleEffect = () => {
                     left: 0;
                     right: 0;
                     bottom: 0;
-                    background: radial-gradient(ellipse at center, rgba(255, 250, 220, 0.15) 0%, transparent 70%);
+                    background: radial-gradient(ellipse at center, rgba(255, 250, 220, 0.12) 0%, transparent 70%);
                     opacity: 0.4;
-                    animation: glow-pulse 10s ease-in-out infinite alternate;
+                    animation: glow-pulse 15s ease-in-out infinite alternate;
+                    mix-blend-mode: screen;
+                    pointer-events: none;
+                    transform: translateZ(0); /* 하드웨어 가속 */
                 }
                 
                 @keyframes shimmer {
-                    0% { opacity: 0.5; }
-                    50% { opacity: 0.7; }
-                    100% { opacity: 0.5; }
+                    0% { 
+                        opacity: 0.3;
+                        transform: translateX(-5px) translateY(5px);
+                    }
+                    25% { 
+                        opacity: 0.4;
+                        transform: translateX(0px) translateY(0px);
+                    }
+                    50% { 
+                        opacity: 0.5;
+                        transform: translateX(5px) translateY(-5px);
+                    }
+                    75% { 
+                        opacity: 0.4;
+                        transform: translateX(0px) translateY(0px);
+                    }
+                    100% { 
+                        opacity: 0.3;
+                        transform: translateX(-5px) translateY(5px);
+                    }
                 }
                 
                 @keyframes glow-pulse {
-                    0% { opacity: 0.3; transform: scale(1); }
-                    50% { opacity: 0.5; transform: scale(1.02); }
-                    100% { opacity: 0.3; transform: scale(1); }
+                    0% { 
+                        opacity: 0.3; 
+                        transform: scale(1);
+                    }
+                    25% { 
+                        opacity: 0.4; 
+                        transform: scale(1.01);
+                    }
+                    50% { 
+                        opacity: 0.5; 
+                        transform: scale(1.02);
+                    }
+                    75% { 
+                        opacity: 0.4; 
+                        transform: scale(1.01);
+                    }
+                    100% { 
+                        opacity: 0.3; 
+                        transform: scale(1);
+                    }
                 }
             `}} />
         </div>
