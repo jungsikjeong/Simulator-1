@@ -60,10 +60,9 @@ export default function SceneAFail1({ onSceneChange }: SceneProps) {
                   onClick={() => onSceneChange('part1')}
                   whileHover={{ scale: 1.03 }}
                   whileTap={{ scale: 0.97 }}
-                  className="group flex w-full items-center justify-center gap-2 rounded-full bg-blue-500 py-3.5 text-white transition-all hover:bg-blue-600 hover:shadow-md"
+                  className="bg-amber-500 text-white px-8 py-3 rounded-full shadow-lg hover:bg-amber-600 transition-all duration-300 font-bold tracking-wider"
                 >
-                  <span className="flex h-5 w-5 items-center justify-center rounded-full bg-white/20 text-xs group-hover:bg-white/30">▶</span>
-                  <span className="font-medium">다시하기</span>
+                  <span className="font-medium">다시하기 &gt;&gt;</span>
                 </motion.button>
               </div>
             </motion.div>

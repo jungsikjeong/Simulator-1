@@ -19,7 +19,7 @@ export const choicePreset: Record<
   light: {
     wrapper: 'bg-none border-none shadow-md backdrop-blur-none',
     button: [
-      'bg-[#DAE2F3] hover:bg-[#FAE4D5] active:bg-[#FFE6D9]',
+      'bg-[#ffefd6] hover:bg-[#edead7] active:bg-[#FFE6D9]',
       'text-gray-800 border border-gray-200/50 shadow-sm',
     ].join(' '),
   },
