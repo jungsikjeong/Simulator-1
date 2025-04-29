@@ -5,6 +5,7 @@ import SceneLayout from '@/components/SceneLayout'
 import type { SceneKey } from '@/modules/scene-key.type'
 import { motion } from 'framer-motion'
 import { useState } from 'react'
+import GlitterEffect from '@/components/glitter-effect'
 
 type SceneProps = {
   onSceneChange: (scene: SceneKey) => void
@@ -16,6 +17,7 @@ export default function SceneASuccess({ onSceneChange }: SceneProps) {
   return (
     <SceneLayout bg="/party/2_장원영.png" effect="zoom" soundEffect="shalala">
       <div className="relative flex h-screen flex-col justify-end overflow-hidden bg-cover bg-center">
+        <GlitterEffect />
         <motion.div
           initial={{
             opacity: 0,
