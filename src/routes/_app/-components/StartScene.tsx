@@ -54,7 +54,7 @@ export default function StartScene({
   }
 
   return (
-    <SceneLayout bg="/start_장원영.png" effect="fade">
+    <SceneLayout bg="/start_장원영.png" effect="fade" hideTitle={true}>
       {/* Background overlay */}
       <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent pointer-events-none" />
 
