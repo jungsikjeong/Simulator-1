@@ -2,12 +2,15 @@
 
 import SuccessScene from '@/components/SuccessScene'
 import type { SceneKey } from '@/modules/scene-key.type'
+import { useState } from 'react'
 
 type SceneProps = {
   onSceneChange: (scene: SceneKey) => void
 }
 
 export default function Part1SceneASuccess1({ onSceneChange }: SceneProps) {
+  const [isTypingComplete, setIsTypingComplete] = useState(false)
+
   return (
     <SuccessScene
       onSceneChange={onSceneChange}
@@ -19,6 +22,8 @@ export default function Part1SceneASuccess1({ onSceneChange }: SceneProps) {
       ]}
       soundEffect="shalala"
       nextScene="part1SceneASuccess2"
+      isTypingComplete={isTypingComplete}
+      setIsTypingComplete={setIsTypingComplete}
     />
   )
 }

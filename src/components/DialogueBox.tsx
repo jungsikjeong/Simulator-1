@@ -16,6 +16,8 @@ interface DialogueBoxProps {
     typingTextClassName?: string
     isTouchable: boolean
     onTouchSceneChange?: () => void
+    isTypingComplete?: boolean
+    setIsTypingComplete?: (isComplete: boolean) => void
 }
 
 export default function DialogueBox({
@@ -29,7 +31,15 @@ export default function DialogueBox({
     typingTextClassName,
     isTouchable,
     onTouchSceneChange,
+    isTypingComplete,
+    setIsTypingComplete,
 }: DialogueBoxProps) {
+    const handleClick = () => {
+        if (isTypingComplete && onTouchSceneChange) {
+            onTouchSceneChange()
+        }
+    }
+
     return (
         <div
             className={cn(
@@ -37,12 +47,15 @@ export default function DialogueBox({
                 dialoguePreset[variant],
                 className
             )}
-            onClick={onTouchSceneChange}
+            onClick={handleClick}
         >
             <TypingText
                 text={chunks}
                 className={cn('text-base leading-relaxed', typingTextClassName)}
-                onComplete={onComplete}
+                onComplete={() => {
+                    if (onComplete) onComplete()
+                    if (setIsTypingComplete) setIsTypingComplete(true)
+                }}
                 speed={typingSpeed}
                 delay={typingDelay}
                 isCursorBlinker={isCursorBlinker}

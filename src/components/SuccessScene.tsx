@@ -4,7 +4,6 @@ import DialogueBox from '@/components/DialogueBox'
 import SceneLayout from '@/components/SceneLayout'
 import type { SceneKey } from '@/modules/scene-key.type'
 import { motion } from 'framer-motion'
-import { useState } from 'react'
 import GlitterEffect from '@/components/glitter-effect'
 import type { SoundEffect } from '@/components/SceneLayout'
 
@@ -16,6 +15,8 @@ type SuccessSceneProps = {
     showGlitter?: boolean
     effect?: 'zoom' | 'fade'
     soundEffect?: SoundEffect | null
+    isTypingComplete?: boolean
+    setIsTypingComplete?: (isComplete: boolean) => void
 }
 
 export default function SuccessScene({
@@ -26,8 +27,9 @@ export default function SuccessScene({
     showGlitter = true,
     effect = 'zoom',
     soundEffect = null,
+    isTypingComplete = false,
+    setIsTypingComplete,
 }: SuccessSceneProps) {
-    const [typingDone, setTypingDone] = useState(false)
     return (
         <SceneLayout bg={bgImage} effect={effect} soundEffect={soundEffect as SoundEffect}>
             <div className="relative flex h-screen flex-col justify-end overflow-hidden bg-cover bg-center">
@@ -48,9 +50,10 @@ export default function SuccessScene({
                         variant="light"
                         className="mb-20 cursor-pointer px-0 py-6 transition-transform duration-200"
                         typingTextClassName="text-base sm:text-xl leading-relaxed"
-                        onComplete={() => setTypingDone(true)}
-                        isTouchable={typingDone}
+                        isTouchable={isTypingComplete}
                         onTouchSceneChange={() => onSceneChange(nextScene)}
+                        isTypingComplete={isTypingComplete}
+                        setIsTypingComplete={setIsTypingComplete}
                     />
                 </motion.div>
             </div>
