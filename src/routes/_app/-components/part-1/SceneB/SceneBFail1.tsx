@@ -7,7 +7,7 @@ type SceneProps = {
   onSceneChange: (scene: SceneKey) => void
 }
 
-export default function SceneAFail1({ onSceneChange }: SceneProps) {
+export default function Part1SceneBFail1({ onSceneChange }: SceneProps) {
   return (
     <FailScene
       onSceneChange={onSceneChange}
@@ -18,7 +18,7 @@ export default function SceneAFail1({ onSceneChange }: SceneProps) {
         { content: '아...내가 오해했구나\n' },
         { content: '조금 더 분발해보자' },
       ]}
-      nextScene="part1SceneB"
+      nextScene="part1SceneBMain"
       showFailMessage={false}
     />
   )

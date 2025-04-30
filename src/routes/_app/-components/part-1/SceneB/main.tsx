@@ -11,7 +11,7 @@ type SceneProps = {
   onSceneChange: (scene: SceneKey) => void
 }
 
-export default function SceneBMain({ onSceneChange }: SceneProps) {
+export default function Part1SceneBMain({ onSceneChange }: SceneProps) {
   const [choiceOpen, setChoiceOpen] = useState(false)
 
   return (

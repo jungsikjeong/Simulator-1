@@ -7,7 +7,7 @@ type SceneProps = {
   onSceneChange: (scene: SceneKey) => void
 }
 
-export default function SceneASuccess({ onSceneChange }: SceneProps) {
+export default function Part1SceneBSuccess({ onSceneChange }: SceneProps) {
   return (
     <SuccessScene
       onSceneChange={onSceneChange}

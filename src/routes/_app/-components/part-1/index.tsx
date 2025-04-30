@@ -5,7 +5,7 @@ import type { SceneKey } from '@/modules/scene-key.type'
 import { motion } from 'framer-motion'
 import { useState } from 'react'
 
-export default function Part2SceneB({
+export default function Part1({
   onSceneChange,
 }: {
   onSceneChange: (scene: SceneKey) => void
@@ -53,7 +53,7 @@ export default function Part2SceneB({
           onSelect={k => {
             switch (k) {
               case 'success':
-                onSceneChange('part1SceneASuccess')
+                onSceneChange('part1SceneASuccess1')
                 break
               case 'fail1':
                 onSceneChange('part1SceneAFail1')

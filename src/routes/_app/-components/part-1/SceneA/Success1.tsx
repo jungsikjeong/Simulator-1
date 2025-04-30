@@ -7,20 +7,18 @@ type SceneProps = {
   onSceneChange: (scene: SceneKey) => void
 }
 
-export default function SceneASuccess({ onSceneChange }: SceneProps) {
+export default function Part1SceneASuccess1({ onSceneChange }: SceneProps) {
   return (
     <SuccessScene
       onSceneChange={onSceneChange}
-      bgImage="/party/5_박정민.png"
+      bgImage="/party/2_장원영.png"
       chunks={[
         {
-          content: '친구 없는데?',
+          content: '좋아하는 친구들과 짐빔 하이볼!',
         },
       ]}
-      soundEffect={null}
-      effect="shake"
-      nextScene="part1SceneB"
-      showGlitter={false}
+      soundEffect="shalala"
+      nextScene="part1SceneASuccess2"
     />
   )
 }

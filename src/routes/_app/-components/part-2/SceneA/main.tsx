@@ -4,7 +4,7 @@ import DialogueBox from '@/components/DialogueBox'
 import ChoiceList from '@/components/ChoiceList'
 import type { SceneKey } from '@/modules/scene-key.type'
 
-export default function Part2SceneB({
+export default function Part2SceneAMain({
     onSceneChange,
 }: {
     onSceneChange: (scene: SceneKey) => void
@@ -39,13 +39,13 @@ export default function Part2SceneB({
                     onSelect={k => {
                         switch (k) {
                             case 'enjoy':
-                                onSceneChange('part2SceneC')
+                                onSceneChange('part2SceneASuccess')
                                 break
                             case 'cheongyak':
-                                onSceneChange('part2SceneBFail1')
+                                onSceneChange('part2SceneAFail1')
                                 break
                             case 'lotto':
-                                onSceneChange('part2SceneBFail2')
+                                onSceneChange('part2SceneAFail2')
                                 break
                         }
                     }

@@ -7,19 +7,19 @@ type SceneProps = {
     onSceneChange: (scene: SceneKey) => void
 }
 
-export default function SceneASuccess({ onSceneChange }: SceneProps) {
+export default function Part3({ onSceneChange }: SceneProps) {
     return (
         <SuccessScene
             onSceneChange={onSceneChange}
-            bgImage="/home/1_박정민.png"
+            bgImage="/hof/1_박정민.png"
             chunks={[
                 {
-                    content: '집 없는데?',
+                    content: '여유 없는데?',
                 },
             ]}
             soundEffect={null}
-            effect="shake"
-            nextScene="part2SceneB"
+            effect="fade"
+            nextScene="part2"
             showGlitter={false}
         />
     )
