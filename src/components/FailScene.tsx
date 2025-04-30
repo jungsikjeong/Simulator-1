@@ -4,7 +4,7 @@ import DialogueBox from '@/components/DialogueBox'
 import SceneLayout from '@/components/SceneLayout'
 import type { SceneKey } from '@/modules/scene-key.type'
 import { motion } from 'framer-motion'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 type FailSceneProps = {
     onSceneChange: (scene: SceneKey) => void
@@ -25,8 +25,14 @@ export default function FailScene({
 }: FailSceneProps) {
     const [typingDone, setTypingDone] = useState(false)
 
+    useEffect(() => {
+        if (navigator.vibrate) {
+            navigator.vibrate(200)
+        }
+    }, [])
+
     return (
-        <SceneLayout bg={bgImage} effect="fade">
+        <SceneLayout bg={bgImage} effect="shake">
             <div className="relative flex h-screen flex-col justify-end overflow-hidden pb-12">
                 <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent pointer-events-none" />
 
