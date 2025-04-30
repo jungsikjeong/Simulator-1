@@ -22,4 +22,7 @@ export type SceneKey =
   | 'part4SceneAMain'
   | 'part4SceneASuccess1'
   | 'part4SceneAFail'
-
+  | 'part4SceneBMain'
+  | 'part4SceneBNext1'
+  | 'part4SceneBNext2'
+  | 'part4SceneBNext3'

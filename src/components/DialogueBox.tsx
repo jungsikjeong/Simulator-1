@@ -40,6 +40,11 @@ export default function DialogueBox({
         }
     }
 
+    // 대사의 총 길이를 계산
+    const totalContentLength = chunks.reduce((acc, chunk) => acc + chunk.content.length, 0)
+    // 대사가 10자 이하인 경우 touch 표시를 숨김
+    const shouldShowTouchIndicator = totalContentLength > 15
+
     return (
         <div
             className={cn(
@@ -62,7 +67,7 @@ export default function DialogueBox({
             />
 
             <AnimatePresence>
-                {!isTouchable && (
+                {!isTouchable && shouldShowTouchIndicator && (
                     <motion.div
                         className="absolute right-4 bottom-2 flex items-center justify-end text-xs opacity-70"
                         animate={{

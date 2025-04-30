@@ -22,6 +22,11 @@ import Part4 from '@/routes/_app/-components/part-4'
 import Part4SceneAMain from '@/routes/_app/-components/part-4/SceneA/main'
 import Part4SceneASuccess1 from '@/routes/_app/-components/part-4/SceneA/Success1'
 import Part4SceneAFail from '@/routes/_app/-components/part-4/SceneA/Fail'
+import Part4SceneBMain from '@/routes/_app/-components/part-4/SceneB/main'
+import Part4SceneBNext1 from '@/routes/_app/-components/part-4/SceneB/next1'
+import Part4SceneBNext2 from '@/routes/_app/-components/part-4/SceneB/next2'
+import Part4SceneBNext3 from '@/routes/_app/-components/part-4/SceneB/next3'
+
 
 type SceneProps = {
   onSceneChange: (scene: SceneKey) => void
@@ -54,4 +59,8 @@ export const SceneComponentMap: Record<SceneKey, SceneComponent> = {
   part4SceneAMain: Part4SceneAMain,
   part4SceneASuccess1: Part4SceneASuccess1,
   part4SceneAFail: Part4SceneAFail,
+  part4SceneBMain: Part4SceneBMain,
+  part4SceneBNext1: Part4SceneBNext1,
+  part4SceneBNext2: Part4SceneBNext2,
+  part4SceneBNext3: Part4SceneBNext3,
 }
