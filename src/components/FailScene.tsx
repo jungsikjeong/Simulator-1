@@ -26,10 +26,10 @@ export default function FailScene({
     const [typingDone, setTypingDone] = useState(false)
 
     useEffect(() => {
-        if (navigator.vibrate) {
+        if (typingDone && navigator.vibrate) {
             navigator.vibrate(200)
         }
-    }, [])
+    }, [typingDone])
 
     return (
         <SceneLayout bg={bgImage} effect="shake">
