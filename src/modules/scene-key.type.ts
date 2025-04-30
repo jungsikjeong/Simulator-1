@@ -15,3 +15,6 @@ export type SceneKey =
   | 'part2SceneAFail1'
   | 'part2SceneAFail2'
   | 'part3'
+  | 'part3SceneAMain'
+  | 'part3SceneASuccess'
+  | 'part3SceneAFail'

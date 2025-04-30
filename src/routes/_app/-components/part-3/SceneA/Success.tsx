@@ -7,20 +7,21 @@ type SceneProps = {
     onSceneChange: (scene: SceneKey) => void
 }
 
-export default function Part3({ onSceneChange }: SceneProps) {
+export default function Part3SceneASuccess({ onSceneChange }: SceneProps) {
     return (
         <SuccessScene
             onSceneChange={onSceneChange}
-            bgImage="/hof/1_박정민.png"
+            bgImage="/hof/3_장원영.png"
             chunks={[
                 {
-                    content: '여유 없는데?',
+                    content: '힘든 하루를 끝내고 낭만있게\n',
+                },
+                {
+                    content: '짐빔 하이볼!',
                 },
             ]}
-            soundEffect={null}
-            effect="fade"
-            nextScene="part3SceneAMain"
-            showGlitter={false}
+            soundEffect="shalala"
+            nextScene="part3"
         />
     )
 }

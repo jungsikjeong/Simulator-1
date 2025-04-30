@@ -7,7 +7,6 @@ import { motion } from 'framer-motion'
 import { useState } from 'react'
 import GlitterEffect from '@/components/glitter-effect'
 import type { SoundEffect } from '@/components/SceneLayout'
-import type { TransitionEffect } from '@/components/SceneLayout'
 
 type SuccessSceneProps = {
     onSceneChange: (scene: SceneKey) => void
@@ -15,7 +14,7 @@ type SuccessSceneProps = {
     chunks: Array<{ content: string; className?: string }>
     nextScene: SceneKey
     showGlitter?: boolean
-    effect?: TransitionEffect
+    effect?: 'zoom' | 'fade'
     soundEffect?: SoundEffect | null
 }
 
