@@ -18,6 +18,10 @@ import Part3 from '@/routes/_app/-components/part-3'
 import Part3SceneAMain from '@/routes/_app/-components/part-3/SceneA/main'
 import Part3SceneASuccess from '@/routes/_app/-components/part-3/SceneA/Success'
 import Part3SceneAFail from '@/routes/_app/-components/part-3/SceneA/Fail'
+import Part4 from '@/routes/_app/-components/part-4'
+import Part4SceneAMain from '@/routes/_app/-components/part-4/SceneA/main'
+import Part4SceneASuccess1 from '@/routes/_app/-components/part-4/SceneA/Success1'
+import Part4SceneAFail from '@/routes/_app/-components/part-4/SceneA/Fail'
 
 type SceneProps = {
   onSceneChange: (scene: SceneKey) => void
@@ -46,4 +50,8 @@ export const SceneComponentMap: Record<SceneKey, SceneComponent> = {
   part3SceneAMain: Part3SceneAMain,
   part3SceneASuccess: Part3SceneASuccess,
   part3SceneAFail: Part3SceneAFail,
+  part4: Part4,
+  part4SceneAMain: Part4SceneAMain,
+  part4SceneASuccess1: Part4SceneASuccess1,
+  part4SceneAFail: Part4SceneAFail,
 }

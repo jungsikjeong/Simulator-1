@@ -8,23 +8,22 @@ type SceneProps = {
     onSceneChange: (scene: SceneKey) => void
 }
 
-export default function Part3SceneASuccess({ onSceneChange }: SceneProps) {
+export default function Part4({ onSceneChange }: SceneProps) {
     const [isTypingComplete, setIsTypingComplete] = useState(false)
 
     return (
         <SuccessScene
             onSceneChange={onSceneChange}
-            bgImage="/hof/3_장원영.png"
+            bgImage="/romance/1_박정민.png"
             chunks={[
                 {
-                    content: '힘든 하루를 끝내고 낭만있게\n',
-                },
-                {
-                    content: '짐빔 하이볼!',
+                    content: '낭만 없는데?',
                 },
             ]}
-            soundEffect="shalala"
-            nextScene="part4"
+            soundEffect={null}
+            effect="fade"
+            nextScene="part4SceneAMain"
+            showGlitter={false}
             isTypingComplete={isTypingComplete}
             setIsTypingComplete={setIsTypingComplete}
         />

@@ -18,3 +18,8 @@ export type SceneKey =
   | 'part3SceneAMain'
   | 'part3SceneASuccess'
   | 'part3SceneAFail'
+  | 'part4'
+  | 'part4SceneAMain'
+  | 'part4SceneASuccess1'
+  | 'part4SceneAFail'
+

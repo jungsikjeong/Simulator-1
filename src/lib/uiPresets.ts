@@ -1,13 +1,14 @@
-export type UIPreset = 'light' | 'dark' | 'glass' | 'vintage' | 'start' | 'fail'
+// src/lib/uiPresets.ts
+export type UIPreset = 'light' | 'dark' | 'glass' | 'start' | 'fail' | 'romance'
 
 /* 대사 박스 */
 export const dialoguePreset: Record<UIPreset, string> = {
   light: 'bg-white/70 border-none rounded-xl text-gray-800 shadow-sm ring-1 ring-white/30',
   dark: 'bg-black/80 border border-gray-600 text-white shadow-md',
   glass: 'bg-white/30 border border-white/40 text-white backdrop-blur-md shadow',
-  vintage: 'bg-[#FFF5E1] border border-[#C9A97F]/70 text-[#3A2C1D] shadow-lg',
   start: 'bg-black/30 border-2 border-amber-400/70 text-white shadow-xl',
   fail: 'bg-white/80 border-none rounded-xl text-gray-700 shadow-md ring-1 ring-gray-200/50',
+  romance: ' border-none rounded-xl text-white',
 }
 
 /* 선택지 리스트 */
@@ -42,15 +43,6 @@ export const choicePreset: Record<
     ].join(' '),
   },
 
-  /* ░░ Vintage ░░ */
-  vintage: {
-    wrapper: 'bg-[#FFFAF0]/95',
-    button: [
-      'bg-[#FFF5E1] hover:bg-[#FFF9EF] active:bg-[#FFF3DD]',
-      'text-[#3A2C1D] border-[#D4B28C]',
-    ].join(' '),
-  },
-
   start: {
     wrapper: 'bg-white/90 border-none shadow-md backdrop-blur-sm',
     button: [
@@ -66,5 +58,11 @@ export const choicePreset: Record<
       'bg-blue-50 hover:bg-blue-100 active:bg-blue-200',
       'text-blue-600 border border-blue-100 shadow-sm',
     ].join(' '),
+  },
+
+  /* ░░ Romance ░░ */
+  romance: {
+    wrapper: '',
+    button: '',
   },
 }

@@ -11,11 +11,11 @@ type SceneProps = {
     onSceneChange: (scene: SceneKey) => void
 }
 
-export default function Part3SceneAMain({ onSceneChange }: SceneProps) {
+export default function Part4SceneAMain({ onSceneChange }: SceneProps) {
     const [choiceOpen, setChoiceOpen] = useState(false)
 
     return (
-        <SceneLayout bg="/hof/2_장원영.png" effect="fade">
+        <SceneLayout bg="/romance/2_박정민.png" effect="fade">
             <div className={`absolute ${choiceOpen ? 'bottom-2' : 'bottom-20'} flex w-full flex-col items-center gap-4`}>
                 <div className="w-full max-w-xl">
                     <motion.div
@@ -26,19 +26,22 @@ export default function Part3SceneAMain({ onSceneChange }: SceneProps) {
                         <DialogueBox
                             chunks={[
                                 {
-                                    content: '괜찮아!\n',
+                                    content: '헉\n',
                                 },
                                 {
-                                    content: '퇴근 후에는\n',
+                                    content: '하긴 아무래도\n',
                                 },
                                 {
-                                    content: '더 멋진 시간을 보낼 수 있잖아!ㅎㅎㅎ\n',
+                                    content: '알바하랴 공부하랴\n',
+                                },
+                                {
+                                    content: '바쁘고 정신없겠지ㅜㅜ\n',
                                 },
                                 {
                                     content: '\n',
                                 },
                                 {
-                                    content: '그렇다면!\n',
+                                    content: '어떻게 하면 좋을까?\n',
                                 },
                             ]}
                             typingDelay={0.5}
@@ -56,17 +59,16 @@ export default function Part3SceneAMain({ onSceneChange }: SceneProps) {
                     inline
                     variant="light"
                     choices={[
-                        { key: 'success', label: '고된 하루의 끝은 짐빔 하이볼!' },
-                        { key: 'fail', label: '고된 하루의 끝은 생맥주!' },
-                        { key: 'fail', label: '고된 하루의 끝은 소주!' },
+                        { key: 'success', label: '위로의 말을 건낸다' },
+                        { key: 'fail', label: '한강에서 "짐빔 하이볼!" 을 외친다' },
                     ]}
                     onSelect={k => {
                         switch (k) {
                             case 'success':
-                                onSceneChange('part3SceneASuccess')
+                                onSceneChange('part4SceneASuccess1')
                                 break
                             case 'fail':
-                                onSceneChange('part3SceneAFail')
+                                onSceneChange('part4SceneAFail')
                                 break
                         }
                     }}
