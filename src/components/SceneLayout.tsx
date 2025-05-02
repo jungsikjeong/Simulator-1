@@ -104,6 +104,7 @@ export default function SceneLayout({
 
     useEffect(() => {
         const bgUrls = [
+            '/start_장원영.png',
             '/hof/1_박정민.png',
             '/hof/2_장원영.png',
             '/hof/3_장원영.png',
