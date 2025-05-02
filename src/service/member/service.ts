@@ -28,4 +28,28 @@ export default class MemberService extends Service {
 
     return data;
   }
+
+  async updateMemberStatus(id: string, status: Database['public']['Enums']['status']) {
+    const { data, error } = await this.supabase
+      .from('members')
+      .update({ status })
+      .eq('id', id)
+      .select()
+      .single();
+
+    if (error) throw error;
+    return data;
+  }
+
+  async getCurrentMemberId() {
+    const { data, error } = await this.supabase
+      .from('members')
+      .select('id')
+      .order('created_at', { ascending: false })
+      .limit(1)
+      .single();
+
+    if (error) throw error;
+    return data.id;
+  }
 }

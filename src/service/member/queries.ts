@@ -1,8 +1,11 @@
 import { supabase } from '@/lib/supabase';
 import MemberService from './service';
+import type { Database } from '@/supabase/database.types';
 
 export const memberQuerykeys = {
   member: ['member'] as const,
+  updateStatus: (id: string) => ['member', 'updateStatus', id] as const,
+  currentMemberId: ['member', 'currentId'] as const,
 };
 
 export const MemberQueryOptions = {
@@ -10,6 +13,18 @@ export const MemberQueryOptions = {
     queryKey: memberQuerykeys.member,
     queryFn: () => {
       return new MemberService(supabase).getMember(id);
+    },
+  }),
+  updateMemberStatus: (id: string, status: Database['public']['Enums']['status']) => ({
+    queryKey: memberQuerykeys.updateStatus(id),
+    queryFn: () => {
+      return new MemberService(supabase).updateMemberStatus(id, status);
+    },
+  }),
+  getCurrentMemberId: () => ({
+    queryKey: memberQuerykeys.currentMemberId,
+    queryFn: () => {
+      return new MemberService(supabase).getCurrentMemberId();
     },
   }),
 };

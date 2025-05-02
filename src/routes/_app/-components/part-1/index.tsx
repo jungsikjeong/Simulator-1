@@ -4,6 +4,7 @@ import SceneLayout from '@/components/SceneLayout'
 import type { SceneKey } from '@/modules/scene-key.type'
 import { motion } from 'framer-motion'
 import { useState } from 'react'
+import { useUpdateMemberStatus, useGetCurrentMemberId } from '@/service/member/useGetMember'
 
 export default function Part1({
   onSceneChange,
@@ -11,6 +12,8 @@ export default function Part1({
   onSceneChange: (scene: SceneKey) => void
 }) {
   const [choiceOpen, setChoiceOpen] = useState(false)
+  const { mutate: updateStatus } = useUpdateMemberStatus()
+  const { data: memberId } = useGetCurrentMemberId()
 
   return (
     <SceneLayout bg="/party/1_박정민.png" effect="fade">
@@ -53,6 +56,7 @@ export default function Part1({
           onSelect={k => {
             switch (k) {
               case 'success':
+                updateStatus({ id: memberId, status: 'in_progress' })
                 onSceneChange('part1SceneASuccess1')
                 break
               case 'fail1':
