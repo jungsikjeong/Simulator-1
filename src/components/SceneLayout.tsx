@@ -102,6 +102,54 @@ export default function SceneLayout({
         return () => window.removeEventListener('keydown', h)
     }, [onSkip])
 
+    useEffect(() => {
+        const bgUrls = [
+            '/hof/1_박정민.png',
+            '/hof/2_장원영.png',
+            '/hof/3_장원영.png',
+            '/hof/4_장원영.png',
+            '/home/1_박정민.png',
+            '/home/2_장원영.png',
+            '/home/3_장원영.png',
+            '/home/4_박정민.png',
+            '/party/1_박정민.png',
+            '/party/2_장원영.png',
+            '/party/3_장원영.png',
+            '/party/4_박정민.png',
+            '/party/5_박정민.png',
+            '/party/6_장원영.png',
+            '/party/7_장원영.png',
+            '/party/8_단체.png',
+            '/party/9_박정민.png',
+            '/personality/박정민_라임.png',
+            '/personality/박정민_레몬.png',
+            '/personality/박정민_자몽.png',
+            '/personality/박정민_플레인.png',
+            '/personality/장원영_레몬.png',
+            '/personality/장원영_자몽.png',
+            '/personality/장원영_진저.png',
+            '/personality/장원영_플레인.png',
+            '/romance/1_박정민.png',
+            '/romance/2_박정민.png',
+            '/romance/3_박정민.png',
+            '/romance/4_박정민.png',
+            '/romance/5_박정민.png',
+            '/romance/6_박정민.png',
+            '/romance/7_박정민.png',
+            '/romance/8_박정민.png',
+            '/romance/9_박정민.png',
+            '/romance/10_박정민.png',
+            '/romance/11_박정민.png',
+            '/romance/12_박정민.png',
+            '/romance/13_박정민.png',
+        ]
+
+        bgUrls.forEach((src) => {
+            const img = new Image();
+            img.src = src;
+        })
+    }, [])
+
     const { initial, animate, exit, transition } = variantMap[effect]
 
     return (
