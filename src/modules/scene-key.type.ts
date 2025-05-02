@@ -26,3 +26,8 @@ export type SceneKey =
   | 'part4SceneBNext1'
   | 'part4SceneBNext2'
   | 'part4SceneBNext3'
+  | 'part4SceneBNext4'
+  | 'part4SceneBNext5'
+  | 'part4SceneBNext6'
+  | 'part4SceneBNext7'
+

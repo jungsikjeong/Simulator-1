@@ -8,22 +8,25 @@ type SceneProps = {
     onSceneChange: (scene: SceneKey) => void
 }
 
-export default function Part4SceneBNext1({ onSceneChange }: SceneProps) {
+export default function Part4SceneBNext6({ onSceneChange }: SceneProps) {
     const [isTypingComplete, setIsTypingComplete] = useState(false)
 
     return (
         <RomanceScene
             onSceneChange={onSceneChange}
-            bgImage="/romance/6_박정민.png"
+            bgImage="/romance/13_장원영.png"
             chunks={[
 
                 {
-                    content: '친구도', className: 'font-bold'
+                    content: '...\n', className: 'font-bold text-black/50'
+                },
+                {
+                    content: '그것 참 잘됐다', className: 'font-bold text-black/50'
                 },
             ]}
             soundEffect={null}
-            nextScene="part4SceneBNext2"
-            showRomanceEffect={true}
+            nextScene="part4SceneBNext7"
+            showRomanceEffect={false}
             isTypingComplete={isTypingComplete}
             setIsTypingComplete={setIsTypingComplete}
         />

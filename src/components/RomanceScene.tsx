@@ -15,6 +15,7 @@ type SuccessSceneProps = {
     soundEffect?: SoundEffect | null
     isTypingComplete?: boolean
     setIsTypingComplete?: (isComplete: boolean) => void
+    sceneEffect?: 'fade' | 'shake'
 }
 
 export default function RomanceScene({
@@ -26,9 +27,10 @@ export default function RomanceScene({
     soundEffect = null,
     isTypingComplete = false,
     setIsTypingComplete,
+    sceneEffect = 'fade',
 }: SuccessSceneProps) {
     return (
-        <SceneLayout bg={bgImage} effect={'fade'} soundEffect={soundEffect as SoundEffect}>
+        <SceneLayout bg={bgImage} effect={sceneEffect as 'fade' | 'shake'} soundEffect={soundEffect as SoundEffect}>
             <div
                 className="relative flex h-screen flex-col justify-center overflow-hidden bg-cover bg-center"
                 onClick={() => isTypingComplete && onSceneChange(nextScene)}

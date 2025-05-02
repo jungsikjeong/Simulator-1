@@ -26,6 +26,10 @@ import Part4SceneBMain from '@/routes/_app/-components/part-4/SceneB/main'
 import Part4SceneBNext1 from '@/routes/_app/-components/part-4/SceneB/next1'
 import Part4SceneBNext2 from '@/routes/_app/-components/part-4/SceneB/next2'
 import Part4SceneBNext3 from '@/routes/_app/-components/part-4/SceneB/next3'
+import Part4SceneBNext4 from '@/routes/_app/-components/part-4/SceneB/next4'
+import Part4SceneBNext5 from '@/routes/_app/-components/part-4/SceneB/next5'
+import Part4SceneBNext6 from '@/routes/_app/-components/part-4/SceneB/next6'
+import Part4SceneBNext7 from '@/routes/_app/-components/part-4/SceneB/next7'
 
 
 type SceneProps = {
@@ -63,4 +67,8 @@ export const SceneComponentMap: Record<SceneKey, SceneComponent> = {
   part4SceneBNext1: Part4SceneBNext1,
   part4SceneBNext2: Part4SceneBNext2,
   part4SceneBNext3: Part4SceneBNext3,
+  part4SceneBNext4: Part4SceneBNext4,
+  part4SceneBNext5: Part4SceneBNext5,
+  part4SceneBNext6: Part4SceneBNext6,
+  part4SceneBNext7: Part4SceneBNext7,
 }

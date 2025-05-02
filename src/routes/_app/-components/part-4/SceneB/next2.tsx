@@ -1,4 +1,3 @@
-// src/routes/_app/-components/part-4/SceneA/Success1.tsx
 'use client'
 
 import RomanceScene from '@/components/RomanceScene'

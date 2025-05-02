@@ -1,3 +1,4 @@
+// src/routes/_app/-components/part-4/SceneB/next4.tsx
 'use client'
 
 import RomanceScene from '@/components/RomanceScene'
@@ -8,21 +9,24 @@ type SceneProps = {
     onSceneChange: (scene: SceneKey) => void
 }
 
-export default function Part4SceneBNext1({ onSceneChange }: SceneProps) {
+export default function Part4SceneBNext4({ onSceneChange }: SceneProps) {
     const [isTypingComplete, setIsTypingComplete] = useState(false)
 
     return (
         <RomanceScene
             onSceneChange={onSceneChange}
-            bgImage="/romance/6_박정민.png"
+            bgImage="/romance/9_박정민.png"
             chunks={[
 
                 {
-                    content: '친구도', className: 'font-bold'
+                    content: '지금 이 순간\n', className: 'font-bold'
+                },
+                {
+                    content: '특별한 게 없어도', className: 'font-bold'
                 },
             ]}
             soundEffect={null}
-            nextScene="part4SceneBNext2"
+            nextScene="part4SceneBNext5"
             showRomanceEffect={true}
             isTypingComplete={isTypingComplete}
             setIsTypingComplete={setIsTypingComplete}

@@ -142,7 +142,9 @@ export default function SceneLayout({
             '/romance/10_박정민.png',
             '/romance/11_박정민.png',
             '/romance/12_박정민.png',
-            '/romance/13_박정민.png',
+            '/romance/13_장원영.png',
+            '/romance/14_같이.png',
+            '/romance/15_장원영.png',
         ]
 
         bgUrls.forEach((src) => {

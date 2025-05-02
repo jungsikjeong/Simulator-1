@@ -1,4 +1,3 @@
-// src/routes/_app/-components/part-4/SceneA/Success1.tsx
 'use client'
 
 import RomanceScene from '@/components/RomanceScene'
@@ -23,7 +22,7 @@ export default function Part4SceneBNext3({ onSceneChange }: SceneProps) {
                 },
             ]}
             soundEffect={null}
-            nextScene="part4SceneAMain"
+            nextScene="part4SceneBNext4"
             showRomanceEffect={true}
             isTypingComplete={isTypingComplete}
             setIsTypingComplete={setIsTypingComplete}
