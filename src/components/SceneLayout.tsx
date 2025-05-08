@@ -214,7 +214,7 @@ export default function SceneLayout({
             >
                 {!hideTitle && (
                     <img
-                        src="/title.png"
+                        src="/logo.png"
                         alt="Greatest Marketer of Jim Beam"
                         className="absolute top-2 right-4 w-20 z-50"
                     />

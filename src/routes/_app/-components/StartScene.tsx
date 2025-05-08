@@ -62,9 +62,18 @@ export default function StartScene({
       {/* Scene transition overlay */}
       <div id="scene-transition" className="absolute inset-0 bg-black opacity-0 transition-opacity duration-800 pointer-events-none z-50" />
 
-      {/* Game Title */}
+      {/* 로고고 */}
+      <div className="absolute top-6 w-full flex justify-center">
+        <img
+          src="/logo.png" // 짐빔 로고만 있는 이미지로 변경 필요
+          alt="Jim Beam"
+          className="w-30 mb-2"
+        />
+      </div>
+
+      {/* 타이틀 */}
       <motion.div
-        className="absolute top-1 w-full text-center"
+        className="absolute top-40 w-full text-center"
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 1, ease: "easeOut" }}
@@ -80,11 +89,27 @@ export default function StartScene({
             ease: 'easeInOut'
           }}
         >
-          <img
-            src="/title.png"
-            alt="짐빔 위대한 마케터"
-            className="w-[50%] max-w-2xl mx-auto drop-shadow-xl"
-          />
+          <div className="flex flex-col items-center">
+            <div
+              className="text-3xl sm:text-4xl md:text-5xl font-bold mb-2 tracking-wider font-danjo text-black"
+              style={{
+                textShadow: '2px 2px 8px rgba(255,215,0,0.8), 0 0 15px rgba(255,185,0,0.5), 0 0 5px rgba(255,185,0,0.7)',
+                WebkitTextStroke: '0.5px rgba(0,0,0,0.3)'
+              }}
+            >
+              짐빔 위대한 마케터
+            </div>
+
+            <div
+              className="text-lg sm:text-xl tracking-wide font-danjo text-black"
+              style={{
+                textShadow: '1px 1px 5px rgba(255,185,0,0.7), 0 0 8px rgba(255,185,0,0.5)',
+                WebkitTextStroke: '0.2px rgba(0,0,0,0.2)'
+              }}
+            >
+              Greatest Marketer of Jim Beam
+            </div>
+          </div>
         </motion.div>
       </motion.div>
 
