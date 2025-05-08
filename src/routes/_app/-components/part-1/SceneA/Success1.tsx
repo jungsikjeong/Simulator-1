@@ -10,6 +10,7 @@ type SceneProps = {
 
 export default function Part1SceneASuccess1({ onSceneChange }: SceneProps) {
   const [isTypingComplete, setIsTypingComplete] = useState(false)
+  const [isTouchable, setIsTouchable] = useState(true)
 
   return (
     <SuccessScene
@@ -24,6 +25,8 @@ export default function Part1SceneASuccess1({ onSceneChange }: SceneProps) {
       nextScene="part1SceneASuccess2"
       isTypingComplete={isTypingComplete}
       setIsTypingComplete={setIsTypingComplete}
+      isTouchable={isTouchable}
+      setIsTouchable={setIsTouchable}
     />
   )
 }

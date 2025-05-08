@@ -10,6 +10,7 @@ type SceneProps = {
 
 export default function Part3({ onSceneChange }: SceneProps) {
     const [isTypingComplete, setIsTypingComplete] = useState(false)
+    const [isTouchable, setIsTouchable] = useState(true)
 
     return (
         <SuccessScene
@@ -26,6 +27,8 @@ export default function Part3({ onSceneChange }: SceneProps) {
             showGlitter={false}
             isTypingComplete={isTypingComplete}
             setIsTypingComplete={setIsTypingComplete}
+            isTouchable={isTouchable}
+            setIsTouchable={setIsTouchable}
         />
     )
 }

@@ -10,13 +10,13 @@ type SceneProps = {
 
 export default function Part4SceneBNext2({ onSceneChange }: SceneProps) {
     const [isTypingComplete, setIsTypingComplete] = useState(false)
+    const [isTouchable, setIsTouchable] = useState(true)
 
     return (
         <RomanceScene
             onSceneChange={onSceneChange}
             bgImage="/romance/7_박정민.png"
             chunks={[
-
                 {
                     content: '여유도', className: 'font-bold'
                 },
@@ -26,6 +26,8 @@ export default function Part4SceneBNext2({ onSceneChange }: SceneProps) {
             showRomanceEffect={true}
             isTypingComplete={isTypingComplete}
             setIsTypingComplete={setIsTypingComplete}
+            isTouchable={isTouchable}
+            setIsTouchable={setIsTouchable}
         />
     )
 }

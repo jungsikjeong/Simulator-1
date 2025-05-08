@@ -13,6 +13,7 @@ type SceneProps = {
 
 export default function Part1SceneBMain({ onSceneChange }: SceneProps) {
   const [choiceOpen, setChoiceOpen] = useState(false)
+  const [isTouchable, setIsTouchable] = useState(true)
 
   return (
     <SceneLayout bg="/party/6_장원영.png" effect="fade">
@@ -46,7 +47,8 @@ export default function Part1SceneBMain({ onSceneChange }: SceneProps) {
               className='p-5'
               typingTextClassName="text-base sm:text-xl leading-relaxed"
               onComplete={() => setChoiceOpen(true)}
-              isTouchable={choiceOpen}
+              isTouchable={isTouchable}
+              setIsTouchable={setIsTouchable}
             />
           </motion.div>
         </div>

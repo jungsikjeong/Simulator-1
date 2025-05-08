@@ -1,3 +1,4 @@
+//src/routes/_app/-components/part-2/SceneA/main.tsx
 import { useState } from 'react'
 import SceneLayout from '@/components/SceneLayout'
 import DialogueBox from '@/components/DialogueBox'
@@ -10,6 +11,7 @@ export default function Part2SceneAMain({
     onSceneChange: (scene: SceneKey) => void
 }) {
     const [choiceOpen, setChoiceOpen] = useState(false)
+    const [isTouchable, setIsTouchable] = useState(true)
 
     return (
         <SceneLayout bg="/home/2_장원영.png" effect="shake">
@@ -25,7 +27,10 @@ export default function Part2SceneAMain({
                     variant="light"
                     className='p-5'
                     typingTextClassName="text-sm sm:text-xl leading-relaxed"
-                    onComplete={() => setChoiceOpen(true)} isTouchable={false} />
+                    onComplete={() => setChoiceOpen(true)}
+                    isTouchable={isTouchable}
+                    setIsTouchable={setIsTouchable}
+                />
 
                 <ChoiceList
                     open={choiceOpen}

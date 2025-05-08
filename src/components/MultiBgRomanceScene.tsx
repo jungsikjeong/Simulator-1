@@ -83,6 +83,8 @@ interface MultiBgRomanceSceneProps {
     initialImageDelay?: number
     transitionDuration?: number
     typingSpeed?: number
+    isTouchable?: boolean
+    setIsTouchable?: (isTouchable: boolean) => void
 }
 
 export default function MultiBgRomanceScene({
@@ -98,6 +100,8 @@ export default function MultiBgRomanceScene({
     initialImageDelay = 2000,
     transitionDuration = 800,
     typingSpeed = 10,
+    isTouchable = true,
+    setIsTouchable,
 }: MultiBgRomanceSceneProps) {
     // 사운드 이펙트 재생
     useEffect(() => {
@@ -141,7 +145,8 @@ export default function MultiBgRomanceScene({
                     variant="romance"
                     className="mx-auto cursor-pointer px-0 py-6"
                     typingTextClassName="text-base sm:text-xl leading-relaxed"
-                    isTouchable={isTypingComplete ?? false}
+                    isTouchable={isTouchable}
+                    setIsTouchable={setIsTouchable}
                     onTouchSceneChange={handleTouch}
                     isTypingComplete={isTypingComplete}
                     setIsTypingComplete={setIsTypingComplete}

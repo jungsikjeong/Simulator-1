@@ -17,6 +17,8 @@ type SuccessSceneProps = {
     soundEffect?: SoundEffect | null
     isTypingComplete?: boolean
     setIsTypingComplete?: (isComplete: boolean) => void
+    isTouchable?: boolean
+    setIsTouchable?: (isTouchable: boolean) => void
 }
 
 export default function SuccessScene({
@@ -29,6 +31,8 @@ export default function SuccessScene({
     soundEffect = null,
     isTypingComplete = false,
     setIsTypingComplete,
+    isTouchable = true,
+    setIsTouchable,
 }: SuccessSceneProps) {
     return (
         <SceneLayout bg={bgImage} effect={effect} soundEffect={soundEffect as SoundEffect}>
@@ -50,7 +54,8 @@ export default function SuccessScene({
                         variant="light"
                         className="mb-20 cursor-pointer px-0 py-6 transition-transform duration-200"
                         typingTextClassName="text-base sm:text-xl leading-relaxed"
-                        isTouchable={isTypingComplete}
+                        isTouchable={isTouchable}
+                        setIsTouchable={setIsTouchable}
                         onTouchSceneChange={() => onSceneChange(nextScene)}
                         isTypingComplete={isTypingComplete}
                         setIsTypingComplete={setIsTypingComplete}

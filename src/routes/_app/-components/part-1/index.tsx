@@ -1,3 +1,4 @@
+//src/routes/_app/-components/part-1/index.tsx
 import ChoiceList from '@/components/ChoiceList'
 import DialogueBox from '@/components/DialogueBox'
 import SceneLayout from '@/components/SceneLayout'
@@ -12,6 +13,7 @@ export default function Part1({
   onSceneChange: (scene: SceneKey) => void
 }) {
   const [choiceOpen, setChoiceOpen] = useState(false)
+  const [isTouchable, setIsTouchable] = useState(true)
   const { mutate: updateStatus } = useUpdateMemberStatus()
   const { data: memberId } = useGetCurrentMemberId()
 
@@ -39,7 +41,8 @@ export default function Part1({
               className="p-5"
               typingTextClassName="text-sm sm:text-xl leading-relaxed"
               onComplete={() => setChoiceOpen(true)}
-              isTouchable={false}
+              isTouchable={isTouchable}
+              setIsTouchable={setIsTouchable}
             />
           </motion.div>
         </div>

@@ -16,6 +16,7 @@ export default function StartScene({
   const [playerName, setPlayerName] = useState('')
   const [introDone, setIntroDone] = useState(false)
   const [showInput, setShowInput] = useState(false)
+  const [isTouchable, setIsTouchable] = useState(true)
   const createMember = useCreateMember()
 
   useEffect(() => {
@@ -101,7 +102,8 @@ export default function StartScene({
           className='p-5'
           typingTextClassName='text-sm sm:text-lg leading-relaxed'
           onComplete={() => setTypingDone(true)}
-          isTouchable={true}
+          isTouchable={isTouchable}
+          setIsTouchable={setIsTouchable}
         />
       </div>
 

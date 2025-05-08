@@ -10,6 +10,7 @@ type SceneProps = {
 
 export default function Part4SceneASuccess1({ onSceneChange }: SceneProps) {
     const [isTypingComplete, setIsTypingComplete] = useState(false)
+    const [isTouchable, setIsTouchable] = useState(true)
 
     return (
         <RomanceScene
@@ -55,6 +56,8 @@ export default function Part4SceneASuccess1({ onSceneChange }: SceneProps) {
             showRomanceEffect={true}
             isTypingComplete={isTypingComplete}
             setIsTypingComplete={setIsTypingComplete}
+            isTouchable={isTouchable}
+            setIsTouchable={setIsTouchable}
         />
     )
 }

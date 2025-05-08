@@ -18,6 +18,7 @@ interface DialogueBoxProps {
     onTouchSceneChange?: () => void
     isTypingComplete?: boolean
     setIsTypingComplete?: (isComplete: boolean) => void
+    setIsTouchable?: (isTouchable: boolean) => void
 }
 
 export default function DialogueBox({
@@ -33,6 +34,7 @@ export default function DialogueBox({
     onTouchSceneChange,
     isTypingComplete,
     setIsTypingComplete,
+    setIsTouchable,
 }: DialogueBoxProps) {
     const handleClick = () => {
         if (isTypingComplete && onTouchSceneChange) {
@@ -60,6 +62,7 @@ export default function DialogueBox({
                 onComplete={() => {
                     if (onComplete) onComplete()
                     if (setIsTypingComplete) setIsTypingComplete(true)
+                    if (setIsTouchable) setIsTouchable(false)
                 }}
                 speed={typingSpeed}
                 delay={typingDelay}
@@ -67,7 +70,7 @@ export default function DialogueBox({
             />
 
             <AnimatePresence>
-                {!isTouchable && shouldShowTouchIndicator && (
+                {isTouchable && shouldShowTouchIndicator && (
                     <motion.div
                         className="absolute right-4 bottom-2 flex items-center justify-end text-xs opacity-70"
                         animate={{

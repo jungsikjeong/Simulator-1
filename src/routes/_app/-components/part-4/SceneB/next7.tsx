@@ -11,6 +11,7 @@ type SceneProps = {
 
 export default function Part4SceneBNext7({ onSceneChange }: SceneProps) {
     const [isTypingComplete, setIsTypingComplete] = useState(false)
+    const [isTouchable, setIsTouchable] = useState(true)
 
     return (
         <div className="relative">
@@ -36,6 +37,8 @@ export default function Part4SceneBNext7({ onSceneChange }: SceneProps) {
                 showRomanceEffect={false}
                 isTypingComplete={isTypingComplete}
                 setIsTypingComplete={setIsTypingComplete}
+                isTouchable={isTouchable}
+                setIsTouchable={setIsTouchable}
                 sceneEffect="shake"
             />
             <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex items-center text-white text-sm">

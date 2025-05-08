@@ -16,6 +16,8 @@ type SuccessSceneProps = {
     isTypingComplete?: boolean
     setIsTypingComplete?: (isComplete: boolean) => void
     sceneEffect?: 'fade' | 'shake'
+    isTouchable?: boolean
+    setIsTouchable?: (isTouchable: boolean) => void
 }
 
 export default function RomanceScene({
@@ -28,6 +30,8 @@ export default function RomanceScene({
     isTypingComplete = false,
     setIsTypingComplete,
     sceneEffect = 'fade',
+    isTouchable = true,
+    setIsTouchable,
 }: SuccessSceneProps) {
     return (
         <SceneLayout bg={bgImage} effect={sceneEffect as 'fade' | 'shake'} soundEffect={soundEffect as SoundEffect}>
@@ -42,7 +46,8 @@ export default function RomanceScene({
                     variant="romance"
                     className="mx-auto cursor-pointer px-0 py-6"
                     typingTextClassName="text-base sm:text-xl leading-relaxed"
-                    isTouchable={isTypingComplete}
+                    isTouchable={isTouchable}
+                    setIsTouchable={setIsTouchable}
                     onTouchSceneChange={() => onSceneChange(nextScene)}
                     isTypingComplete={isTypingComplete}
                     setIsTypingComplete={setIsTypingComplete}

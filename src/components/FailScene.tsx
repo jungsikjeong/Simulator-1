@@ -24,6 +24,7 @@ export default function FailScene({
     showFailMessage = true,
 }: FailSceneProps) {
     const [typingDone, setTypingDone] = useState(false)
+    const [isTouchable, setIsTouchable] = useState(true)
 
     useEffect(() => {
         if (typingDone && navigator.vibrate) {
@@ -53,7 +54,8 @@ export default function FailScene({
                         className={typingDone ? "mb-5 p-5" : "mb-20 p-5"}
                         typingTextClassName="text-base sm:text-lg leading-relaxed"
                         onComplete={() => setTypingDone(true)}
-                        isTouchable={typingDone}
+                        isTouchable={isTouchable}
+                        setIsTouchable={setIsTouchable}
                     />
                 </motion.div>
 

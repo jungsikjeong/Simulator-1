@@ -10,6 +10,7 @@ type SceneProps = {
 
 export default function Part4SceneBNext5({ onSceneChange }: SceneProps) {
     const [isTypingComplete, setIsTypingComplete] = useState(false)
+    const [isTouchable, setIsTouchable] = useState(true)
 
     return (
         <MultiBgRomanceScene
@@ -31,6 +32,8 @@ export default function Part4SceneBNext5({ onSceneChange }: SceneProps) {
             showRomanceEffect={true}
             isTypingComplete={isTypingComplete}
             setIsTypingComplete={setIsTypingComplete}
+            isTouchable={isTouchable}
+            setIsTouchable={setIsTouchable}
             imageTransitionInterval={1500}  // 1.5초마다 이미지 전환
             initialImageDelay={1500}
             transitionDuration={800}  // 전환 애니메이션 0.5초
