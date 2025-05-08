@@ -13,7 +13,7 @@ type SuccessSceneProps = {
     chunks: Array<{ content: string; className?: string }>
     nextScene: SceneKey
     showGlitter?: boolean
-    effect?: 'zoom' | 'fade'
+    effect?: 'zoom' | 'fade' | 'smoothFade' | 'trueBlend'
     soundEffect?: SoundEffect | null
     isTypingComplete?: boolean
     setIsTypingComplete?: (isComplete: boolean) => void
@@ -27,7 +27,7 @@ export default function SuccessScene({
     chunks,
     nextScene,
     showGlitter = true,
-    effect = 'zoom',
+    effect = 'trueBlend',
     soundEffect = null,
     isTypingComplete = false,
     setIsTypingComplete,

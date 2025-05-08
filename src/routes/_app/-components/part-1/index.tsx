@@ -18,7 +18,7 @@ export default function Part1({
   const { data: memberId } = useGetCurrentMemberId()
 
   return (
-    <SceneLayout bg="/party/1_박정민.png" effect="fade">
+    <SceneLayout bg="/party/1_박정민.png" effect="trueBlend">
       <div
         className={`absolute ${choiceOpen ? 'bottom-2' : 'bottom-20'} flex w-full flex-col items-center gap-4`}
       >

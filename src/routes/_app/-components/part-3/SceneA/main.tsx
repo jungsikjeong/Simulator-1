@@ -16,7 +16,7 @@ export default function Part3SceneAMain({ onSceneChange }: SceneProps) {
     const [isTouchable, setIsTouchable] = useState(true)
 
     return (
-        <SceneLayout bg="/hof/2_장원영.png" effect="fade">
+        <SceneLayout bg="/hof/2_장원영.png" effect="trueBlend">
             <div className={`absolute ${choiceOpen ? 'bottom-2' : 'bottom-20'} flex w-full flex-col items-center gap-4`}>
                 <div className="w-full max-w-xl">
                     <motion.div

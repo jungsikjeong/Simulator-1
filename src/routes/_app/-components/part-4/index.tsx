@@ -22,7 +22,6 @@ export default function Part4({ onSceneChange }: SceneProps) {
                 },
             ]}
             soundEffect={null}
-            effect="fade"
             nextScene="part4SceneAMain"
             showGlitter={false}
             isTypingComplete={isTypingComplete}

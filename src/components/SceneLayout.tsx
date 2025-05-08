@@ -9,7 +9,7 @@ import {
 import type { PropsWithChildren } from 'react'
 import { useEffect } from 'react'
 
-export type TransitionEffect = 'fade' | 'shake' | 'zoom' | 'flash' | 'slide' | 'crossFade'
+export type TransitionEffect = 'fade' | 'shake' | 'zoom' | 'flash' | 'slide' | 'crossFade' | 'smoothFade' | 'trueBlend'
 export type SoundEffect = 'shalala' | '뾰로롱' | '또로롱' | null
 
 interface SceneLayoutProps extends PropsWithChildren {
@@ -34,19 +34,31 @@ const variantMap: Record<TransitionEffect, Variants> = {
     },
     flash: {
         initial: { opacity: 0 },
-        // as number[] : readonly → 가변 배열로 캐스팅
+        // as number[] : readonly → 가변 배열로 캐스팅
         animate: { opacity: [0, 1, 0.8, 1] as number[] },
         exit: { opacity: 0 },
     },
     shake: {
-        initial: { opacity: 0 },
+        initial: {
+            opacity: 0,
+            transition: {
+                duration: 1.5,
+                ease: [0.25, 0.1, 0.25, 1]
+            }
+        },
         animate: {
             opacity: 1,
             x: [0, -4, 4, -4, 4, 0] as number[],
             y: [0, 2, -2, 2, -2, 0] as number[],
             transition: { duration: 0.6 },
         },
-        exit: { opacity: 0 },
+        exit: {
+            opacity: 0,
+            transition: {
+                duration: 0.2,
+                ease: [0.25, 0.1, 0.25, 1]
+            }
+        },
     },
     slide: {
         initial: { x: '100%', opacity: 0 },
@@ -66,15 +78,49 @@ const variantMap: Record<TransitionEffect, Variants> = {
         animate: {
             opacity: 1,
             transition: {
-                duration: 0.5,
+                duration: 1.2,
                 ease: [0.4, 0, 0.2, 1]
             }
         },
         exit: {
             opacity: 0,
             transition: {
-                duration: 0.5,
+                duration: 0.2,
                 ease: [0.4, 0, 0.2, 1]
+            }
+        },
+    },
+    smoothFade: {
+        initial: { opacity: 0 },
+        animate: {
+            opacity: 1,
+            transition: {
+                duration: 1.5,
+                ease: [0.25, 0.1, 0.25, 1]
+            }
+        },
+        exit: {
+            opacity: 0,
+            transition: {
+                duration: 0.2,
+                ease: [0.25, 0.1, 0.25, 1]
+            }
+        },
+    },
+    trueBlend: {
+        initial: { opacity: 0 },
+        animate: {
+            opacity: 1,
+            transition: {
+                duration: 0.8,
+                ease: [0.33, 1, 0.68, 1] // easeOutCubic
+            }
+        },
+        exit: {
+            opacity: 0,
+            transition: {
+                duration: 0.8,
+                ease: [0.32, 0, 0.67, 0] // easeInCubic
             }
         },
     },
@@ -82,7 +128,7 @@ const variantMap: Record<TransitionEffect, Variants> = {
 
 export default function SceneLayout({
     bg,
-    effect = 'fade',
+    effect = 'trueBlend',
     onSkip,
     children,
     soundEffect = null,
@@ -156,7 +202,7 @@ export default function SceneLayout({
     const { initial, animate, exit, transition } = variantMap[effect]
 
     return (
-        <AnimatePresence mode="wait">
+        <AnimatePresence mode="sync">
             <motion.div
                 key={`${bg}-${effect}`}
                 className="relative h-screen w-full overflow-hidden bg-cover bg-center"
