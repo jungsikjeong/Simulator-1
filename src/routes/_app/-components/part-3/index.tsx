@@ -23,7 +23,6 @@ export default function Part3({ onSceneChange }: SceneProps) {
             ]}
             soundEffect={null}
             nextScene="part3SceneAMain"
-            showGlitter={false}
             isTypingComplete={isTypingComplete}
             setIsTypingComplete={setIsTypingComplete}
             isTouchable={isTouchable}

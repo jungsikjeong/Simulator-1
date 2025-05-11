@@ -23,7 +23,6 @@ export default function Part1SceneASuccess2({ onSceneChange }: SceneProps) {
       soundEffect={null}
       effect="fade"
       nextScene="part1SceneBMain"
-      showGlitter={false}
       isTypingComplete={isTypingComplete}
       setIsTypingComplete={setIsTypingComplete}
     />

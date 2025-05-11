@@ -16,6 +16,7 @@ export default function Part1SceneAFail2({ onSceneChange }: SceneProps) {
         { content: '부담스러워...' },
       ]}
       nextScene="part1"
+      showFailMessage={false}
     />
   )
 }

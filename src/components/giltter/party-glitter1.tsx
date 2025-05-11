@@ -9,10 +9,27 @@ interface Sparkle {
     style: React.CSSProperties;
 }
 
-const EnhancedSparkleEffect = () => {
+// 얼굴 영역을 정의하는 인터페이스
+interface FaceArea {
+    top: number;    // 얼굴 영역 상단 % (0-100)
+    left: number;   // 얼굴 영역 좌측 % (0-100)
+    width: number;  // 얼굴 영역 너비 % (0-100)
+    height: number; // 얼굴 영역 높이 % (0-100)
+}
+
+const PartyGlitter1 = () => {
     // 타입을 명시적으로 지정하여 TypeScript 오류 해결
     const [sparkles, setSparkles] = useState<Sparkle[]>([]);
     const containerRef = useRef<HTMLDivElement>(null);
+
+    // 모델 얼굴 영역 정의 (백분율 기준, 0-100%)
+    // 이미지를 분석하여 얼굴 위치를 대략 추정
+    const faceArea: FaceArea = {
+        top: 8,      // 얼굴이 이미지 상단에서 약 8% 위치
+        left: 40,    // 얼굴이 이미지 좌측에서 약 40% 위치
+        width: 20,   // 얼굴 너비는 이미지의 약 20%
+        height: 25,  // 얼굴 높이는 이미지의 약 25%
+    };
 
     // Generate random position within container
     const random = (min: number, max: number): number =>
@@ -32,7 +49,29 @@ const EnhancedSparkleEffect = () => {
         '#FFEFBA', // 부드러운 황금색
     ];
 
-    // 부드러운 반짝임 생성
+    // 얼굴 영역인지 확인하는 함수
+    const isInFaceArea = (posX: number, posY: number): boolean => {
+        return (
+            posX >= faceArea.left &&
+            posX <= (faceArea.left + faceArea.width) &&
+            posY >= faceArea.top &&
+            posY <= (faceArea.top + faceArea.height)
+        );
+    };
+
+    // 얼굴을 피해 랜덤 위치 생성
+    const getRandomPositionAvoidingFace = (): { top: number, left: number } => {
+        let posX, posY;
+        // 얼굴 영역이 아닌 위치가 나올 때까지 반복
+        do {
+            posX = random(0, 100);
+            posY = random(0, 100);
+        } while (isInFaceArea(posX, posY));
+
+        return { top: posY, left: posX };
+    };
+
+    // 부드러운 반짝임 생성 (얼굴 영역 회피)
     const createSparkle = (): Sparkle => {
         // 더 변화있는 크기 범위 (작은 것부터 큰 것까지)
         const size = random(8, 35);
@@ -52,6 +91,9 @@ const EnhancedSparkleEffect = () => {
             ? `brightness(1.2) drop-shadow(0 0 ${random(2, 6)}px rgba(255,250,220,${glowIntensity}))`
             : '';
 
+        // 얼굴을 피한 위치 가져오기
+        const { top, left } = getRandomPositionAvoidingFace();
+
         return {
             id: String(Date.now() + random(0, 10000)),
             createdAt: Date.now(),
@@ -59,8 +101,8 @@ const EnhancedSparkleEffect = () => {
             size,
             style: {
                 position: 'absolute',
-                top: `${random(0, 100)}%`,
-                left: `${random(0, 100)}%`,
+                top: `${top}%`,
+                left: `${left}%`,
                 opacity: 0, // 시작은 투명하게
                 transform: `rotate(${random(0, 360)}deg) scale(${random(0.8, 1.2)})`,
                 animation: `
@@ -112,12 +154,31 @@ const EnhancedSparkleEffect = () => {
         return () => clearTimeout(timeout);
     }, []);
 
+    // 디버깅용 얼굴 영역 표시 (개발 중에만 사용)
+    const showDebugFaceArea = false;
+
     return (
         <div ref={containerRef} className="absolute inset-0 overflow-hidden pointer-events-none z-10">
             {/* 부드러운 배경 효과 레이어 (먼저 렌더링) */}
             <div className="absolute inset-0 bg-gradient-radial from-transparent to-transparent opacity-50"></div>
             <div className="shimmer-particles"></div>
             <div className="glow-overlay"></div>
+
+            {/* 얼굴 영역 디버깅 표시 (개발 중에만 사용) */}
+            {showDebugFaceArea && (
+                <div
+                    style={{
+                        position: 'absolute',
+                        top: `${faceArea.top}%`,
+                        left: `${faceArea.left}%`,
+                        width: `${faceArea.width}%`,
+                        height: `${faceArea.height}%`,
+                        border: '2px dashed red',
+                        backgroundColor: 'rgba(255, 0, 0, 0.1)',
+                        zIndex: 1000,
+                    }}
+                />
+            )}
 
             {/* 모든 반짝임 효과 */}
             {sparkles.map(sparkle => (
@@ -314,4 +375,4 @@ const EnhancedSparkleEffect = () => {
     );
 };
 
-export default EnhancedSparkleEffect;
+export default PartyGlitter1;
