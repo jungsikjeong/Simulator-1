@@ -31,6 +31,7 @@ import Part4SceneBNext5 from '@/routes/_app/-components/part-4/SceneB/next5'
 import Ending from '@/routes/_app/-components/ending'
 import EndingNext1 from '@/routes/_app/-components/ending/next1'
 import EndingNext2 from '@/routes/_app/-components/ending/next2'
+import Plain from '@/routes/_app/-components/reward/plain'
 
 
 type SceneProps = {
@@ -73,4 +74,5 @@ export const SceneComponentMap: Record<SceneKey, SceneComponent> = {
   ending: Ending,
   endingNext1: EndingNext1,
   endingNext2: EndingNext2,
+  plain: Plain,
 }

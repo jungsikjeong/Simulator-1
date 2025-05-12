@@ -74,7 +74,7 @@ export default function EndingNext2({ onSceneChange }: SceneProps) {
                     onSelect={k => {
                         switch (k) {
                             case 'plain':
-                                onSceneChange('endingNext2')
+                                onSceneChange('plain')
                                 break
                             case 'lemon':
                                 onSceneChange('endingNext2')

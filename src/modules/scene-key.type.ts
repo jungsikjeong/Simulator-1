@@ -31,4 +31,5 @@ export type SceneKey =
   | 'ending'
   | 'endingNext1'
   | 'endingNext2'
+  | 'plain'
 
