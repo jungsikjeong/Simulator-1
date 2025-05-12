@@ -43,6 +43,7 @@ export default function RomanceScene({
                 <DialogueBox
                     chunks={chunks}
                     typingDelay={0.5}
+                    typingSpeed={8}
                     variant="romance"
                     className="mx-auto cursor-pointer px-0 py-6"
                     typingTextClassName="text-base sm:text-xl leading-relaxed"

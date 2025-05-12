@@ -9,7 +9,7 @@ type SceneProps = {
     onSceneChange: (scene: SceneKey) => void
 }
 
-export default function Part4SceneBNext7({ onSceneChange }: SceneProps) {
+export default function EndingNext1({ onSceneChange }: SceneProps) {
     const [isTypingComplete, setIsTypingComplete] = useState(false)
     const [isTouchable, setIsTouchable] = useState(true)
 
@@ -17,7 +17,7 @@ export default function Part4SceneBNext7({ onSceneChange }: SceneProps) {
         <div className="relative">
             <RomanceScene
                 onSceneChange={onSceneChange}
-                bgImage="/romance/14_같이.png"
+                bgImage="/ending/2_같이.png"
                 chunks={[
                     {
                         content: 'CHEERS!!', className: 'font-bold text-[3rem] [text-shadow:_-1px_-1px_0_#000,_1px_-1px_0_#000,_-1px_1px_0_#000,_1px_1px_0_#000]'
@@ -33,7 +33,7 @@ export default function Part4SceneBNext7({ onSceneChange }: SceneProps) {
                     },
                 ]}
                 soundEffect={null}
-                nextScene="part4SceneBNext1"
+                nextScene="ending"
                 showRomanceEffect={false}
                 isTypingComplete={isTypingComplete}
                 setIsTypingComplete={setIsTypingComplete}

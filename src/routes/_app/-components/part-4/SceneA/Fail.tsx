@@ -16,7 +16,9 @@ export default function Part4SceneAFail({ onSceneChange }: SceneProps) {
                 { content: '"편의점이 너무 멀어..."' },
             ]}
             nextScene="part4SceneAMain"
-            failMessage="아차차... 너무 안쪽까지 들어왔구나..."
+            failMessage={
+                <><div>아차차...</div><div>너무 안쪽까지 들어왔구나...</div></>
+            }
         />
     )
 }

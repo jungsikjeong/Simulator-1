@@ -18,7 +18,7 @@ export default function Part4SceneBMain({ onSceneChange }: SceneProps) {
             bgImage="/romance/5_박정민.png"
             chunks={[
                 {
-                    content: '"응? 나 아무렇지 않은데?."', className: 'font-bold'
+                    content: '"응? 나 아무렇지 않은데?"', className: 'font-bold'
                 },
             ]}
             soundEffect={null}

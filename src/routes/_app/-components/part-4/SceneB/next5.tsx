@@ -28,7 +28,7 @@ export default function Part4SceneBNext5({ onSceneChange }: SceneProps) {
                 }
             ]}
             soundEffect={null}
-            nextScene="part4SceneBNext6"
+            nextScene="ending"
             showRomanceEffect={true}
             isTypingComplete={isTypingComplete}
             setIsTypingComplete={setIsTypingComplete}

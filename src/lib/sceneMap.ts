@@ -28,8 +28,8 @@ import Part4SceneBNext2 from '@/routes/_app/-components/part-4/SceneB/next2'
 import Part4SceneBNext3 from '@/routes/_app/-components/part-4/SceneB/next3'
 import Part4SceneBNext4 from '@/routes/_app/-components/part-4/SceneB/next4'
 import Part4SceneBNext5 from '@/routes/_app/-components/part-4/SceneB/next5'
-import Part4SceneBNext6 from '@/routes/_app/-components/part-4/SceneB/next6'
-import Part4SceneBNext7 from '@/routes/_app/-components/part-4/SceneB/next7'
+import Ending from '@/routes/_app/-components/ending'
+import EndingNext1 from '@/routes/_app/-components/ending/next1'
 
 
 type SceneProps = {
@@ -69,6 +69,6 @@ export const SceneComponentMap: Record<SceneKey, SceneComponent> = {
   part4SceneBNext3: Part4SceneBNext3,
   part4SceneBNext4: Part4SceneBNext4,
   part4SceneBNext5: Part4SceneBNext5,
-  part4SceneBNext6: Part4SceneBNext6,
-  part4SceneBNext7: Part4SceneBNext7,
+  ending: Ending,
+  endingNext1: EndingNext1,
 }
