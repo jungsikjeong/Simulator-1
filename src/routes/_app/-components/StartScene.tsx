@@ -30,15 +30,7 @@ export default function StartScene({
     try {
       const uuid = uuidv4()
       createMember.mutate({ name: playerName, id: uuid })
-
-      // Add transition effect before changing scene
-      const overlay = document.getElementById('scene-transition')
-      if (overlay) {
-        overlay.classList.add('opacity-100')
-        setTimeout(() => onSceneChange('part1'), 800)
-      } else {
-        onSceneChange('part1')
-      }
+      onSceneChange('part1')
     } catch (error) {
       console.error('Failed to create member:', error)
     }
@@ -55,7 +47,7 @@ export default function StartScene({
   }
 
   return (
-    <SceneLayout bg="/start_장원영.png" effect="smoothFade" hideTitle={true}>
+    <SceneLayout bg="/start_장원영.png" effect="trueBlend" hideTitle={true}>
       {/* Background overlay */}
       <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent pointer-events-none" />
 

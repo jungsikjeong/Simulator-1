@@ -1,6 +1,6 @@
-import React, { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef } from 'react'
 
-// 반짝임 아이템의 타입을 명시적으로 정의
+// 반짝임 아이템의 타입 정의
 interface Sparkle {
     id: string;
     createdAt: number;
@@ -17,25 +17,19 @@ interface FaceArea {
     height: number; // 얼굴 영역 높이 % (0-100)
 }
 
-const PartyGlitter1 = () => {
-    // 타입을 명시적으로 지정하여 TypeScript 오류 해결
+type GlitterEffectProps = {
+    faceArea?: FaceArea;
+}
+
+export default function GlitterEffect({ faceArea = { top: 8, left: 40, width: 20, height: 25 } }: GlitterEffectProps) {
     const [sparkles, setSparkles] = useState<Sparkle[]>([]);
     const containerRef = useRef<HTMLDivElement>(null);
 
-    // 모델 얼굴 영역 정의 (백분율 기준, 0-100%)
-    // 이미지를 분석하여 얼굴 위치를 대략 추정
-    const faceArea: FaceArea = {
-        top: 8,      // 얼굴이 이미지 상단에서 약 8% 위치
-        left: 40,    // 얼굴이 이미지 좌측에서 약 40% 위치
-        width: 20,   // 얼굴 너비는 이미지의 약 20%
-        height: 25,  // 얼굴 높이는 이미지의 약 25%
-    };
-
-    // Generate random position within container
+    // 랜덤 값 생성 함수
     const random = (min: number, max: number): number =>
         min + Math.random() * (max - min);
 
-    // 더 부드러운 파스텔 골드/크림 색상 팔레트
+    // 파스텔 골드/크림 색상 팔레트
     const sparkleColors = [
         '#FFC700', // Gold
         '#FFFCEB', // Soft white
@@ -118,15 +112,14 @@ const PartyGlitter1 = () => {
         };
     };
 
-    // 많은 초기 반짝임과 천천히 추가
     useEffect(() => {
-        const SPARKLE_LIMIT = 150; // 최대 반짝임 수 증가
+        const SPARKLE_LIMIT = 150; // 최대 반짝임 수
 
-        // 초기에 즉시 반짝임 추가 (50개로 증가)
+        // 초기에 즉시 반짝임 추가 (50개)
         const initialSparkles = Array.from({ length: 50 }, () => createSparkle());
         setSparkles(initialSparkles);
 
-        // 개별 타이머로 랜덤하게 반짝임 추가 (더 자연스러운 추가 방식)
+        // 개별 타이머로 랜덤하게 반짝임 추가
         const addSparkleRandomly = () => {
             const timeout = setTimeout(() => {
                 setSparkles(prev => {
@@ -159,7 +152,7 @@ const PartyGlitter1 = () => {
 
     return (
         <div ref={containerRef} className="absolute inset-0 overflow-hidden pointer-events-none z-10">
-            {/* 부드러운 배경 효과 레이어 (먼저 렌더링) */}
+            {/* 부드러운 배경 효과 레이어 */}
             <div className="absolute inset-0 bg-gradient-radial from-transparent to-transparent opacity-50"></div>
             <div className="shimmer-particles"></div>
             <div className="glow-overlay"></div>
@@ -224,7 +217,7 @@ const PartyGlitter1 = () => {
                 </div>
             ))}
 
-            {/* style jsx 오류 해결을 위해 일반 style 태그 사용 */}
+            {/* 글리터 애니메이션을 위한 스타일 */}
             <style dangerouslySetInnerHTML={{
                 __html: `
                 @keyframes sparkle-fade-in {
@@ -373,6 +366,4 @@ const PartyGlitter1 = () => {
             `}} />
         </div>
     );
-};
-
-export default PartyGlitter1;
+} 
