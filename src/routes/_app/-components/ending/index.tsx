@@ -18,10 +18,10 @@ export default function Ending({ onSceneChange }: SceneProps) {
             bgImage="/ending/1_장원영.png"
             chunks={[
                 {
-                    content: '...\n', className: 'font-bold text-black/50'
+                    content: '...\n', className: 'font-bold text-black/70'
                 },
                 {
-                    content: '그것 참 잘됐다', className: 'font-bold text-black/50'
+                    content: '그것 참 잘됐다', className: 'font-bold text-black/70'
                 },
             ]}
             soundEffect={null}
