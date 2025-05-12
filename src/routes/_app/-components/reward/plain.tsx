@@ -9,6 +9,7 @@ export default function Plain() {
             ]}
             bgColor="bg-yellow-100"
             borderColor="border-yellow-500"
+            textColor="text-yellow-700"
             sceneText="깔끔담백한 답변을 해준 당신은"
         />
     )
