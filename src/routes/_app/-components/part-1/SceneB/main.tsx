@@ -39,7 +39,7 @@ export default function Part1SceneBMain({ onSceneChange }: SceneProps) {
                   content: '당황한 기색없이 이렇게 말한다\n',
                 },
                 {
-                  content: '"그거 참 잘됐다!"',
+                  content: '"그거 참 잘됐다"',
                 },
               ]}
               typingDelay={0.5}

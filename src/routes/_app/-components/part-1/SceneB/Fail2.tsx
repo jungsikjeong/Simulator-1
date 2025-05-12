@@ -19,7 +19,13 @@ export default function Part1SceneBFail2({ onSceneChange }: SceneProps) {
         { content: '맛있게 마셔! 안녕!' },
       ]}
       nextScene="part1SceneBMain"
-      showFailMessage={false}
+      failMessage={
+        <>
+          <div>아... 벌써 마시고 있구나</div>
+          <div>맛있게 마셔! 안녕!</div>
+        </>
+      }
+
     />
   )
 }

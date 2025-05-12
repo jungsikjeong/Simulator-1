@@ -14,12 +14,15 @@ export default function Part1SceneBFail1({ onSceneChange }: SceneProps) {
       bgImage="/party/8_단체.png"
       chunks={[
         { content: '친구 지금 왔는데?\n', className: 'font-bold' },
-        { content: '\n' },
-        { content: '아...내가 오해했구나\n' },
-        { content: '조금 더 분발해보자' },
       ]}
       nextScene="part1SceneBMain"
-      showFailMessage={false}
+      showFailMessage={true}
+      failMessage={
+        <>
+          <div>아... 내가 오해했구나</div>
+          <div>조금 더 분발해보자</div>
+        </>
+      }
     />
   )
 }

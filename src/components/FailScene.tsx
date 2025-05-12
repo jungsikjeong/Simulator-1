@@ -11,7 +11,7 @@ type FailSceneProps = {
     bgImage: string
     chunks: Array<{ content: string; className?: string }>
     nextScene: SceneKey
-    failMessage?: string
+    failMessage?: React.ReactNode
     showFailMessage?: boolean
 }
 
@@ -68,7 +68,7 @@ export default function FailScene({
                             className="w-[90%] max-w-xl"
                         >
                             <div className="w-full rounded-xl bg-white/80 px-5 py-5 shadow backdrop-blur-sm">
-                                {showFailMessage && <div className="mb-4 text-center text-gray-700 text-sm sm:text-base">
+                                {showFailMessage && <div className="mb-4 text-center text-gray-700 text-sm sm:text-base whitespace-pre-line">
                                     {failMessage}
                                 </div>}
 
