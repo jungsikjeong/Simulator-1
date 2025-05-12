@@ -12,6 +12,13 @@ export default function Part2SceneASuccess({ onSceneChange }: SceneProps) {
     const [isTypingComplete, setIsTypingComplete] = useState(false)
     const [isTouchable, setIsTouchable] = useState(true)
 
+    const modelFaceArea = {
+        top: 32,
+        left: 38,
+        width: 24,
+        height: 20,
+    }
+
     return (
         <SuccessScene
             onSceneChange={onSceneChange}
@@ -27,6 +34,8 @@ export default function Part2SceneASuccess({ onSceneChange }: SceneProps) {
             setIsTypingComplete={setIsTypingComplete}
             isTouchable={isTouchable}
             setIsTouchable={setIsTouchable}
+            showGlitter={true}
+            faceArea={modelFaceArea}
         />
     )
 }

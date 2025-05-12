@@ -20,7 +20,7 @@ export default function FailScene({
     bgImage,
     chunks,
     nextScene,
-    failMessage = '아차차... 조금 더 분발해보자!!',
+    failMessage = (<><div>아차차...</div><div>조금 더 분발해보자!!</div></>),
     showFailMessage = true,
 }: FailSceneProps) {
     const [typingDone, setTypingDone] = useState(false)
