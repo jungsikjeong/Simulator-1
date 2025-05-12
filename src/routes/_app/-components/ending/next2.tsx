@@ -6,7 +6,7 @@ import SceneLayout from '@/components/SceneLayout'
 import type { SceneKey } from '@/modules/scene-key.type'
 import { motion } from 'framer-motion'
 import { useState } from 'react'
-import { useGetCurrentMemberName } from '@/service/member/useGetMember'
+import { useGetCurrentMemberName, useUpdateMemberStatus, useGetCurrentMemberId } from '@/service/member/useGetMember'
 
 type SceneProps = {
     onSceneChange: (scene: SceneKey) => void
@@ -16,6 +16,8 @@ export default function EndingNext2({ onSceneChange }: SceneProps) {
     const [choiceOpen, setChoiceOpen] = useState(false)
     const [isTouchable, setIsTouchable] = useState(true)
     const { data: currentMemberName } = useGetCurrentMemberName()
+    const { mutate: updateStatus } = useUpdateMemberStatus()
+    const { data: memberId } = useGetCurrentMemberId()
 
     return (
         <SceneLayout bg="/ending/3_같이.png" effect="trueBlend">
@@ -75,15 +77,19 @@ export default function EndingNext2({ onSceneChange }: SceneProps) {
                         switch (k) {
                             case 'plain':
                                 onSceneChange('plain')
+                                updateStatus({ id: memberId, status: 'completed' })
                                 break
                             case 'lemon':
                                 onSceneChange('lemon')
+                                updateStatus({ id: memberId, status: 'completed' })
                                 break
                             case 'jinjer':
                                 onSceneChange('jinjer')
+                                updateStatus({ id: memberId, status: 'completed' })
                                 break
                             case 'grape':
                                 onSceneChange('grape')
+                                updateStatus({ id: memberId, status: 'completed' })
                                 break
                         }
                     }}
