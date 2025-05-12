@@ -32,6 +32,9 @@ import Ending from '@/routes/_app/-components/ending'
 import EndingNext1 from '@/routes/_app/-components/ending/next1'
 import EndingNext2 from '@/routes/_app/-components/ending/next2'
 import Plain from '@/routes/_app/-components/reward/plain'
+import Jinjer from '@/routes/_app/-components/reward/jinjer'
+import Lemon from '@/routes/_app/-components/reward/lemon'
+import Grape from '@/routes/_app/-components/reward/grape'
 
 
 type SceneProps = {
@@ -75,4 +78,7 @@ export const SceneComponentMap: Record<SceneKey, SceneComponent> = {
   endingNext1: EndingNext1,
   endingNext2: EndingNext2,
   plain: Plain,
+  jinjer: Jinjer,
+  lemon: Lemon,
+  grape: Grape,
 }

@@ -32,4 +32,7 @@ export type SceneKey =
   | 'endingNext1'
   | 'endingNext2'
   | 'plain'
+  | 'jinjer'
+  | 'lemon'
+  | 'grape'
 

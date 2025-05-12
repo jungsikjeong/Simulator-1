@@ -77,13 +77,13 @@ export default function EndingNext2({ onSceneChange }: SceneProps) {
                                 onSceneChange('plain')
                                 break
                             case 'lemon':
-                                onSceneChange('endingNext2')
+                                onSceneChange('lemon')
                                 break
                             case 'jinjer':
-                                onSceneChange('endingNext2')
+                                onSceneChange('jinjer')
                                 break
                             case 'grape':
-                                onSceneChange('endingNext2')
+                                onSceneChange('grape')
                                 break
                         }
                     }}
