@@ -13,10 +13,10 @@ export default function Part3SceneASuccess({ onSceneChange }: SceneProps) {
     const [isTouchable, setIsTouchable] = useState(true)
 
     const modelFaceArea = {
-        top: 23,
-        left: 38,
-        width: 24,
-        height: 22,
+        top: 20,
+        left: 30,
+        width: 34,
+        height: 30,
     }
 
     return (

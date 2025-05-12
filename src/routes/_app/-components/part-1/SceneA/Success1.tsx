@@ -14,10 +14,10 @@ export default function Part1SceneASuccess1({ onSceneChange }: SceneProps) {
 
   // 장원영 이미지를 위한 얼굴 영역 정의
   const modelFaceArea = {
-    top: 8,      // 얼굴이 이미지 상단에서 약 8% 위치
-    left: 40,    // 얼굴이 이미지 좌측에서 약 40% 위치
-    width: 20,   // 얼굴 너비는 이미지의 약 20%
-    height: 25,  // 얼굴 높이는 이미지의 약 25%
+    top: 6,      // 얼굴이 이미지 상단에서 약 8% 위치
+    left: 32,    // 얼굴이 이미지 좌측에서 약 40% 위치
+    width: 25,   // 얼굴 너비는 이미지의 약 20%
+    height: 30,  // 얼굴 높이는 이미지의 약 25%
   }
 
   return (
