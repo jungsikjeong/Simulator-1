@@ -34,7 +34,7 @@ export default function EndingNext1({ onSceneChange }: SceneProps) {
                     },
                 ]}
                 soundEffect={null}
-                nextScene="ending"
+                nextScene="endingNext2"
                 showRomanceEffect={false}
                 isTypingComplete={isTypingComplete}
                 setIsTypingComplete={setIsTypingComplete}

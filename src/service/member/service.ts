@@ -42,14 +42,21 @@ export default class MemberService extends Service {
   }
 
   async getCurrentMemberId() {
+    const currentId = localStorage.getItem('currentMemberId');
+    if (!currentId) throw new Error('No current member found');
+    return currentId;
+  }
+
+
+  async getCurrentMemberName() {
+    const currentId = await this.getCurrentMemberId();
     const { data, error } = await this.supabase
       .from('members')
-      .select('id')
-      .order('created_at', { ascending: false })
-      .limit(1)
+      .select('name')
+      .eq('id', currentId)
       .single();
 
     if (error) throw error;
-    return data.id;
+    return data.name;
   }
 }

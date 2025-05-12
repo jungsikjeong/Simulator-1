@@ -168,7 +168,7 @@ export default function SceneLayout({
             '/party/7_장원영.png',
             '/party/8_단체.png',
             '/party/9_박정민.png',
-            '/reward/박정민_라임.png',
+            '/reward/박정민_진저.png',
             '/reward/박정민_레몬.png',
             '/reward/박정민_자몽.png',
             '/reward/박정민_플레인.png',

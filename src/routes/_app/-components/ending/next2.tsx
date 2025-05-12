@@ -1,44 +1,94 @@
 'use client'
 
-import RomanceScene from '@/components/RomanceScene'
+import ChoiceList from '@/components/ChoiceList'
+import DialogueBox from '@/components/DialogueBox'
+import SceneLayout from '@/components/SceneLayout'
 import type { SceneKey } from '@/modules/scene-key.type'
+import { motion } from 'framer-motion'
 import { useState } from 'react'
-import { Star } from 'lucide-react'
+import { useGetCurrentMemberName } from '@/service/member/useGetMember'
 
 type SceneProps = {
     onSceneChange: (scene: SceneKey) => void
 }
 
 export default function EndingNext2({ onSceneChange }: SceneProps) {
-    const [isTypingComplete, setIsTypingComplete] = useState(false)
+    const [choiceOpen, setChoiceOpen] = useState(false)
     const [isTouchable, setIsTouchable] = useState(true)
+    const { data: currentMemberName } = useGetCurrentMemberName()
 
     return (
-        <div className="relative">
-            <RomanceScene
-                onSceneChange={onSceneChange}
-                bgImage="/ending/3_같이.png"
-                chunks={[
-                    {
-                        content: '각기 다른 청춘의 일상에 정답은 없지!\n', className: 'font-bold [text-shadow:_-1px_-1px_0_#000,_1px_-1px_0_#000,_-1px_1px_0_#000,_1px_1px_0_#000]'
-                    },
-                    {
-                        content: '너만의 방식대로 행복해서 다행이야~', className: 'font-bold [text-shadow:_-1px_-1px_0_#000,_1px_-1px_0_#000,_-1px_1px_0_#000,_1px_1px_0_#000]'
-                    },
-                ]}
-                soundEffect={null}
-                nextScene="ending"
-                showRomanceEffect={false}
-                isTypingComplete={isTypingComplete}
-                setIsTypingComplete={setIsTypingComplete}
-                isTouchable={isTouchable}
-                setIsTouchable={setIsTouchable}
-            />
-            <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex items-center text-white text-sm border border-red-500">
-                <Star className="w-6 h-6 text-yellow-400" fill="currentColor" />
-                <span>원영이와 짐빔하이볼로 정민 응원하기, <br />성공</span>
-                <Star className="w-6 h-6 text-yellow-400" fill="currentColor" />
+        <SceneLayout bg="/ending/3_같이.png" effect="trueBlend">
+            <div className={`absolute ${choiceOpen ? 'bottom-2' : 'bottom-20'} flex w-full flex-col items-center gap-4`}>
+                <div className="w-full max-w-xl">
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ duration: 0.5 }}
+                    >
+                        <DialogueBox
+                            chunks={[
+                                {
+                                    content: `[${currentMemberName}]!\n`,
+                                },
+                                {
+                                    content: '청춘의 일상에 정답은 없지만\n',
+                                },
+                                {
+                                    content: '짐빔은 항상 옆에 있어!\n',
+                                },
+                                {
+                                    content: '\n',
+                                },
+                                {
+                                    content: '오늘도 도와줘서 고마워,\n',
+                                },
+                                {
+                                    content: '오늘도 수고 많았어, 항상 응원해!\n',
+                                },
+                                {
+                                    content: 'CHEERS~!\n',
+                                },
+                            ]}
+                            typingDelay={0.5}
+                            variant="light"
+                            className='p-5'
+                            typingTextClassName="text-base sm:text-xl leading-relaxed"
+                            onComplete={() => setChoiceOpen(true)}
+                            isTouchable={isTouchable}
+                            setIsTouchable={setIsTouchable}
+                        />
+                    </motion.div>
+                </div>
+
+                <ChoiceList
+                    open={choiceOpen}
+                    inline
+                    variant="light"
+                    choices={[
+                        { key: 'plain', label: '고맙다, 우리 모두 힘내자.' },
+                        { key: 'lemon', label: '웅웅 너도 고생많았어 파이팅!!' },
+                        { key: 'jinjer', label: '진짜 진짜 진저 고마워 원영아~' },
+                        { key: 'grape', label: '고생은 뭘?!ㅎㅎ!!!' },
+                    ]}
+                    onSelect={k => {
+                        switch (k) {
+                            case 'plain':
+                                onSceneChange('endingNext2')
+                                break
+                            case 'lemon':
+                                onSceneChange('endingNext2')
+                                break
+                            case 'jinjer':
+                                onSceneChange('endingNext2')
+                                break
+                            case 'grape':
+                                onSceneChange('endingNext2')
+                                break
+                        }
+                    }}
+                />
             </div>
-        </div>
+        </SceneLayout>
     )
 }

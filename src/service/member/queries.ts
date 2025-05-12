@@ -6,6 +6,7 @@ export const memberQuerykeys = {
   member: ['member'] as const,
   updateStatus: (id: string) => ['member', 'updateStatus', id] as const,
   currentMemberId: ['member', 'currentId'] as const,
+  currentMemberName: ['member', 'currentName'] as const,
 };
 
 export const MemberQueryOptions = {
@@ -25,6 +26,12 @@ export const MemberQueryOptions = {
     queryKey: memberQuerykeys.currentMemberId,
     queryFn: () => {
       return new MemberService(supabase).getCurrentMemberId();
+    },
+  }),
+  getCurrentMemberName: () => ({
+    queryKey: memberQuerykeys.currentMemberName,
+    queryFn: () => {
+      return new MemberService(supabase).getCurrentMemberName();
     },
   }),
 };

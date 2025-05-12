@@ -21,3 +21,10 @@ export const useGetCurrentMemberId = () => {
     ...MemberQueryOptions.getCurrentMemberId(),
   });
 };
+
+export const useGetCurrentMemberName = () => {
+  return useSuspenseQuery({
+    ...MemberQueryOptions.getCurrentMemberName(),
+  });
+};
+

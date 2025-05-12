@@ -10,7 +10,9 @@ export const useCreateMember = () => {
 
   return useMutation<Member, Error, { name: string; id: string }>({
     mutationFn: async ({ name, id }) => {
-      return await memberService.createMember(name, id);
+      const member = await memberService.createMember(name, id);
+      localStorage.setItem('currentMemberId', id);
+      return member;
     },
   });
 };
