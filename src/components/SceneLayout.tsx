@@ -199,7 +199,7 @@ export default function SceneLayout({
         })
     }, [])
 
-    const { initial, animate, exit, transition } = variantMap[effect]
+    const { initial, animate, exit } = variantMap[effect]
 
     return (
         <AnimatePresence mode="sync">
@@ -210,7 +210,6 @@ export default function SceneLayout({
                 initial={initial as TargetAndTransition}
                 animate={animate as TargetAndTransition}
                 exit={exit as TargetAndTransition}
-                transition={transition ?? { duration: effect === 'flash' ? 0.4 : 0.6 }}
             >
                 {!hideTitle && (
                     <img

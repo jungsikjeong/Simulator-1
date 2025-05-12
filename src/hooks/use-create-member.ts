@@ -12,6 +12,7 @@ export const useCreateMember = () => {
     mutationFn: async ({ name, id }) => {
       const member = await memberService.createMember(name, id);
       localStorage.setItem('currentMemberId', id);
+      localStorage.setItem('currentMemberName', name);
       return member;
     },
   });
