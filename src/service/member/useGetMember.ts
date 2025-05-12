@@ -28,3 +28,11 @@ export const useGetCurrentMemberName = () => {
   });
 };
 
+export const useUpdateMemberName = () => {
+  return useMutation({
+    mutationFn: ({ id, name }: { id: string; name: string }) => {
+      return MemberQueryOptions.updateMemberName(id, name).queryFn();
+    },
+  });
+};
+

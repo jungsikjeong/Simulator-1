@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import SceneLayout from '@/components/SceneLayout'
 import { useCreateMember } from '@/hooks/use-create-member'
+import { useUpdateMemberName } from '@/hooks/use-update-member-name'
 import { v4 as uuidv4 } from 'uuid'
 import type { SceneKey } from '@/modules/scene-key.type'
 import { motion } from 'framer-motion'
@@ -18,6 +19,7 @@ export default function StartScene({
   const [showInput, setShowInput] = useState(false)
   const [isTouchable, setIsTouchable] = useState(true)
   const createMember = useCreateMember()
+  const updateMemberName = useUpdateMemberName()
 
   useEffect(() => {
     if (introDone) {
@@ -28,11 +30,21 @@ export default function StartScene({
   const handleNameSubmit = async () => {
     if (!playerName.trim()) return
     try {
-      const uuid = uuidv4()
-      createMember.mutate({ name: playerName, id: uuid })
+      const existingId = localStorage.getItem('currentMemberId')
+
+      if (existingId) {
+        // 이미 게임했던 유저면 이름만 업데이트
+        await updateMemberName.mutateAsync({ id: existingId, name: playerName })
+        localStorage.setItem('currentMemberName', playerName)
+      } else {
+        // 새로운 유저면 새로 생성
+        const uuid = uuidv4()
+        createMember.mutate({ name: playerName, id: uuid })
+      }
+
       onSceneChange('part1')
     } catch (error) {
-      console.error('Failed to create member:', error)
+      console.error('Failed to handle member:', error)
     }
   }
 

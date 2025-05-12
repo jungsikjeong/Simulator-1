@@ -5,6 +5,7 @@ import type { Database } from '@/supabase/database.types';
 export const memberQuerykeys = {
   member: ['member'] as const,
   updateStatus: (id: string) => ['member', 'updateStatus', id] as const,
+  updateName: (id: string) => ['member', 'updateName', id] as const,
   currentMemberId: ['member', 'currentId'] as const,
   currentMemberName: ['member', 'currentName'] as const,
 };
@@ -32,6 +33,12 @@ export const MemberQueryOptions = {
     queryKey: memberQuerykeys.currentMemberName,
     queryFn: () => {
       return new MemberService(supabase).getCurrentMemberName();
+    },
+  }),
+  updateMemberName: (id: string, name: string) => ({
+    queryKey: memberQuerykeys.updateName(id),
+    queryFn: () => {
+      return new MemberService(supabase).updateMemberName(id, name);
     },
   }),
 };

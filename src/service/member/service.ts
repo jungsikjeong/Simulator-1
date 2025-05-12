@@ -59,4 +59,16 @@ export default class MemberService extends Service {
     if (error) throw error;
     return data.name;
   }
+
+  async updateMemberName(id: string, name: string) {
+    const { data, error } = await this.supabase
+      .from('members')
+      .update({ name })
+      .eq('id', id)
+      .select()
+      .single();
+
+    if (error) throw error;
+    return data;
+  }
 }
