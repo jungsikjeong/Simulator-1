@@ -15,9 +15,12 @@ export default function Part3SceneAFail({ onSceneChange }: SceneProps) {
             chunks={[
                 { content: '"나 짐빔 광고 모델인거\n' },
                 { content: '잊은거야ㅠㅠ?"\n' },
+                { content: '\n' },
+                { content: '경쟁사는 말할 수 없다구.\n' },
+                { content: '꼭 기억해줘ㅠㅠㅠ' },
             ]}
-            nextScene="part1SceneBMain"
-            failMessage="경쟁사는 말할 수 없다구. 꼭 기억해줘ㅠㅠ"
+            nextScene="part3SceneAMain"
+            showFailMessage={false}
         />
     )
 }

@@ -12,6 +12,13 @@ export default function Part3SceneASuccess({ onSceneChange }: SceneProps) {
     const [isTypingComplete, setIsTypingComplete] = useState(false)
     const [isTouchable, setIsTouchable] = useState(true)
 
+    const modelFaceArea = {
+        top: 23,
+        left: 38,
+        width: 24,
+        height: 22,
+    }
+
     return (
         <SuccessScene
             onSceneChange={onSceneChange}
@@ -30,6 +37,8 @@ export default function Part3SceneASuccess({ onSceneChange }: SceneProps) {
             setIsTypingComplete={setIsTypingComplete}
             isTouchable={isTouchable}
             setIsTouchable={setIsTouchable}
+            showGlitter={true}
+            faceArea={modelFaceArea}
         />
     )
 }

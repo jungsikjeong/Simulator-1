@@ -33,7 +33,7 @@ export default function Part3SceneAMain({ onSceneChange }: SceneProps) {
                                     content: '퇴근 후에는\n',
                                 },
                                 {
-                                    content: '더 멋진 시간을 보낼 수 있잖아!ㅎㅎㅎ\n',
+                                    content: '더 멋진 시간을 보낼 수 있잖아!ㅎㅎ\n',
                                 },
                                 {
                                     content: '\n',
