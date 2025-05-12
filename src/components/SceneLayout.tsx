@@ -113,14 +113,14 @@ const variantMap: Record<TransitionEffect, Variants> = {
             opacity: 1,
             transition: {
                 duration: 0.8,
-                ease: [0.33, 1, 0.68, 1] // easeOutCubic
+                ease: [0.33, 1, 0.68, 1]
             }
         },
         exit: {
             opacity: 0,
             transition: {
                 duration: 0.8,
-                ease: [0.32, 0, 0.67, 0] // easeInCubic
+                ease: [0.32, 0, 0.67, 0]
             }
         },
     },
