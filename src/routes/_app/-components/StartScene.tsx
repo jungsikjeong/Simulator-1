@@ -69,9 +69,9 @@ export default function StartScene({
       {/* 로고 */}
       <div className="absolute top-6 w-full flex justify-center">
         <img
-          src="/logo.png" // 짐빔 로고만 있는 이미지로 변경 필요
+          src="/logo.png"
           alt="Jim Beam"
-          className="w-30 mb-2"
+          className="w-48 sm:w-52 "
         />
       </div>
 
