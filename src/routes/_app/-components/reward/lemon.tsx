@@ -7,6 +7,10 @@ export default function Lemon() {
                 { src: '/reward/박정민_레몬.png', label: '박정민_레몬' },
                 { src: '/reward/장원영_레몬.png', label: '장원영_레몬' },
             ]}
+            tabs={[
+                { text: "정민이와 레몬 짐빔" },
+                { text: "원영이와 레몬 짐빔" },
+            ]}
             bgColor="bg-yellow-100"
             borderColor="border-yellow-500"
             textColor="text-yellow-700"

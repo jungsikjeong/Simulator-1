@@ -9,7 +9,7 @@ export const Route = createFileRoute('/_app/')({
 })
 
 export default function App() {
-  const [scene, setScene] = useState<SceneKey>('plain')
+  const [scene, setScene] = useState<SceneKey>('grape')
 
   const handleSceneChange = useCallback((scene: SceneKey) => {
     setScene(scene)

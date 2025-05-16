@@ -1,15 +1,19 @@
-// src/components/RewardSceneLayout.tsx
+// Modified RewardSceneLayout.tsx
 import { useState, useRef, useEffect } from 'react';
 import { useIsMobile } from '@/hooks/use-mobile';
 
-// 타입 정의
 interface CardImage {
     src: string;
     label: string;
 }
 
+interface CardTab {
+    text: string;
+}
+
 interface RewardSceneLayoutProps {
     images: CardImage[];
+    tabs?: CardTab[];
     bgColor?: string;
     borderColor?: string;
     textColor?: string;
@@ -18,11 +22,11 @@ interface RewardSceneLayoutProps {
     guideTextDesktop?: string;
 }
 
-// 이벤트 핸들러 타입
 type TouchEvent = React.TouchEvent<HTMLDivElement> | React.MouseEvent<HTMLDivElement>;
 
 const RewardSceneLayout = ({
     images = [],
+    tabs = [],
     bgColor = 'bg-yellow-50',
     borderColor = 'border-yellow-400',
     textColor = 'text-yellow-700',
@@ -30,7 +34,7 @@ const RewardSceneLayout = ({
     guideTextMobile = '아래로 스와이프하여 다운로드',
     guideTextDesktop = '클릭하여 다운로드'
 }: RewardSceneLayoutProps) => {
-    const [selectedCard, setSelectedCard] = useState<number | null>(null);
+    const [selectedCard, setSelectedCard] = useState<number>(0); // Default to showing first card
     const [isDownloading, setIsDownloading] = useState<boolean>(false);
     const [isSwipeAnimating, setIsSwipeAnimating] = useState<boolean>(false);
     const [swipeProgress, setSwipeProgress] = useState<number>(0);
@@ -40,6 +44,9 @@ const RewardSceneLayout = ({
     const isMobile = useIsMobile();
     const cardRef = useRef<HTMLDivElement>(null);
     const [cardDimensions, setCardDimensions] = useState({ width: 280, height: 420 });
+    const containerRef = useRef<HTMLDivElement>(null);
+
+    const tabTexts = tabs.map(tab => tab.text);
 
     // Adjust card dimensions based on viewport
     useEffect(() => {
@@ -74,11 +81,18 @@ const RewardSceneLayout = ({
                 // On desktop, clicking the selected card triggers download
                 downloadCard(images[index]);
             } else {
-                setSelectedCard(null);
+                // No longer setting to null, instead keep the selected state
+                // setSelectedCard(null);
             }
         } else {
             setSelectedCard(index);
         }
+    };
+
+    // 탭 클릭 핸들러 추가
+    const handleTabClick = (index: number): void => {
+        if (isSwipeAnimating) return;
+        setSelectedCard(index);
     };
 
     const downloadCard = (card: CardImage): void => {
@@ -97,7 +111,8 @@ const RewardSceneLayout = ({
                 setIsDownloading(false);
                 setIsSwipeAnimating(false);
                 setSwipeProgress(0);
-                setSelectedCard(null);
+                // Keep the card selected after download
+                // setSelectedCard(null);
             }, 500);
         }, 300);
     };
@@ -148,11 +163,12 @@ const RewardSceneLayout = ({
         const isSelected = selectedCard === index;
         const totalCards = images.length;
 
+        // 카드 배치를 수정하여 가운데 정렬되도록 함
         const baseRotation = totalCards <= 2 ? -5 : -10;
         const rotationIncrement = totalCards <= 2 ? 10 : 5;
 
         let rotation = baseRotation + (index * rotationIncrement);
-        let translateX = index * 10;
+        let translateX = 0; // 초기 X 이동값을 0으로 설정 (가운데 정렬)
         let translateY = index * 5;
         let zIndex = index;
         let scale = 1;
@@ -196,64 +212,93 @@ const RewardSceneLayout = ({
     return (
         <div className={`w-full min-h-screen flex flex-col items-center justify-center ${bgColor} p-4`}>
             {sceneText && (
-                <h1 className={`text-xl font-bold mb-8 text-center ${textColor} drop-shadow-sm px-6`}>
+                <h1 className={`${isMobile ? 'text-md' : 'text-2xl'} font-bold mb-8 text-center ${textColor} drop-shadow-sm px-6`}>
                     {sceneText}
                 </h1>
             )}
 
-            <div className="relative mb-8" style={{ width: `${cardDimensions.width + 40}px`, height: `${cardDimensions.height + 40}px` }}>
-                {images.map((card, index) => (
-                    <div
-                        key={index}
-                        ref={selectedCard === index ? cardRef : null}
-                        className={`absolute top-0 left-0 rounded-xl shadow-lg cursor-pointer
-                                  border-4 ${selectedCard === index ? borderColor : 'border-white'}`}
-                        style={getCardStyle(index)}
-                        onClick={() => handleCardClick(index)}
-                        onTouchStart={(e) => handleTouchStart(e, card)}
-                        onMouseDown={(e) => handleTouchStart(e, card)}
-                        onTouchMove={handleTouchMove}
-                        onMouseMove={handleTouchMove}
-                        onTouchEnd={() => handleTouchEnd(card)}
-                        onMouseUp={() => handleTouchEnd(card)}
-                    >
-                        <div className="w-full h-full p-2 flex flex-col bg-white rounded-lg overflow-hidden">
-                            <div className="w-full h-full overflow-hidden flex items-center justify-center bg-gray-50">
-                                <img
-                                    src={card.src}
-                                    alt={card.label}
-                                    className="w-full h-full object-contain"
-                                    draggable={false}
-                                />
-                            </div>
-
-                            {selectedCard === index && (
-                                <div className="absolute bottom-3 left-0 right-0 flex flex-col items-center">
-                                    <div className={`mb-1 text-sm text-center ${textColor} bg-opacity-70 ${bgColor} py-1 px-3 rounded-full mx-auto shadow-sm`}>
-                                        {isDownloading ? '다운로드중...' : isMobile ? guideTextMobile : guideTextDesktop}
-                                    </div>
-
-                                    {isMobile && selectedCard === index && !isDownloading && (
-                                        <div className="w-16 h-1.5 bg-gray-200 rounded-full overflow-hidden">
-                                            <div
-                                                className={`h-full ${borderColor} rounded-full transition-all duration-300`}
-                                                style={{ width: `${swipeProgress}%` }}
-                                            />
-                                        </div>
-                                    )}
+            <div
+                ref={containerRef}
+                className="relative mb-8 flex flex-col items-center"
+                style={{ width: `${cardDimensions.width + 100}px` }}
+            >
+                {/* 카드 스택 */}
+                <div className="relative w-full flex justify-center" style={{ height: `${cardDimensions.height}px` }}>
+                    {images.map((card, index) => (
+                        <div
+                            key={index}
+                            ref={selectedCard === index ? cardRef : null}
+                            className={`absolute rounded-xl shadow-lg cursor-pointer
+                                      border-4 ${selectedCard === index ? borderColor : 'border-white'}`}
+                            style={{
+                                ...getCardStyle(index),
+                                left: '50%',
+                                top: '0',
+                                marginLeft: `-${cardDimensions.width / 2}px`,
+                            }}
+                            onClick={() => handleCardClick(index)}
+                            onTouchStart={(e) => handleTouchStart(e, card)}
+                            onMouseDown={(e) => handleTouchStart(e, card)}
+                            onTouchMove={handleTouchMove}
+                            onMouseMove={handleTouchMove}
+                            onTouchEnd={() => handleTouchEnd(card)}
+                            onMouseUp={() => handleTouchEnd(card)}
+                        >
+                            <div className="w-full h-full p-2 flex flex-col bg-white rounded-lg overflow-hidden">
+                                <div className="w-full h-full overflow-hidden flex items-center justify-center bg-gray-50">
+                                    <img
+                                        src={card.src}
+                                        alt={card.label}
+                                        className="w-full h-full object-contain"
+                                        draggable={false}
+                                    />
                                 </div>
-                            )}
+
+                                {selectedCard === index && (
+                                    <div className="absolute bottom-3 left-0 right-0 flex flex-col items-center">
+                                        <div className={`mb-1 text-sm text-center ${textColor} bg-opacity-70 ${bgColor} py-1 px-3 rounded-full mx-auto shadow-sm`}>
+                                            {isDownloading ? '다운로드중...' : isMobile ? guideTextMobile : guideTextDesktop}
+                                        </div>
+
+                                        {isMobile && selectedCard === index && !isDownloading && (
+                                            <div className="w-16 h-1.5 bg-gray-200 rounded-full overflow-hidden">
+                                                <div
+                                                    className={`h-full ${borderColor} rounded-full transition-all duration-300`}
+                                                    style={{ width: `${swipeProgress}%` }}
+                                                />
+                                            </div>
+                                        )}
+                                    </div>
+                                )}
+                            </div>
                         </div>
-                    </div>
-                ))}
+                    ))}
+                </div>
+
+                {/*탭*/}
+                <div className="flex flex-wrap justify-center gap-2 mt-6 w-full">
+                    {tabTexts.map((text, index) => (
+                        <button
+                            key={index}
+                            onClick={() => handleTabClick(index)}
+                            className={`px-4 py-1.5 rounded-full text-sm transition-all 
+                                      ${selectedCard === index
+                                    ? `${borderColor} bg-white font-medium border-2 shadow-md` // Enhanced selected state
+                                    : 'bg-white border border-gray-200'} 
+                                      ${textColor}`}
+                        >
+                            {text}
+                        </button>
+                    ))}
+                </div>
             </div>
 
             <div className={`text-center ${textColor} text-sm max-w-xs mt-2`}>
-                {selectedCard === null
-                    ? "카드를 선택해주세요"
-                    : isMobile
-                        ? "카드를 아래로 스와이프하여 다운로드"
-                        : "카드를 클릭하여 다운로드"}
+                {selectedCard !== null
+                    ? (isMobile
+                        ? '다운로드하려면 카드를 아래로 스와이프하세요'
+                        : '다운로드하려면 카드를 클릭하세요')
+                    : '카드를 선택해주세요'}
             </div>
         </div>
     );

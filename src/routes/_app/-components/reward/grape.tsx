@@ -4,8 +4,12 @@ export default function Grape() {
     return (
         <RewardSceneLayout
             images={[
-                { src: '/reward/박정민_자몽.png', label: '박정민_자몽' },
                 { src: '/reward/장원영_자몽.png', label: '장원영_자몽' },
+                { src: '/reward/박정민_자몽.png', label: '박정민_자몽' },
+            ]}
+            tabs={[
+                { text: "원영이와 자몽 짐빔" },
+                { text: "정민이와 자몽 짐빔" },
             ]}
             bgColor="bg-pink-100"
             borderColor="border-pink-500"

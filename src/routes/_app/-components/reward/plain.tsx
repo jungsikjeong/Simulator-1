@@ -5,8 +5,12 @@ export default function Plain() {
         <RewardSceneLayout
             images={[
 
-                { src: '/reward/박정민_플레인.png', label: '박정민_플레인' },
                 { src: '/reward/장원영_플레인.png', label: '장원영_플레인' },
+                { src: '/reward/박정민_플레인.png', label: '박정민_플레인' },
+            ]}
+            tabs={[
+                { text: "원영이와 플레인 짐빔" },
+                { text: "정민이와 플레인 짐빔" },
             ]}
             bgColor="bg-slate-100"
             borderColor="border-slate-500"
