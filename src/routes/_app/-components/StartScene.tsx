@@ -30,12 +30,12 @@ export default function StartScene({
   const handleNameSubmit = async () => {
     if (!playerName.trim()) return
     try {
-      const existingId = localStorage.getItem('currentMemberId')
+      const existingId = localStorage.getItem('currentMemberId_1')
 
       if (existingId) {
         // 이미 게임했던 유저면 이름만 업데이트
         await updateMemberName.mutateAsync({ id: existingId, name: playerName })
-        localStorage.setItem('currentMemberName', playerName)
+        localStorage.setItem('currentMemberName_1', playerName)
       } else {
         // 새로운 유저면 새로 생성
         const uuid = uuidv4()
@@ -66,7 +66,7 @@ export default function StartScene({
       {/* Scene transition overlay */}
       <div id="scene-transition" className="absolute inset-0 bg-black opacity-0 transition-opacity duration-800 pointer-events-none z-50" />
 
-      {/* 로고고 */}
+      {/* 로고 */}
       <div className="absolute top-6 w-full flex justify-center">
         <img
           src="/logo.png" // 짐빔 로고만 있는 이미지로 변경 필요
@@ -75,53 +75,12 @@ export default function StartScene({
         />
       </div>
 
-      {/* 타이틀 */}
-      <motion.div
-        className="absolute top-40 w-full text-center"
-        initial={{ y: -20, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 1, ease: "easeOut" }}
-      >
-        <motion.div
-          animate={{
-            y: [0, -10, 0],
-            rotate: [0, 1, 0, -1, 0]
-          }}
-          transition={{
-            repeat: Infinity,
-            duration: 4,
-            ease: 'easeInOut'
-          }}
-        >
-          <div className="flex flex-col items-center">
-            <div
-              className="text-3xl sm:text-4xl md:text-5xl font-bold mb-2 tracking-wider font-danjo text-black"
-              style={{
-                textShadow: '2px 2px 8px rgba(255,215,0,0.8), 0 0 15px rgba(255,185,0,0.5), 0 0 5px rgba(255,185,0,0.7)',
-                WebkitTextStroke: '0.5px rgba(0,0,0,0.3)'
-              }}
-            >
-              짐빔 위대한 마케터
-            </div>
-
-            <div
-              className="text-lg sm:text-xl tracking-wide font-danjo text-black"
-              style={{
-                textShadow: '1px 1px 5px rgba(255,185,0,0.7), 0 0 8px rgba(255,185,0,0.5)',
-                WebkitTextStroke: '0.2px rgba(0,0,0,0.2)'
-              }}
-            >
-              Greatest Marketer of Jim Beam
-            </div>
-          </div>
-        </motion.div>
-      </motion.div>
 
       {/* Dialogue Box */}
       <div className="absolute bottom-42 w-full flex justify-center">
         <DialogueBox
           chunks={[
-            { content: '안녕! 나는 짐빔 모델 장원영이야\n' },
+            { content: '  안녕! 나는 짐빔 모델 장원영이야\n' },
             { content: '앞으로 난 일상에 지친 청춘들을 응원하기 위해\n' },
             { content: '짐빔과 함께 엄청난 마케팅들을 펼칠 예정이야\n\n' },
             { content: '내가 위대한 마케터가 될 수 있도록\n' },

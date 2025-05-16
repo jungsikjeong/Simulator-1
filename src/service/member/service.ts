@@ -42,7 +42,7 @@ export default class MemberService extends Service {
   }
 
   async getCurrentMemberId() {
-    const currentId = localStorage.getItem('currentMemberId');
+    const currentId = localStorage.getItem('currentMemberId_1');
     if (!currentId) throw new Error('No current member found');
     return currentId;
   }

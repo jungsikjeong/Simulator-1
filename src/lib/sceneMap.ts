@@ -1,40 +1,41 @@
 import type { SceneKey } from '@/modules/scene-key.type'
-import StartScene from '@/routes/_app/-components/StartScene'
+import Ending from '@/routes/_app/-components/ending'
+import EndingNext1 from '@/routes/_app/-components/ending/next1'
+import EndingNext2 from '@/routes/_app/-components/ending/next2'
 import Part1 from '@/routes/_app/-components/part-1'
-import Part1SceneASuccess1 from '@/routes/_app/-components/part-1/SceneA/Success1'
-import Part1SceneASuccess2 from '@/routes/_app/-components/part-1/SceneA/Success2'
 import Part1SceneAFail1 from '@/routes/_app/-components/part-1/SceneA/Fail1'
 import Part1SceneAFail2 from '@/routes/_app/-components/part-1/SceneA/Fail2'
-import Part1SceneBMain from '@/routes/_app/-components/part-1/SceneB/main'
-import Part1SceneBSuccess from '@/routes/_app/-components/part-1/SceneB/Success'
+import Part1SceneASuccess1 from '@/routes/_app/-components/part-1/SceneA/Success1'
+import Part1SceneASuccess2 from '@/routes/_app/-components/part-1/SceneA/Success2'
 import Part1SceneBFail1 from '@/routes/_app/-components/part-1/SceneB/Fail1'
 import Part1SceneBFail2 from '@/routes/_app/-components/part-1/SceneB/Fail2'
+import Part1SceneBMain from '@/routes/_app/-components/part-1/SceneB/main'
+import Part1SceneBSuccess from '@/routes/_app/-components/part-1/SceneB/Success'
 import Part2 from '@/routes/_app/-components/part-2'
-import Part2SceneAMain from '@/routes/_app/-components/part-2/SceneA/main'
-import Part2SceneASuccess from '@/routes/_app/-components/part-2/SceneA/Success'
 import Part2SceneAFail1 from '@/routes/_app/-components/part-2/SceneA/Fail1'
 import Part2SceneAFail2 from '@/routes/_app/-components/part-2/SceneA/Fail2'
+import Part2SceneAMain from '@/routes/_app/-components/part-2/SceneA/main'
+import Part2SceneASuccess from '@/routes/_app/-components/part-2/SceneA/Success'
 import Part3 from '@/routes/_app/-components/part-3'
+import Part3SceneAFail from '@/routes/_app/-components/part-3/SceneA/Fail'
 import Part3SceneAMain from '@/routes/_app/-components/part-3/SceneA/main'
 import Part3SceneASuccess from '@/routes/_app/-components/part-3/SceneA/Success'
-import Part3SceneAFail from '@/routes/_app/-components/part-3/SceneA/Fail'
 import Part4 from '@/routes/_app/-components/part-4'
+import Part4SceneAFail from '@/routes/_app/-components/part-4/SceneA/Fail'
 import Part4SceneAMain from '@/routes/_app/-components/part-4/SceneA/main'
 import Part4SceneASuccess1 from '@/routes/_app/-components/part-4/SceneA/Success1'
-import Part4SceneAFail from '@/routes/_app/-components/part-4/SceneA/Fail'
 import Part4SceneBMain from '@/routes/_app/-components/part-4/SceneB/main'
 import Part4SceneBNext1 from '@/routes/_app/-components/part-4/SceneB/next1'
 import Part4SceneBNext2 from '@/routes/_app/-components/part-4/SceneB/next2'
 import Part4SceneBNext3 from '@/routes/_app/-components/part-4/SceneB/next3'
 import Part4SceneBNext4 from '@/routes/_app/-components/part-4/SceneB/next4'
 import Part4SceneBNext5 from '@/routes/_app/-components/part-4/SceneB/next5'
-import Ending from '@/routes/_app/-components/ending'
-import EndingNext1 from '@/routes/_app/-components/ending/next1'
-import EndingNext2 from '@/routes/_app/-components/ending/next2'
-import Plain from '@/routes/_app/-components/reward/plain'
+import Grape from '@/routes/_app/-components/reward/grape'
 import Jinjer from '@/routes/_app/-components/reward/jinjer'
 import Lemon from '@/routes/_app/-components/reward/lemon'
-import Grape from '@/routes/_app/-components/reward/grape'
+import Plain from '@/routes/_app/-components/reward/plain'
+import StartScene from '@/routes/_app/-components/StartScene'
+import StartSceneInit from '@/routes/_app/-components/StartSceneInit'
 
 
 type SceneProps = {
@@ -45,6 +46,7 @@ type SceneComponent = (props: SceneProps) => React.JSX.Element
 
 // 각 씬 키에 해당하는 컴포넌트를 매핑하는 객체
 export const SceneComponentMap: Record<SceneKey, SceneComponent> = {
+  startInit: StartSceneInit,
   start: StartScene,
   part1: Part1,
   part1SceneASuccess1: Part1SceneASuccess1,

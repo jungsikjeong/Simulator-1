@@ -1,4 +1,5 @@
 export type SceneKey =
+  | 'startInit'
   | 'start'
   | 'part1'
   | 'part1SceneASuccess1'
