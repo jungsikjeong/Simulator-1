@@ -1,4 +1,6 @@
-import { useState, useRef } from 'react';
+// src/components/RewardSceneLayout.tsx
+import { useState, useRef, useEffect } from 'react';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 // 타입 정의
 interface CardImage {
@@ -12,7 +14,8 @@ interface RewardSceneLayoutProps {
     borderColor?: string;
     textColor?: string;
     sceneText?: string;
-    guideText?: string;
+    guideTextMobile?: string;
+    guideTextDesktop?: string;
 }
 
 // 이벤트 핸들러 타입
@@ -24,83 +27,120 @@ const RewardSceneLayout = ({
     borderColor = 'border-yellow-400',
     textColor = 'text-yellow-700',
     sceneText = '',
-    guideText = '스와이프하여 다운로드'
+    guideTextMobile = '아래로 스와이프하여 다운로드',
+    guideTextDesktop = '클릭하여 다운로드'
 }: RewardSceneLayoutProps) => {
     const [selectedCard, setSelectedCard] = useState<number | null>(null);
     const [isDownloading, setIsDownloading] = useState<boolean>(false);
     const [isSwipeAnimating, setIsSwipeAnimating] = useState<boolean>(false);
-    const [swipeDirection, setSwipeDirection] = useState<number>(0);
-    const startX = useRef<number>(0);
-    const currentX = useRef<number>(0);
-    const swipeThreshold = 50;
+    const [swipeProgress, setSwipeProgress] = useState<number>(0);
+    const startY = useRef<number>(0);
+    const currentY = useRef<number>(0);
+    const swipeThreshold = 80;
+    const isMobile = useIsMobile();
+    const cardRef = useRef<HTMLDivElement>(null);
+    const [cardDimensions, setCardDimensions] = useState({ width: 280, height: 420 });
+
+    // Adjust card dimensions based on viewport
+    useEffect(() => {
+        const updateCardDimensions = () => {
+            const viewportWidth = window.innerWidth;
+            const viewportHeight = window.innerHeight;
+
+            // Adjust card width and height based on viewport
+            let newWidth = Math.min(viewportWidth * 0.8, 320);
+            // For vertical images, increase height ratio
+            let newHeight = Math.min(viewportHeight * 0.6, 520);
+
+            setCardDimensions({
+                width: newWidth,
+                height: newHeight
+            });
+        };
+
+        updateCardDimensions();
+        window.addEventListener('resize', updateCardDimensions);
+
+        return () => {
+            window.removeEventListener('resize', updateCardDimensions);
+        };
+    }, []);
 
     const handleCardClick = (index: number): void => {
         if (isSwipeAnimating) return;
 
         if (selectedCard === index) {
-            setSelectedCard(null);
+            if (!isMobile) {
+                // On desktop, clicking the selected card triggers download
+                downloadCard(images[index]);
+            } else {
+                setSelectedCard(null);
+            }
         } else {
             setSelectedCard(index);
         }
     };
 
+    const downloadCard = (card: CardImage): void => {
+        setIsDownloading(true);
+        setIsSwipeAnimating(true);
+
+        setTimeout(() => {
+            const link = document.createElement('a');
+            link.href = card.src;
+            link.download = card.label;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+
+            setTimeout(() => {
+                setIsDownloading(false);
+                setIsSwipeAnimating(false);
+                setSwipeProgress(0);
+                setSelectedCard(null);
+            }, 500);
+        }, 300);
+    };
+
     const handleTouchStart = (e: TouchEvent, _card: CardImage): void => {
-        if (selectedCard === null || isSwipeAnimating) return;
+        if (selectedCard === null || isSwipeAnimating || !isMobile) return;
 
-        if (selectedCard !== null) {
-            e.preventDefault();
-        }
-
-        startX.current = 'touches' in e
-            ? e.touches[0].clientX
-            : e.clientX;
-        currentX.current = startX.current;
-        setSwipeDirection(0);
+        startY.current = 'touches' in e
+            ? e.touches[0].clientY
+            : e.clientY;
+        currentY.current = startY.current;
+        setSwipeProgress(0);
     };
 
     const handleTouchMove = (e: TouchEvent): void => {
-        if (selectedCard === null || isSwipeAnimating) return;
+        if (selectedCard === null || isSwipeAnimating || !isMobile) return;
 
-        if (selectedCard !== null) {
-            e.preventDefault();
+        currentY.current = 'touches' in e
+            ? e.touches[0].clientY
+            : e.clientY;
+
+        const swipeDiff = currentY.current - startY.current;
+
+        // Only track downward swipes
+        if (swipeDiff > 0) {
+            // Calculate progress percentage (0-100)
+            const progress = Math.min(100, (swipeDiff / swipeThreshold) * 100);
+            setSwipeProgress(progress);
         }
-
-        currentX.current = 'touches' in e
-            ? e.touches[0].clientX
-            : e.clientX;
-
-        const swipeDiff = currentX.current - startX.current;
-        setSwipeDirection(swipeDiff);
     };
 
     const handleTouchEnd = (card: CardImage): void => {
-        if (selectedCard === null || isSwipeAnimating) return;
+        if (selectedCard === null || isSwipeAnimating || !isMobile) return;
 
-        const swipeDistance = currentX.current - startX.current;
+        const swipeDistance = currentY.current - startY.current;
 
-        if (Math.abs(swipeDistance) > swipeThreshold) {
-            setIsSwipeAnimating(true);
-            setIsDownloading(true);
-
-            setSwipeDirection(swipeDistance > 0 ? 300 : -300);
-
-            setTimeout(() => {
-                const link = document.createElement('a');
-                link.href = card.src;
-                link.download = card.label;
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-
-                setTimeout(() => {
-                    setIsDownloading(false);
-                    setIsSwipeAnimating(false);
-                    setSwipeDirection(0);
-                    setSelectedCard(null);
-                }, 500);
-            }, 300);
+        if (swipeDistance > swipeThreshold) {
+            // Complete the downward animation
+            setSwipeProgress(100);
+            downloadCard(card);
         } else {
-            setSwipeDirection(0);
+            // Reset if threshold not met
+            setSwipeProgress(0);
         }
     };
 
@@ -108,36 +148,36 @@ const RewardSceneLayout = ({
         const isSelected = selectedCard === index;
         const totalCards = images.length;
 
-        const baseRotation = totalCards <= 2 ? -10 : -15;
-        const rotationIncrement = totalCards <= 2 ? 20 : 7;
+        const baseRotation = totalCards <= 2 ? -5 : -10;
+        const rotationIncrement = totalCards <= 2 ? 10 : 5;
 
         let rotation = baseRotation + (index * rotationIncrement);
-        let translateX = index * 20;
-        let translateY = index * 3;
+        let translateX = index * 10;
+        let translateY = index * 5;
         let zIndex = index;
         let scale = 1;
 
-        if (isSelected && swipeDirection !== 0) {
-            translateX += swipeDirection;
-            rotation += swipeDirection * 0.05;
+        if (isSelected && isMobile && swipeProgress > 0) {
+            translateY += swipeProgress * 0.8; // Move down based on swipe progress
+            scale = 1 - (swipeProgress * 0.001); // Slightly reduce scale as swiped down
         }
 
         if (selectedCard !== null) {
             if (isSelected) {
-                rotation = swipeDirection * 0.05;
-                translateX = swipeDirection;
-                translateY = -40;
+                rotation = 0;
+                translateX = 0;
+                translateY = isMobile && swipeProgress > 0 ? translateY : 0;
                 zIndex = 100;
-                scale = 1.1;
+                scale = isMobile && swipeProgress > 0 ? scale : 1.05;
             } else {
                 if (index < selectedCard) {
-                    rotation = baseRotation - 5;
-                    translateX = -80;
+                    rotation = baseRotation - 10;
+                    translateX = -60;
                 } else {
-                    rotation = baseRotation + (totalCards * rotationIncrement) + 5;
-                    translateX = 80;
+                    rotation = baseRotation + (totalCards * rotationIncrement) + 10;
+                    translateX = 60;
                 }
-                translateY = 20;
+                translateY = 10;
                 zIndex = 10;
                 scale = 0.9;
             }
@@ -146,26 +186,28 @@ const RewardSceneLayout = ({
         return {
             transform: `rotate(${rotation}deg) translateX(${translateX}px) translateY(${translateY}px) scale(${scale})`,
             zIndex,
-            transition: isSwipeAnimating ? 'all 0.5s ease' : 'all 0.3s ease',
+            transition: isSwipeAnimating ? 'all 0.5s ease' : swipeProgress > 0 ? 'none' : 'all 0.3s ease',
             opacity: selectedCard !== null && !isSelected ? 0.7 : 1,
+            width: `${cardDimensions.width}px`,
+            height: `${cardDimensions.height}px`,
         };
     };
-
 
     return (
         <div className={`w-full min-h-screen flex flex-col items-center justify-center ${bgColor} p-4`}>
             {sceneText && (
-                <h1 className={`text-2xl font-bold mb-12 text-center ${textColor} drop-shadow-sm px-6`}>
+                <h1 className={`text-xl font-bold mb-8 text-center ${textColor} drop-shadow-sm px-6`}>
                     {sceneText}
                 </h1>
             )}
 
-            <div className="relative w-80 h-96 mb-8">
+            <div className="relative mb-8" style={{ width: `${cardDimensions.width + 40}px`, height: `${cardDimensions.height + 40}px` }}>
                 {images.map((card, index) => (
                     <div
                         key={index}
-                        className={`absolute top-0 left-0 w-64 h-80 rounded-xl shadow-lg cursor-pointer
-                      border-4 ${selectedCard === index ? borderColor : 'border-white'}`}
+                        ref={selectedCard === index ? cardRef : null}
+                        className={`absolute top-0 left-0 rounded-xl shadow-lg cursor-pointer
+                                  border-4 ${selectedCard === index ? borderColor : 'border-white'}`}
                         style={getCardStyle(index)}
                         onClick={() => handleCardClick(index)}
                         onTouchStart={(e) => handleTouchStart(e, card)}
@@ -175,8 +217,8 @@ const RewardSceneLayout = ({
                         onTouchEnd={() => handleTouchEnd(card)}
                         onMouseUp={() => handleTouchEnd(card)}
                     >
-                        <div className="w-full h-full p-3 flex flex-col bg-white rounded-lg overflow-hidden">
-                            <div className="w-full h-56 overflow-hidden flex items-center justify-center bg-gray-50">
+                        <div className="w-full h-full p-2 flex flex-col bg-white rounded-lg overflow-hidden">
+                            <div className="w-full h-full overflow-hidden flex items-center justify-center bg-gray-50">
                                 <img
                                     src={card.src}
                                     alt={card.label}
@@ -184,13 +226,21 @@ const RewardSceneLayout = ({
                                     draggable={false}
                                 />
                             </div>
-                            <h3 className={`text-lg font-semibold text-center mt-3 ${textColor}`}>
-                                {card.label}
-                            </h3>
 
                             {selectedCard === index && (
-                                <div className={`mt-2 text-sm text-center ${textColor} bg-opacity-20 ${bgColor} py-1 px-3 rounded-full mx-auto`}>
-                                    {isDownloading ? '다운로드중...' : guideText}
+                                <div className="absolute bottom-3 left-0 right-0 flex flex-col items-center">
+                                    <div className={`mb-1 text-sm text-center ${textColor} bg-opacity-70 ${bgColor} py-1 px-3 rounded-full mx-auto shadow-sm`}>
+                                        {isDownloading ? '다운로드중...' : isMobile ? guideTextMobile : guideTextDesktop}
+                                    </div>
+
+                                    {isMobile && selectedCard === index && !isDownloading && (
+                                        <div className="w-16 h-1.5 bg-gray-200 rounded-full overflow-hidden">
+                                            <div
+                                                className={`h-full ${borderColor} rounded-full transition-all duration-300`}
+                                                style={{ width: `${swipeProgress}%` }}
+                                            />
+                                        </div>
+                                    )}
                                 </div>
                             )}
                         </div>
@@ -198,10 +248,12 @@ const RewardSceneLayout = ({
                 ))}
             </div>
 
-            <div className={`text-center ${textColor} text-sm max-w-xs mt-4`}>
+            <div className={`text-center ${textColor} text-sm max-w-xs mt-2`}>
                 {selectedCard === null
                     ? "카드를 선택해주세요"
-                    : "카드를 좌우로 스와이프하여 다운로드"}
+                    : isMobile
+                        ? "카드를 아래로 스와이프하여 다운로드"
+                        : "카드를 클릭하여 다운로드"}
             </div>
         </div>
     );
