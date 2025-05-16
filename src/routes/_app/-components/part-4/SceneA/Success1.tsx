@@ -2,15 +2,24 @@
 
 import RomanceScene from '@/components/RomanceScene'
 import type { SceneKey } from '@/modules/scene-key.type'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { audioManager } from '@/modules/audio-manager'
 
 type SceneProps = {
     onSceneChange: (scene: SceneKey) => void
 }
 
+// 전역 오디오 객체 생성
+const bgm = new Audio('/sounds/romance_bgm.mp3')
+bgm.loop = true
+
 export default function Part4SceneASuccess1({ onSceneChange }: SceneProps) {
     const [isTypingComplete, setIsTypingComplete] = useState(false)
     const [isTouchable, setIsTouchable] = useState(true)
+
+    useEffect(() => {
+        audioManager.playBGM('/sounds/romance_bgm.mp3')
+    }, [])
 
     return (
         <RomanceScene

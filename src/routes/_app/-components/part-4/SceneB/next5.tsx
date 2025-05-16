@@ -12,6 +12,7 @@ export default function Part4SceneBNext5({ onSceneChange }: SceneProps) {
     const [isTypingComplete, setIsTypingComplete] = useState(false)
     const [isTouchable, setIsTouchable] = useState(true)
 
+
     return (
         <MultiBgRomanceScene
             onSceneChange={onSceneChange}
