@@ -47,21 +47,21 @@ export default function Fireworks({ isTypingComplete = false }: FireworksProps) 
                 : randomBetween(rightMin, W)
 
             const y0 = randomBetween(H * 0.05, H * 0.95)
-            const count = Math.floor(randomBetween(6, 10))
+            const count = Math.floor(randomBetween(8, 12))
             const color = colors[Math.floor(Math.random() * colors.length)]
 
             for (let i = 0; i < count; i++) {
                 const angle = randomBetween(0, Math.PI * 2)
-                const speed = randomBetween(0.2, 0.6)
+                const speed = randomBetween(0.3, 0.8)
                 particles.push({
                     x: x0,
                     y: y0,
-                    size: randomBetween(1, 1.8),
+                    size: randomBetween(1.5, 2.5),
                     speedX: Math.cos(angle) * speed,
                     speedY: Math.sin(angle) * speed,
                     color,
-                    life: randomBetween(50, 100),
-                    maxLife: randomBetween(50, 100),
+                    life: randomBetween(40, 80),
+                    maxLife: randomBetween(40, 80),
                 })
             }
         }
@@ -71,7 +71,7 @@ export default function Fireworks({ isTypingComplete = false }: FireworksProps) 
             ctx.fillStyle = 'rgba(0,0,0,0.25)'
             ctx.fillRect(0, 0, W, H)
 
-            if (Math.random() < (isTypingComplete ? 0.03 : 0.015)) {
+            if (Math.random() < (isTypingComplete ? 0.04 : 0.02)) {
                 createFirework()
             }
 
