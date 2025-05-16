@@ -65,7 +65,7 @@ export default function FailScene({
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.3, duration: 0.5 }}
-                            className="w-[90%] max-w-xl"
+                            className="w-[80%] max-w-xl"
                         >
                             <div className="w-full rounded-xl bg-white/80 px-5 py-5 shadow backdrop-blur-sm">
                                 {showFailMessage && <div className="mb-4 text-center text-gray-700 text-sm sm:text-base whitespace-pre-line">
