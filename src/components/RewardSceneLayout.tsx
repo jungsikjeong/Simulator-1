@@ -1,9 +1,10 @@
 // Modified RewardSceneLayout.tsx
-import { useState, useRef, useEffect } from 'react';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { motion } from 'framer-motion';
-import { Share2 } from 'lucide-react';
 import type { SceneKey } from '@/modules/scene-key.type';
+import { useGetCurrentMemberName } from '@/service/member/useGetMember';
+import { motion } from 'framer-motion';
+import { useEffect, useRef, useState } from 'react';
+import ShareButton from './ShareButton';
 
 interface CardImage {
     src: string;
@@ -50,6 +51,9 @@ const RewardSceneLayout = ({
     const cardRef = useRef<HTMLDivElement>(null);
     const [cardDimensions, setCardDimensions] = useState({ width: 280, height: 420 });
     const containerRef = useRef<HTMLDivElement>(null);
+
+    const { data: currentMemberName } = useGetCurrentMemberName()
+
 
     const tabTexts = tabs.map(tab => tab.text);
 
@@ -221,6 +225,9 @@ const RewardSceneLayout = ({
         };
     };
 
+
+
+
     return (
         <div className={`w-full h-screen flex flex-col items-center ${isMobile ? 'justify-between' : 'justify-center py-10'} ${bgColor} p-4 overflow-hidden`}>
             {sceneText && (
@@ -322,22 +329,18 @@ const RewardSceneLayout = ({
                     transition={{ duration: 0.5, delay: 1.8 }}
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    className={`${bgColor} hover:${bgColor} text-black px-8 md:px-10 py-2 md:py-3 rounded-full shadow-lg transition-colors duration-300 flex items-center space-x-2 text-sm md:text-base w-full max-w-[200px] justify-center mx-auto`}
+                    className={`border-white border-2 ${bgColor}  ${textColor} hover:${bgColor} px-8 md:px-10 py-2 md:py-3 rounded-full shadow-lg transition-colors duration-300 flex items-center space-x-2 text-sm md:text-base w-full max-w-[200px] justify-center mx-auto`}
                 >
                     <span className="font-medium">다시하기</span>
                 </motion.button>
-                <motion.button
-                    onClick={() => { }}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: 2 }}
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className={`bg-white hover:bg-gray-50 ${textColor} ${borderColor} px-8 md:px-10 py-2 md:py-3 rounded-full shadow-lg transition-colors duration-300 flex items-center space-x-2 text-sm md:text-base w-full max-w-[200px] justify-center mx-auto`}
-                >
-                    <Share2 size={18} />
-                    <span className="font-medium">공유하기</span>
-                </motion.button>
+
+                <ShareButton
+                    currentMemberName={currentMemberName}
+                    selectedCard={images[selectedCard].src}
+                    title="공유하기"
+                    textColor={textColor}
+                    borderColor={borderColor}
+                />
             </div>
         </div>
     );
