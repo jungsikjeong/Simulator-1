@@ -1,6 +1,11 @@
 import RewardSceneLayout from '@/components/RewardSceneLayout'
+import type { SceneKey } from '@/modules/scene-key.type'
 
-export default function Grape() {
+interface GrapeProps {
+    onSceneChange: (scene: SceneKey) => void
+}
+
+export default function Grape({ onSceneChange }: GrapeProps) {
     return (
         <RewardSceneLayout
             images={[
@@ -15,6 +20,7 @@ export default function Grape() {
             borderColor="border-pink-500"
             textColor="text-pink-700"
             sceneText="자몽처럼 톡 쏘는 답변을 해준 당신은"
+            onSceneChange={onSceneChange}
         />
     )
 }

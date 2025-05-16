@@ -1,6 +1,11 @@
 import RewardSceneLayout from '@/components/RewardSceneLayout'
+import type { SceneKey } from '@/modules/scene-key.type'
 
-export default function Lemon() {
+interface LemonProps {
+    onSceneChange: (scene: SceneKey) => void
+}
+
+export default function Lemon({ onSceneChange }: LemonProps) {
     return (
         <RewardSceneLayout
             images={[
@@ -15,6 +20,7 @@ export default function Lemon() {
             borderColor="border-yellow-500"
             textColor="text-yellow-700"
             sceneText="청량한 답변을 해준 당신은"
+            onSceneChange={onSceneChange}
         />
     )
 }

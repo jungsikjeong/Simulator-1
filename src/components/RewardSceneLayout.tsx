@@ -3,6 +3,7 @@ import { useState, useRef, useEffect } from 'react';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { motion } from 'framer-motion';
 import { Share2 } from 'lucide-react';
+import type { SceneKey } from '@/modules/scene-key.type';
 
 interface CardImage {
     src: string;
@@ -22,7 +23,7 @@ interface RewardSceneLayoutProps {
     sceneText?: string;
     guideTextMobile?: string;
     guideTextDesktop?: string;
-    onSceneChange?: (scene: string) => void;
+    onSceneChange?: (scene: SceneKey) => void;
 }
 
 type TouchEvent = React.TouchEvent<HTMLDivElement> | React.MouseEvent<HTMLDivElement>;
@@ -315,7 +316,7 @@ const RewardSceneLayout = ({
             {/* 번튼 */}
             <div className="flex flex-col sm:flex-row gap-3 mt-2 w-full max-w-md px-4">
                 <motion.button
-                    onClick={() => onSceneChange('startinit')}
+                    onClick={() => onSceneChange('startInit')}
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: 1.8 }}

@@ -1,10 +1,14 @@
 import RewardSceneLayout from '@/components/RewardSceneLayout'
+import type { SceneKey } from '@/modules/scene-key.type'
 
-export default function Plain() {
+interface PlainProps {
+    onSceneChange: (scene: SceneKey) => void
+}
+
+export default function Plain({ onSceneChange }: PlainProps) {
     return (
         <RewardSceneLayout
             images={[
-
                 { src: '/reward/장원영_플레인.png', label: '장원영_플레인' },
                 { src: '/reward/박정민_플레인.png', label: '박정민_플레인' },
             ]}
@@ -16,7 +20,7 @@ export default function Plain() {
             borderColor="border-slate-500"
             textColor="text-slate-700"
             sceneText="깔끔담백한 답변을 해준 당신은"
-
+            onSceneChange={onSceneChange}
         />
     )
 }

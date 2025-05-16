@@ -1,6 +1,11 @@
 import RewardSceneLayout from '@/components/RewardSceneLayout'
+import type { SceneKey } from '@/modules/scene-key.type'
 
-export default function Jinjer() {
+interface JinjerProps {
+    onSceneChange: (scene: SceneKey) => void
+}
+
+export default function Jinjer({ onSceneChange }: JinjerProps) {
     return (
         <RewardSceneLayout
             images={[
@@ -15,6 +20,7 @@ export default function Jinjer() {
             borderColor="border-green-500"
             textColor="text-green-700"
             sceneText="스윗한 답변을 해준 당신은"
+            onSceneChange={onSceneChange}
         />
     )
 }
