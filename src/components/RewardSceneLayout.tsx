@@ -1,11 +1,10 @@
 // Modified RewardSceneLayout.tsx
-import { useState, useRef, useEffect } from 'react';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { motion } from 'framer-motion';
-import { Share2 } from 'lucide-react';
 import type { SceneKey } from '@/modules/scene-key.type';
-import ShareButton from './ShareButton';
 import { useGetCurrentMemberName } from '@/service/member/useGetMember';
+import { motion } from 'framer-motion';
+import { useEffect, useRef, useState } from 'react';
+import ShareButton from './ShareButton';
 
 interface CardImage {
     src: string;
