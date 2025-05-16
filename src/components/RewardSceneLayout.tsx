@@ -222,9 +222,9 @@ const RewardSceneLayout = ({
     };
 
     return (
-        <div className={`w-full h-screen flex flex-col items-center ${isMobile ? 'justify-between' : 'justify-center py-10'} bg-pink-50 p-4 overflow-hidden`}>
+        <div className={`w-full h-screen flex flex-col items-center ${isMobile ? 'justify-between' : 'justify-center py-10'} ${bgColor} p-4 overflow-hidden`}>
             {sceneText && (
-                <h1 className={`${isMobile ? 'text-sm' : 'text-2xl'} font-bold ${isMobile ? 'mt-4 mb-4' : 'mb-6'} text-center text-pink-600 drop-shadow-sm px-4`}>
+                <h1 className={`${isMobile ? 'text-sm' : 'text-2xl'} font-bold ${isMobile ? 'mt-4 mb-4' : 'mb-6'} text-center ${textColor} drop-shadow-sm px-4`}>
                     {sceneText}
                 </h1>
             )}
@@ -241,7 +241,7 @@ const RewardSceneLayout = ({
                             key={index}
                             ref={selectedCard === index ? cardRef : null}
                             className={`absolute rounded-xl shadow-lg cursor-pointer
-                                      border-4 ${selectedCard === index ? 'border-pink-400' : 'border-white'}`}
+                                      border-4 ${selectedCard === index ? borderColor : 'border-white'}`}
                             style={{
                                 ...getCardStyle(index),
                                 left: '50%',
@@ -268,14 +268,14 @@ const RewardSceneLayout = ({
 
                                 {selectedCard === index && (
                                     <div className="absolute bottom-3 left-0 right-0 flex flex-col items-center">
-                                        <div className={`mb-1 text-sm text-center text-pink-600 bg-opacity-70 bg-pink-50 py-1 px-3 rounded-full mx-auto shadow-sm`}>
+                                        <div className={`mb-1 text-sm text-center ${textColor} bg-opacity-70 ${bgColor} py-1 px-3 rounded-full mx-auto shadow-sm`}>
                                             {isDownloading ? '다운로드중...' : isMobile ? guideTextMobile : guideTextDesktop}
                                         </div>
 
                                         {isMobile && selectedCard === index && !isDownloading && (
                                             <div className="w-16 h-1.5 bg-gray-200 rounded-full overflow-hidden">
                                                 <div
-                                                    className={`h-full border-pink-400 bg-pink-400 rounded-full transition-all duration-300`}
+                                                    className={`h-full ${borderColor} ${bgColor} rounded-full transition-all duration-300`}
                                                     style={{ width: `${swipeProgress}%` }}
                                                 />
                                             </div>
@@ -295,8 +295,8 @@ const RewardSceneLayout = ({
                             onClick={() => handleTabClick(index)}
                             className={`px-3 py-1 rounded-full text-xs md:text-sm transition-all 
                                       ${selectedCard === index
-                                    ? `border-pink-400 bg-white font-medium border-2 shadow-md text-pink-600` // Enhanced selected state
-                                    : 'bg-white border border-gray-200 text-pink-600'}`}
+                                    ? `${borderColor} bg-white font-medium border-2 shadow-md ${textColor}` // Enhanced selected state
+                                    : 'bg-white border border-gray-200 ' + textColor}`}
                         >
                             {text}
                         </button>
@@ -305,7 +305,7 @@ const RewardSceneLayout = ({
             </div>
 
             {/* 가이드텍스트 */}
-            <div className={`text-center text-pink-600 text-xs md:text-sm max-w-xs mt-4 ${isMobile ? 'mb-4' : 'mb-6'}`}>
+            <div className={`text-center ${textColor} text-xs md:text-sm max-w-xs mt-4 ${isMobile ? 'mb-4' : 'mb-6'}`}>
                 {selectedCard !== null
                     ? (isMobile
                         ? '다운로드하려면 카드를 아래로 스와이프하세요'
@@ -322,9 +322,9 @@ const RewardSceneLayout = ({
                     transition={{ duration: 0.5, delay: 1.8 }}
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    className={`${bgColor.replace('bg-', 'bg-')} hover:${bgColor.replace('bg-', 'bg-')} ${textColor.replace('text-', 'text-white')} px-8 md:px-10 py-2 md:py-3 rounded-full shadow-lg transition-colors duration-300 flex items-center space-x-2 text-sm md:text-base w-full max-w-[200px] justify-center mx-auto`}
+                    className={`${bgColor} hover:${bgColor} text-black px-8 md:px-10 py-2 md:py-3 rounded-full shadow-lg transition-colors duration-300 flex items-center space-x-2 text-sm md:text-base w-full max-w-[200px] justify-center mx-auto`}
                 >
-                    <span className="font-medium">다시하기 &gt;</span>
+                    <span className="font-medium">다시하기</span>
                 </motion.button>
                 <motion.button
                     onClick={() => { }}
@@ -333,7 +333,7 @@ const RewardSceneLayout = ({
                     transition={{ duration: 0.5, delay: 2 }}
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    className={`bg-white hover:bg-gray-50 ${textColor} ${borderColor.replace('border-', 'border border-')} px-8 md:px-10 py-2 md:py-3 rounded-full shadow-lg transition-colors duration-300 flex items-center space-x-2 text-sm md:text-base w-full max-w-[200px] justify-center mx-auto`}
+                    className={`bg-white hover:bg-gray-50 ${textColor} ${borderColor} px-8 md:px-10 py-2 md:py-3 rounded-full shadow-lg transition-colors duration-300 flex items-center space-x-2 text-sm md:text-base w-full max-w-[200px] justify-center mx-auto`}
                 >
                     <Share2 size={18} />
                     <span className="font-medium">공유하기</span>
