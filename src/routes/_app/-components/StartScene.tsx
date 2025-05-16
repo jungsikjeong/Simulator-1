@@ -102,7 +102,7 @@ export default function StartScene({
         animate={showInput ? { y: 0, opacity: 1 } : {}}
         transition={{ duration: 0.5, ease: "easeOut" }}
       >
-        <div className="relative w-[90%] max-w-md">
+        <div className="relative w-[80%]">
           <input
             type="text"
             value={playerName}

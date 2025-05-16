@@ -42,7 +42,7 @@ export default function StartSceneInit({
                         <img
                             src="/title_bright.png"
                             alt="짐빔 위대한 마케터"
-                            className="w-70 sm:w-60"
+                            className="w-70"
                         />
                     </div>
                 </motion.div>

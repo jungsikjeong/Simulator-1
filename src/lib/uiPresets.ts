@@ -3,7 +3,7 @@ export type UIPreset = 'light' | 'dark' | 'glass' | 'start' | 'fail' | 'romance'
 
 /* 대사 박스 */
 export const dialoguePreset: Record<UIPreset, string> = {
-  light: 'bg-white/70 border-none rounded-xl text-gray-800 shadow-sm ring-1 ring-white/30',
+  light: 'bg-gradient-to-r from-amber-50/70 via-white/70 to-amber-50/70 border-none rounded-xl text-gray-800 shadow-sm ring-1 ring-white/30',
   dark: 'bg-black/80 border border-gray-600 text-white shadow-md',
   glass: 'bg-white/30 border border-white/40 text-white backdrop-blur-md shadow',
   start: 'bg-black/30 border-2 border-amber-400/70 text-white shadow-xl',
@@ -18,9 +18,9 @@ export const choicePreset: Record<
 > = {
   /* ░░ Light ░░ */
   light: {
-    wrapper: 'bg-none border-none shadow-md backdrop-blur-none',
+    wrapper: 'bg-none border-none',
     button: [
-      'bg-[#ffefd6] hover:bg-[#edead7] active:bg-[#FFE6D9]',
+      'bg-[#fff]/80 hover:bg-[#edead7]/90 active:bg-[#FFE6D9]/95',
       'text-gray-800 border border-gray-200/50 shadow-sm',
     ].join(' '),
   },
