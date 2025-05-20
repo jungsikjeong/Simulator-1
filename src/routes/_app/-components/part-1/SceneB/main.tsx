@@ -149,7 +149,7 @@ export default function Part1SceneBMain({ onSceneChange }: SceneProps) {
               typingDelay={0.5}
               variant="light"
               className='p-5'
-              typingTextClassName="text-base sm:text-xl leading-relaxed"
+              typingTextClassName="leading-relaxed"
               onComplete={() => setChoiceOpen(true)}
               isTouchable={isTouchable}
               setIsTouchable={setIsTouchable}

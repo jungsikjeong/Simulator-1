@@ -2,7 +2,7 @@
 
 import SuccessScene from '@/components/SuccessScene'
 import type { SceneKey } from '@/modules/scene-key.type'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 type SceneProps = {
   onSceneChange: (scene: SceneKey) => void
@@ -10,6 +10,12 @@ type SceneProps = {
 
 export default function Part1SceneASuccess2({ onSceneChange }: SceneProps) {
   const [isTypingComplete, setIsTypingComplete] = useState(false)
+
+  useEffect(() => {
+    if (navigator.vibrate) {
+      navigator.vibrate(200)
+    }
+  }, [])
 
   return (
     <SuccessScene
@@ -21,7 +27,7 @@ export default function Part1SceneASuccess2({ onSceneChange }: SceneProps) {
         },
       ]}
       soundEffect={null}
-      effect="fade"
+      effect="shake"
       nextScene="part1SceneBMain"
       isTypingComplete={isTypingComplete}
       setIsTypingComplete={setIsTypingComplete}

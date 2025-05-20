@@ -20,7 +20,7 @@ type SuccessSceneProps = {
     bgImage: string
     chunks: Array<{ content: string; className?: string }>
     nextScene: SceneKey
-    effect?: 'zoom' | 'fade' | 'smoothFade' | 'trueBlend'
+    effect?: 'zoom' | 'fade' | 'smoothFade' | 'trueBlend' | 'shake'
     soundEffect?: SoundEffect | null
     isTypingComplete?: boolean
     setIsTypingComplete?: (isComplete: boolean) => void
@@ -71,7 +71,7 @@ export default function SuccessScene({
                     <DialogueBox
                         chunks={chunks}
                         typingDelay={0.5}
-                        variant="light"
+                        variant="success"
                         className="mb-20 cursor-pointer px-0 py-6 transition-transform duration-200"
                         typingTextClassName="text-base sm:text-xl leading-relaxed"
                         isTouchable={isTouchable}
