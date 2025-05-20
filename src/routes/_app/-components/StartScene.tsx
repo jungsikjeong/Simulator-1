@@ -70,7 +70,7 @@ export default function StartScene({
 
 
       {/* Dialogue Box */}
-      <div className="absolute bottom-42 w-full flex justify-center">
+      <div className={`absolute ${isMobile ? 'bottom-38' : 'bottom-56'} w-full flex justify-center`}>
         <DialogueBox
           chunks={[
             { content: '  안녕! 나는 짐빔 모델 장원영이야\n' },
@@ -90,7 +90,7 @@ export default function StartScene({
 
       {/* Name Input with animation */}
       <motion.div
-        className={`absolute bottom-6 w-full flex flex-col items-center gap-4 ${!showInput ? 'opacity-0 pointer-events-none' : ''}`}
+        className={`absolute ${isMobile ? 'bottom-12' : 'bottom-20'} w-full flex flex-col items-center gap-4 ${!showInput ? 'opacity-0 pointer-events-none' : ''}`}
         initial={{ y: 20, opacity: 0 }}
         animate={showInput ? { y: 0, opacity: 1 } : {}}
         transition={{ duration: 0.5, ease: "easeOut" }}
@@ -102,17 +102,17 @@ export default function StartScene({
             onChange={e => setPlayerName(e.target.value)}
             onKeyPress={handleKeyPress}
             placeholder="조언자 이름을 입력하세요"
-            className="px-4 py-3 rounded-full border-2 border-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-500 w-full shadow-lg text-center bg-white/90 backdrop-blur-sm text-gray-800"
+            className={`${isMobile ? 'px-2 py-1.5 text-sm' : 'px-4 py-3 text-lg'} border-1 border-black rounded-sm focus:outline-none focus:ring-2 focus:ring-[#ffc000] w-full shadow-lg text-center bg-white/90 backdrop-blur-sm text-gray-800`}
             maxLength={12}
           />
-          <div className="absolute right-2 top-1/2 -translate-y-1/2 text-amber-400 text-sm font-medium">
+          <div className="absolute right-2 top-1/2 -translate-y-1/2 text-[#ffc000] text-sm font-medium">
             {playerName.length}/12
           </div>
         </div>
 
         <motion.button
           onClick={handleNameSubmit}
-          className="bg-amber-500 text-white px-8 py-3 rounded-full shadow-lg hover:bg-amber-600 transition-all duration-300 font-bold tracking-wider"
+          className={`bg-[#ffc000] text-white ${isMobile ? 'px-4 py-2 text-sm' : 'px-8 py-3 text-lg'} rounded-full shadow-lg hover:bg-amber-600 transition-all duration-300 font-bold tracking-wider`}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           disabled={!playerName.trim()}
