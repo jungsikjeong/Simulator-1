@@ -30,10 +30,14 @@ export default function FailScene({
     const isMobile = useIsMobile()
 
     useEffect(() => {
-        if (typingDone && navigator.vibrate) {
-            navigator.vibrate(200)
-        }
-    }, [typingDone])
+        const timer = setTimeout(() => {
+            if (navigator.vibrate) {
+                navigator.vibrate(300)
+            }
+        }, 100) // 타이핑 시작 전에 진동이 울리도록 약간의 지연 추가
+
+        return () => clearTimeout(timer)
+    }, [])
 
     return (
         <SceneLayout bg={bgImage} effect="shake">

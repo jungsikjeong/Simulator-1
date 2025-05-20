@@ -12,9 +12,13 @@ export default function Part1SceneASuccess2({ onSceneChange }: SceneProps) {
   const [isTypingComplete, setIsTypingComplete] = useState(false)
 
   useEffect(() => {
-    if (navigator.vibrate) {
-      navigator.vibrate(200)
-    }
+    const timer = setTimeout(() => {
+      if (navigator.vibrate) {
+        navigator.vibrate(300)
+      }
+    }, 100) // 타이핑 시작 전에 진동이 울리도록 약간의 지연 추가
+
+    return () => clearTimeout(timer)
   }, [])
 
   return (
