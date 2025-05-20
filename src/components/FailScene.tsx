@@ -55,7 +55,7 @@ export default function FailScene({
                         typingDelay={0.5}
                         variant="fail"
                         className={cn(
-                            typingDone ? "mb-0" : "mb-6",
+                            typingDone && !showFailMessage ? "mb-0" : isMobile ? "mb-4" : "mb-6",
                             isMobile ? "p-2" : "p-5"
                         )}
                         typingTextClassName={`${isMobile ? 'text-xs' : 'text-base'} leading-relaxed`}
