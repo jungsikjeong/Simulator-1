@@ -54,7 +54,10 @@ export default function FailScene({
                         chunks={chunks}
                         typingDelay={0.5}
                         variant="fail"
-                        className={typingDone ? "mb-0 p-5" : "mb-6 p-5"}
+                        className={cn(
+                            typingDone ? "mb-0" : "mb-6",
+                            isMobile ? "p-2" : "p-5"
+                        )}
                         typingTextClassName={`${isMobile ? 'text-xs' : 'text-base'} leading-relaxed`}
                         onComplete={() => setTypingDone(true)}
                         isTouchable={isTouchable}
@@ -71,7 +74,7 @@ export default function FailScene({
                             className="w-[80%] max-w-xl"
                         >
                             <div className={cn(
-                                "w-full rounded-xl px-5 py-5 shadow",
+                                "w-full rounded-xl px-5 py-4 shadow",
                                 showFailMessage ? "bg-white/80 backdrop-blur-sm" : ""
                             )}>
                                 {showFailMessage && <div className="mb-4 text-center text-gray-700 text-sm sm:text-base whitespace-pre-line">
