@@ -59,21 +59,12 @@ export default function StartScene({
   }
 
   return (
-    <SceneLayout bg="/start_장원영.png" effect="trueBlend" hideTitle={true}>
+    <SceneLayout bg="/start_장원영.png" effect="trueBlend" hideTitle={false}>
       {/* Background overlay */}
       <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent pointer-events-none" />
 
       {/* Scene transition overlay */}
       <div id="scene-transition" className="absolute inset-0 bg-black opacity-0 transition-opacity duration-800 pointer-events-none z-50" />
-
-      {/* 로고 */}
-      <div className="absolute top-6 w-full flex justify-center">
-        <img
-          src="/logo.png"
-          alt="Jim Beam"
-          className="w-48 sm:w-52 "
-        />
-      </div>
 
 
       {/* Dialogue Box */}

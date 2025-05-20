@@ -8,6 +8,7 @@ import {
 } from 'framer-motion'
 import type { PropsWithChildren } from 'react'
 import { useEffect } from 'react'
+import { useIsMobile } from '@/hooks/use-mobile'
 
 export type TransitionEffect = 'fade' | 'shake' | 'zoom' | 'flash' | 'slide' | 'crossFade' | 'smoothFade' | 'trueBlend'
 export type SoundEffect = 'shalala' | '뾰로롱' | '또로롱' | null
@@ -134,6 +135,8 @@ export default function SceneLayout({
     soundEffect = null,
     hideTitle = false,
 }: SceneLayoutProps) {
+    const isMobile = useIsMobile()
+
     useEffect(() => {
         if (soundEffect) {
             const audio = new Audio(`/sounds/${soundEffect}.mp3`)
@@ -214,7 +217,7 @@ export default function SceneLayout({
                     <img
                         src="/logo.png"
                         alt="Greatest Marketer of Jim Beam"
-                        className="absolute top-2 right-2 w-20 z-50"
+                        className={`${isMobile ? 'w-28' : 'w-35'} absolute top-3 right-3 z-50`}
                     />
                 )}
                 {children}

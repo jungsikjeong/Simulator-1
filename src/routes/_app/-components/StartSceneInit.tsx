@@ -3,15 +3,16 @@
 import SceneLayout from '@/components/SceneLayout'
 import type { SceneKey } from '@/modules/scene-key.type'
 import { motion } from 'framer-motion'
+import { useIsMobile } from '@/hooks/use-mobile'
 
 export default function StartSceneInit({
     onSceneChange,
 }: {
     onSceneChange: (scene: SceneKey) => void
 }) {
-
+    const isMobile = useIsMobile()
     return (
-        <SceneLayout bg="/start_장원영.png" effect="trueBlend" hideTitle={true}>
+        <SceneLayout bg="/start_장원영.png" effect="trueBlend" hideTitle={false}>
             {/* Background overlay */}
             <div className="absolute inset-0 bg-gradient-to-t from-gray-500/30 to-transparent pointer-events-none" />
 
@@ -42,7 +43,7 @@ export default function StartSceneInit({
                         <img
                             src="/title_bright.png"
                             alt="짐빔 위대한 마케터"
-                            className="w-70"
+                            className={`${isMobile ? 'w-60' : 'w-80'}`}
                         />
                     </div>
                 </motion.div>
