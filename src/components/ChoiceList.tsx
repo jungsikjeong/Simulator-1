@@ -3,6 +3,7 @@
 import { choicePreset, type UIPreset } from '@/lib/uiPresets'
 import { cn } from '@/lib/utils'
 import { AnimatePresence, motion } from 'framer-motion'
+import { useIsMobile } from '@/hooks/use-mobile'
 
 interface Choice {
   key: string
@@ -30,6 +31,7 @@ export default function ChoiceList({
   textClassName = 'text-base',
 }: ChoiceListProps) {
   const preset = choicePreset[variant]
+  const isMobile = useIsMobile()
 
   /* ── wrapper: overlay vs inline ── */
   const Wrapper: React.FC<{ children: React.ReactNode }> = ({ children }) =>
@@ -52,7 +54,8 @@ export default function ChoiceList({
         <Wrapper>
           <motion.ul
             className={cn(
-              'mb-4 w-[80%] space-y-3',
+              'mb-4 w-[80%]',
+              isMobile ? 'space-y-2' : 'space-y-3',
               preset.wrapper,
               className
             )}
@@ -72,10 +75,10 @@ export default function ChoiceList({
                     preset.button.replace('border border-gray-200/50', '')
                   )}
                 >
-                  <div className="mr-3 flex h-5 w-5 shrink-0 items-center justify-center">
+                  <div className="flex h-5 w-5 shrink-0 items-center justify-center">
                     <span className="text-sm">▶</span>
                   </div>
-                  <span className={cn(textClassName, 'text-sm sm:text-base')}>
+                  <span className={cn(textClassName, `${isMobile ? 'text-xs' : 'text-base'} flex-1 text-center`)}>
                     {c.label}
                   </span>
                 </button>

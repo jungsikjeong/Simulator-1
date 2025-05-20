@@ -39,7 +39,7 @@ export default function Part1({
               ]}
               variant="light"
               className="p-5"
-              typingTextClassName="text-sm sm:text-xl leading-relaxed"
+              typingTextClassName="leading-relaxed"
               onComplete={() => setChoiceOpen(true)}
               isTouchable={isTouchable}
               setIsTouchable={setIsTouchable}

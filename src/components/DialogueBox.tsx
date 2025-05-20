@@ -4,6 +4,7 @@ import { dialoguePreset, type UIPreset } from '@/lib/uiPresets'
 import { cn } from '@/lib/utils'
 import { AnimatePresence, motion } from 'framer-motion'
 import TypingText from './TypingText'
+import { useIsMobile } from '@/hooks/use-mobile'
 
 interface DialogueBoxProps {
     chunks: { content: string; className?: string }[]
@@ -36,6 +37,7 @@ export default function DialogueBox({
     setIsTypingComplete,
     setIsTouchable,
 }: DialogueBoxProps) {
+    const isMobile = useIsMobile()
     const handleClick = () => {
         if (isTypingComplete && onTouchSceneChange) {
             onTouchSceneChange()
@@ -54,7 +56,7 @@ export default function DialogueBox({
         >
             <TypingText
                 text={chunks}
-                className={cn('text-base leading-relaxed', typingTextClassName)}
+                className={cn(`${isMobile ? 'text-xs' : 'text-base'} leading-relaxed`, typingTextClassName)}
                 onComplete={() => {
                     if (onComplete) onComplete()
                     if (setIsTypingComplete) setIsTypingComplete(true)

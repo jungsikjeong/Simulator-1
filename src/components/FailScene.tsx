@@ -5,6 +5,7 @@ import SceneLayout from '@/components/SceneLayout'
 import type { SceneKey } from '@/modules/scene-key.type'
 import { motion } from 'framer-motion'
 import { useState, useEffect } from 'react'
+import { useIsMobile } from '@/hooks/use-mobile'
 
 type FailSceneProps = {
     onSceneChange: (scene: SceneKey) => void
@@ -25,6 +26,7 @@ export default function FailScene({
 }: FailSceneProps) {
     const [typingDone, setTypingDone] = useState(false)
     const [isTouchable, setIsTouchable] = useState(true)
+    const isMobile = useIsMobile()
 
     useEffect(() => {
         if (typingDone && navigator.vibrate) {
@@ -52,7 +54,7 @@ export default function FailScene({
                         typingDelay={0.5}
                         variant="fail"
                         className={typingDone ? "mb-5 p-5" : "mb-20 p-5"}
-                        typingTextClassName="text-base sm:text-lg leading-relaxed"
+                        typingTextClassName={`${isMobile ? 'text-xs' : 'text-base'} leading-relaxed`}
                         onComplete={() => setTypingDone(true)}
                         isTouchable={isTouchable}
                         setIsTouchable={setIsTouchable}

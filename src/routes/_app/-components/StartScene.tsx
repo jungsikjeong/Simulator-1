@@ -81,7 +81,7 @@ export default function StartScene({
           ]}
           variant="start"
           className='p-5'
-          typingTextClassName={`${isMobile ? 'text-xs' : 'text-lg'} leading-relaxed`}
+          typingTextClassName={`leading-relaxed`}
           onComplete={() => setTypingDone(true)}
           isTouchable={isTouchable}
           setIsTouchable={setIsTouchable}
