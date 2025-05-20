@@ -67,9 +67,9 @@ export default function ChoiceList({
                   onClick={() => onSelect(c.key)}
                   className={cn(
                     /* ① 공통 레이아웃 + 애니메이션 */
-                    'flex w-full cursor-pointer items-center rounded-full border px-2 py-3 transition-all duration-150 ease-out hover:scale-[1.02] active:scale-100 sm:py-3 sm:pr-6 sm:pl-5',
+                    'flex w-full cursor-pointer items-center rounded-xl border-2 border-black px-2 py-3 transition-all duration-150 ease-out hover:scale-[1.02] active:scale-100 sm:py-3 sm:pr-6 sm:pl-5',
                     /* ② 프리셋 색상/호버/포커스 */
-                    preset.button
+                    preset.button.replace('border border-gray-200/50', '')
                   )}
                 >
                   <div className="mr-3 flex h-5 w-5 shrink-0 items-center justify-center">

@@ -220,23 +220,7 @@ export default function SceneLayout({
                         className={`${isMobile ? 'w-28' : 'w-35'} absolute top-2 right-2 z-50`}
                     />
                 )}
-                <AnimatePresence>
-                    <motion.div
-                        className="absolute right-4 bottom-2 flex items-center justify-end text-sm opacity-70 text-white"
-                        animate={{
-                            opacity: [0.7, 0.4, 0.7],
-                            transition: {
-                                duration: 1.5,
-                                repeat: Infinity,
-                                ease: 'easeInOut',
-                            },
-                        }}
-                        initial={{ opacity: 0 }}
-                        exit={{ opacity: 0, transition: { duration: 0.5 } }}
-                    >
-                        <span className="mr-1">▶︎</span> touch
-                    </motion.div>
-                </AnimatePresence>
+
                 {children}
             </motion.div>
         </AnimatePresence>

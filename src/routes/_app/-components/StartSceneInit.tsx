@@ -2,7 +2,7 @@
 
 import SceneLayout from '@/components/SceneLayout'
 import type { SceneKey } from '@/modules/scene-key.type'
-import { motion } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
 import { useIsMobile } from '@/hooks/use-mobile'
 
 export default function StartSceneInit({
@@ -53,6 +53,24 @@ export default function StartSceneInit({
                 className="absolute inset-0 cursor-pointer"
                 onClick={() => onSceneChange('start')}
             />
+
+            <AnimatePresence>
+                <motion.div
+                    className="absolute right-4 bottom-2 flex items-center justify-end text-sm opacity-70 text-white"
+                    animate={{
+                        opacity: [0.7, 0.4, 0.7],
+                        transition: {
+                            duration: 1.5,
+                            repeat: Infinity,
+                            ease: 'easeInOut',
+                        },
+                    }}
+                    initial={{ opacity: 0 }}
+                    exit={{ opacity: 0, transition: { duration: 0.5 } }}
+                >
+                    <span className="mr-1">▶︎</span> touch
+                </motion.div>
+            </AnimatePresence>
 
         </SceneLayout>
     )
