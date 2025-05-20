@@ -28,6 +28,7 @@ type SuccessSceneProps = {
     setIsTouchable?: (isTouchable: boolean) => void
     showGlitter?: boolean
     faceArea?: FaceArea
+    logoColor?: 'white' | 'black'
 }
 
 export default function SuccessScene({
@@ -43,9 +44,15 @@ export default function SuccessScene({
     setIsTouchable,
     showGlitter = false,
     faceArea = { top: 8, left: 40, width: 20, height: 25 }, // 기본 얼굴 영역 좌표
+    logoColor = 'white',
 }: SuccessSceneProps) {
     return (
-        <SceneLayout bg={bgImage} effect={effect} soundEffect={soundEffect as SoundEffect}>
+        <SceneLayout
+            bg={bgImage}
+            effect={effect}
+            soundEffect={soundEffect as SoundEffect}
+            logoColor={logoColor}
+        >
             <div className="relative flex h-screen flex-col justify-end overflow-hidden bg-cover bg-center">
                 {/* 글리터 효과 (showGlitter가 true일 때만 보여짐) */}
                 {showGlitter && <GlitterEffect faceArea={faceArea} />}

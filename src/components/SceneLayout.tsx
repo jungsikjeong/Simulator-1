@@ -19,6 +19,7 @@ interface SceneLayoutProps extends PropsWithChildren {
     onSkip?: () => void
     soundEffect?: SoundEffect
     hideTitle?: boolean
+    logoColor?: 'white' | 'black'
 }
 
 /** 효과별 variant 정의 */
@@ -134,6 +135,7 @@ export default function SceneLayout({
     children,
     soundEffect = null,
     hideTitle = false,
+    logoColor = 'white',
 }: SceneLayoutProps) {
     const isMobile = useIsMobile()
 
@@ -215,9 +217,9 @@ export default function SceneLayout({
             >
                 {!hideTitle && (
                     <img
-                        src="/logo.png"
+                        src={`/logo-${logoColor}.png`}
                         alt="Greatest Marketer of Jim Beam"
-                        className={`${isMobile ? 'w-28' : 'w-35'} absolute top-2 right-2 z-50`}
+                        className={`${isMobile ? 'w-20' : 'w-32'} absolute top-2 right-2 z-50`}
                     />
                 )}
 
