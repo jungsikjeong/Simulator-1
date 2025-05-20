@@ -90,7 +90,7 @@ export default function StartScene({
 
       {/* Name Input with animation */}
       <motion.div
-        className={`absolute ${isMobile ? 'bottom-12' : 'bottom-20'} w-full flex flex-col items-center gap-4 ${!showInput ? 'opacity-0 pointer-events-none' : ''}`}
+        className={`absolute ${isMobile ? 'bottom-12' : 'bottom-16'} w-full flex flex-col items-center gap-4 ${!showInput ? 'opacity-0 pointer-events-none' : ''}`}
         initial={{ y: 20, opacity: 0 }}
         animate={showInput ? { y: 0, opacity: 1 } : {}}
         transition={{ duration: 0.5, ease: "easeOut" }}
