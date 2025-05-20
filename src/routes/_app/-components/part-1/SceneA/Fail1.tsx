@@ -13,8 +13,8 @@ export default function Part1SceneAFail1({ onSceneChange }: SceneProps) {
       onSceneChange={onSceneChange}
       bgImage="/party/3_장원영.png"
       chunks={[
-        { content: '분명 좋은 응원 방법이 있지 않을까?\n', className: 'font-bold' },
-        { content: '한번 더 나를 위해\n 고민해주겠어?' },
+        { content: '분명 좋은 응원 방법이 있지 않을까?\n' },
+        { content: '한 번 더 나를 위해 고민해 줄래?' },
       ]}
       nextScene="part1"
       showFailMessage={false}

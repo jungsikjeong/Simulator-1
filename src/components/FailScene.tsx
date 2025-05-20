@@ -6,6 +6,7 @@ import type { SceneKey } from '@/modules/scene-key.type'
 import { motion } from 'framer-motion'
 import { useState, useEffect } from 'react'
 import { useIsMobile } from '@/hooks/use-mobile'
+import { cn } from '@/lib/utils'
 
 type FailSceneProps = {
     onSceneChange: (scene: SceneKey) => void
@@ -36,8 +37,8 @@ export default function FailScene({
 
     return (
         <SceneLayout bg={bgImage} effect="shake">
-            <div className="relative flex h-screen flex-col justify-end overflow-hidden pb-12">
-                <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent pointer-events-none" />
+            <div className={`relative flex h-screen flex-col justify-end overflow-hidden ${isMobile ? 'pb-6' : 'pb-12'}`}>
+                <div className="absolute inset-0 pointer-events-none" />
 
                 <motion.div
                     initial={{ opacity: 0, y: 50, scale: 0.9 }}
@@ -53,7 +54,7 @@ export default function FailScene({
                         chunks={chunks}
                         typingDelay={0.5}
                         variant="fail"
-                        className={typingDone ? "mb-5 p-5" : "mb-20 p-5"}
+                        className={typingDone ? "mb-0 p-5" : "mb-6 p-5"}
                         typingTextClassName={`${isMobile ? 'text-xs' : 'text-base'} leading-relaxed`}
                         onComplete={() => setTypingDone(true)}
                         isTouchable={isTouchable}
@@ -69,7 +70,10 @@ export default function FailScene({
                             transition={{ delay: 0.3, duration: 0.5 }}
                             className="w-[80%] max-w-xl"
                         >
-                            <div className="w-full rounded-xl bg-white/80 px-5 py-5 shadow backdrop-blur-sm">
+                            <div className={cn(
+                                "w-full rounded-xl px-5 py-5 shadow",
+                                showFailMessage ? "bg-white/80 backdrop-blur-sm" : ""
+                            )}>
                                 {showFailMessage && <div className="mb-4 text-center text-gray-700 text-sm sm:text-base whitespace-pre-line">
                                     {failMessage}
                                 </div>}
@@ -78,9 +82,9 @@ export default function FailScene({
                                     onClick={() => onSceneChange(nextScene)}
                                     whileHover={{ scale: 1.03 }}
                                     whileTap={{ scale: 0.97 }}
-                                    className="bg-amber-500 text-white px-8 py-3 rounded-full shadow-lg hover:bg-amber-600 transition-all duration-300 font-bold tracking-wider"
+                                    className={`bg-[#ffc000] text-white ${isMobile ? 'px-15 py-1.5' : 'px-20 py-3'} rounded-full shadow-lg hover:bg-amber-600 transition-all duration-300 font-bold`}
                                 >
-                                    <span className="font-medium">다시하기 &gt;&gt;</span>
+                                    <span className={`${isMobile ? 'text-xs' : 'text-base'}`}>다시하기 &gt;&gt;</span>
                                 </motion.button>
                             </div>
                         </motion.div>
