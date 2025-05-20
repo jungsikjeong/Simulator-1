@@ -6,7 +6,7 @@ export const dialoguePreset: Record<UIPreset, string> = {
   light: 'bg-gradient-to-r from-amber-50/70 via-white/70 to-amber-50/70 border-none rounded-xl text-gray-800 shadow-sm ring-1 ring-white/30',
   dark: 'bg-black/80 border border-gray-600 text-white shadow-md',
   glass: 'bg-white/30 border border-white/40 text-white backdrop-blur-md shadow',
-  start: 'bg-gradient-to-r from-[#ffffcd] via-white to-[#ffffcd] border-1 border-black rounded-xl text-gray-800 shadow-sm ring-1 ring-white/30',
+  start: 'bg-gradient-to-r from-[#ffffcd] via-white to-[#ffffcd] border-2 border-black rounded-xl text-gray-800 shadow-sm ring-1 ring-white/30',
   fail: 'bg-white/80 border-none rounded-xl text-gray-700 shadow-md ring-1 ring-gray-200/50',
   romance: ' border-none rounded-xl text-white',
 }

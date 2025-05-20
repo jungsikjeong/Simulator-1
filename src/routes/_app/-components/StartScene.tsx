@@ -102,7 +102,7 @@ export default function StartScene({
             onChange={e => setPlayerName(e.target.value)}
             onKeyPress={handleKeyPress}
             placeholder="조언자 이름을 입력하세요"
-            className={`${isMobile ? 'px-2 py-1.5 text-sm' : 'px-4 py-3 text-lg'} border-1 border-black rounded-sm focus:outline-none focus:ring-2 focus:ring-[#ffc000] w-full shadow-lg text-center bg-white/90 backdrop-blur-sm text-gray-800`}
+            className={`${isMobile ? 'px-2 py-1.5 text-sm' : 'px-4 py-3 text-lg'} border-2 border-black rounded-sm focus:outline-none focus:ring-2 focus:ring-[#ffc000] w-full shadow-lg text-center bg-white/90 backdrop-blur-sm text-gray-800`}
             maxLength={12}
           />
           <div className="absolute right-2 top-1/2 -translate-y-1/2 text-[#ffc000] text-sm font-medium">
