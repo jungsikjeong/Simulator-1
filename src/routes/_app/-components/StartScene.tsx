@@ -8,6 +8,7 @@ import { v4 as uuidv4 } from 'uuid'
 import type { SceneKey } from '@/modules/scene-key.type'
 import { motion } from 'framer-motion'
 import DialogueBox from '@/components/DialogueBox'
+import { useIsMobile } from '@/hooks/use-mobile'
 
 export default function StartScene({
   onSceneChange,
@@ -20,6 +21,7 @@ export default function StartScene({
   const [isTouchable, setIsTouchable] = useState(true)
   const createMember = useCreateMember()
   const updateMemberName = useUpdateMemberName()
+  const isMobile = useIsMobile()
 
   useEffect(() => {
     if (introDone) {
@@ -79,7 +81,7 @@ export default function StartScene({
           ]}
           variant="start"
           className='p-5'
-          typingTextClassName='text-sm sm:text-lg leading-relaxed'
+          typingTextClassName={`${isMobile ? 'text-xs' : 'text-lg'} leading-relaxed`}
           onComplete={() => setTypingDone(true)}
           isTouchable={isTouchable}
           setIsTouchable={setIsTouchable}
