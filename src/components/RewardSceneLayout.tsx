@@ -262,7 +262,7 @@ const RewardSceneLayout = ({
         }
     };
 
-    const handleTouchEnd = (e: React.TouchEvent) => {
+    const handleTouchEnd = (_e: React.TouchEvent) => {
         if (isDownloading) return;
 
         clearLongPressTimer();
