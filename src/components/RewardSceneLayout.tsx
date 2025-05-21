@@ -41,12 +41,14 @@ const RewardSceneLayout = ({
     const [isSwipeAnimating, setIsSwipeAnimating] = useState<boolean>(false);
     const [swipeProgress, setSwipeProgress] = useState<number>(0);
     const [swipeDirection, setSwipeDirection] = useState<'left' | 'right' | null>(null);
+    const [longPressProgress, setLongPressProgress] = useState<number>(0); // 길게 누르는 진행도 추가
 
     const startY = useRef(0);
     const startX = useRef(0);
     const currentY = useRef(0);
     const currentX = useRef(0);
     const longPressTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+    const longPressAnimTimer = useRef<ReturnType<typeof setInterval> | null>(null); // 길게 누르는 애니메이션용 타이머
     const swipeThreshold = 80;
     const longPressThreshold = 800;
 
@@ -80,7 +82,11 @@ const RewardSceneLayout = ({
 
     const downloadCard = (card: CardImage) => {
         setIsDownloading(true);
-        setIsSwipeAnimating(true);
+        // 햅틱 피드백 추가 (iOS 및 Android에서 지원)
+        if (navigator.vibrate) {
+            navigator.vibrate(100);
+        }
+
         setTimeout(() => {
             const link = document.createElement('a');
             link.href = card.src;
@@ -92,6 +98,7 @@ const RewardSceneLayout = ({
                 setIsDownloading(false);
                 setIsSwipeAnimating(false);
                 setSwipeProgress(0);
+                setLongPressProgress(0);
             }, 500);
         }, 300);
     };
@@ -100,7 +107,22 @@ const RewardSceneLayout = ({
     const handleLongPressStart = (index: number) => {
         if (isDownloading) return;
         clearLongPressTimer();
+
+        // 프로그레스 애니메이션 추가
+        setLongPressProgress(0);
+        longPressAnimTimer.current = setInterval(() => {
+            setLongPressProgress(prev => {
+                const newProgress = prev + (100 / (longPressThreshold / 100));
+                return newProgress >= 100 ? 100 : newProgress;
+            });
+        }, 100);
+
         longPressTimer.current = setTimeout(() => {
+            if (longPressAnimTimer.current) {
+                clearInterval(longPressAnimTimer.current);
+                longPressAnimTimer.current = null;
+            }
+            setLongPressProgress(100);
             downloadCard(images[index]);
         }, longPressThreshold);
     };
@@ -110,6 +132,11 @@ const RewardSceneLayout = ({
             clearTimeout(longPressTimer.current);
             longPressTimer.current = null;
         }
+        if (longPressAnimTimer.current) {
+            clearInterval(longPressAnimTimer.current);
+            longPressAnimTimer.current = null;
+        }
+        setLongPressProgress(0);
     };
 
     // 포인터 다운: 시작 위치 기록 + 캡처
@@ -121,16 +148,23 @@ const RewardSceneLayout = ({
         handleLongPressStart(index);
     };
 
-    // 포인터 이동: 스와이프 취소 및 진행
+    // 포인터 이동: 스와이프 처리 및 길게 누르기 취소
     const handlePointerMove = (e: React.PointerEvent) => {
-        clearLongPressTimer();
         currentX.current = e.clientX;
         currentY.current = e.clientY;
         const diffX = currentX.current - startX.current;
-        if (Math.abs(diffX) > Math.abs(currentY.current - startY.current) && Math.abs(diffX) > 10) {
-            const dir = diffX > 0 ? 'right' : 'left';
-            setSwipeDirection(dir);
-            setSwipeProgress(Math.min(100, (Math.abs(diffX) / swipeThreshold) * 100));
+        const diffY = currentY.current - startY.current;
+
+        // 미세한 움직임은 무시 (길게 누르기 유지)
+        if (Math.abs(diffX) > 10 || Math.abs(diffY) > 10) {
+            clearLongPressTimer(); // 움직임이 감지되면 길게 누르기 취소
+
+            // 좌우 스와이프가 상하 스와이프보다 큰 경우만 처리
+            if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 10) {
+                const dir = diffX > 0 ? 'right' : 'left';
+                setSwipeDirection(dir);
+                setSwipeProgress(Math.min(100, (Math.abs(diffX) / swipeThreshold) * 100));
+            }
         }
     };
 
@@ -138,11 +172,18 @@ const RewardSceneLayout = ({
     const handlePointerEnd = (e: React.PointerEvent) => {
         clearLongPressTimer();
         (e.target as Element).releasePointerCapture(e.pointerId);
+
         if (swipeDirection) {
             const diffX = Math.abs(currentX.current - startX.current);
             if (diffX > swipeThreshold) {
                 setIsSwipeAnimating(true);
                 setSwipeProgress(100);
+
+                // 햅틱 피드백 추가 (iOS 및 Android에서 지원)
+                if (navigator.vibrate) {
+                    navigator.vibrate(50);
+                }
+
                 setTimeout(() => {
                     setSelectedCard(prev =>
                         swipeDirection === 'left'
@@ -203,7 +244,7 @@ const RewardSceneLayout = ({
     };
 
     return (
-        <div className={`w-full h-screen flex flex-col items-center ${isMobile ? 'justify-between' : 'justify-center py-10'} ${bgColor} p-4 overflow-hidden`}>
+        <div className={`w-full h-screen flex flex-col items-center ${isMobile ? 'justify-between py-10' : 'justify-center py-10'} ${bgColor} p-4 overflow-hidden`}>
             {sceneText && (
                 <h1 className={`${isMobile ? 'text-sm' : 'text-2xl'} font-bold mb-6 text-center ${textColor} drop-shadow-sm px-4`}>
                     {sceneText}
@@ -232,9 +273,21 @@ const RewardSceneLayout = ({
                                         <div className={`mb-1 text-sm text-center ${textColor} bg-opacity-70 ${bgColor} py-1 px-3 rounded-full mx-auto shadow-sm`}>
                                             {isDownloading ? '다운로드중...' : guideTextMobile}
                                         </div>
+                                        {/* 프로그레스 바 영역 */}
                                         <div className="w-16 h-1.5 bg-gray-200 rounded-full overflow-hidden">
+                                            {/* 스와이프 프로그레스 */}
                                             {swipeDirection && (
-                                                <div className={`h-full ${borderColor} ${bgColor} rounded-full transition-all duration-300`} style={{ width: `${swipeProgress}%` }} />
+                                                <div
+                                                    className={`h-full ${borderColor} ${bgColor} rounded-full transition-all duration-300`}
+                                                    style={{ width: `${swipeProgress}%` }}
+                                                />
+                                            )}
+                                            {/* 길게 누르기 프로그레스 */}
+                                            {!swipeDirection && longPressProgress > 0 && (
+                                                <div
+                                                    className={`h-full bg-green-500 rounded-full transition-all duration-300`}
+                                                    style={{ width: `${longPressProgress}%` }}
+                                                />
                                             )}
                                         </div>
                                     </div>
@@ -245,7 +298,11 @@ const RewardSceneLayout = ({
                 </div>
                 <div className="flex flex-wrap justify-center gap-3 mt-10 w-full">
                     {tabTexts.map((text, idx) => (
-                        <button key={idx} onClick={() => setSelectedCard(idx)} className={`px-3 py-1 rounded-full text-xs md:text-sm transition-all ${selectedCard === idx ? `${borderColor} bg-white font-medium border-2 shadow-md ${textColor}` : 'bg-white border border-gray-200 ' + textColor}`}>
+                        <button
+                            key={idx}
+                            onClick={() => setSelectedCard(idx)}
+                            className={`px-3 py-1 rounded-full text-xs md:text-sm transition-all ${selectedCard === idx ? `${borderColor} bg-white font-medium border-2 shadow-md ${textColor}` : 'bg-white border border-gray-200 ' + textColor}`}
+                        >
                             {text}
                         </button>
                     ))}
