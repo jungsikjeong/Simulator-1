@@ -7,7 +7,7 @@ import {
     type Variants,
 } from 'framer-motion'
 import type { PropsWithChildren } from 'react'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useIsMobile } from '@/hooks/use-mobile'
 
 export type TransitionEffect = 'fade' | 'shake' | 'zoom' | 'flash' | 'slide' | 'crossFade' | 'smoothFade' | 'trueBlend'
@@ -128,6 +128,18 @@ const variantMap: Record<TransitionEffect, Variants> = {
     },
 }
 
+// 이미지 로딩 상태 관리를 위한 타입
+interface LoadingState {
+    isLoading: boolean;
+    progress: number;
+    totalImages: number;
+    loadedImages: number;
+}
+
+// 전역 이미지 캐시
+const imageCache = new Map<string, HTMLImageElement>();
+let isInitialLoad = true;
+
 export default function SceneLayout({
     bg,
     effect = 'trueBlend',
@@ -138,6 +150,12 @@ export default function SceneLayout({
     logoColor = 'white',
 }: SceneLayoutProps) {
     const isMobile = useIsMobile()
+    const [loadingState, setLoadingState] = useState<LoadingState>({
+        isLoading: isInitialLoad,
+        progress: 0,
+        totalImages: 0,
+        loadedImages: 0
+    });
 
     useEffect(() => {
         if (soundEffect) {
@@ -153,55 +171,199 @@ export default function SceneLayout({
         return () => window.removeEventListener('keydown', h)
     }, [onSkip])
 
-    useEffect(() => {
-        const bgUrls = [
-            '/start_장원영.png',
-            '/hof/1_박정민.png',
-            '/hof/2_장원영.png',
-            '/hof/3_장원영.png',
-            '/hof/4_장원영.png',
-            '/home/1_박정민.png',
-            '/home/2_장원영.png',
-            '/home/3_장원영.png',
-            '/home/4_박정민.png',
-            '/party/1_박정민.png',
-            '/party/2_장원영.png',
-            '/party/3_장원영.png',
-            '/party/4_박정민.png',
-            '/party/5_박정민.png',
-            '/party/6_장원영.png',
-            '/party/7_장원영.png',
-            '/party/8_단체.png',
-            '/reward/박정민_진저.png',
-            '/reward/박정민_레몬.png',
-            '/reward/박정민_자몽.png',
-            '/reward/박정민_플레인.png',
-            '/reward/장원영_레몬.png',
-            '/reward/장원영_자몽.png',
-            '/reward/장원영_진저.png',
-            '/reward/장원영_플레인.png',
-            '/romance/1_박정민.png',
-            '/romance/2_박정민.png',
-            '/romance/3_박정민.png',
-            '/romance/4_박정민.png',
-            '/romance/5_박정민.png',
-            '/romance/6_박정민.png',
-            '/romance/7_박정민.png',
-            '/romance/8_박정민.png',
-            '/romance/9_박정민.png',
-            '/romance/10_박정민.png',
-            '/romance/11_박정민.png',
-            '/romance/12_박정민.png',
-            '/ending/1_장원영.png',
-            '/ending/2_같이.png',
-            '/ending/3_같이.png',
-        ]
+    // 이미지 최적화를 위한 설정
+    const optimizeImage = (src: string) => {
+        // WebP 지원 확인
+        const supportsWebP = () => {
+            const elem = document.createElement('canvas');
+            if (elem.getContext && elem.getContext('2d')) {
+                return elem.toDataURL('image/webp').indexOf('data:image/webp') === 0;
+            }
+            return false;
+        };
 
-        bgUrls.forEach((src) => {
+        // 이미지 경로에서 WebP 버전 생성
+        const getOptimizedPath = (path: string) => {
+            if (supportsWebP()) {
+                return path.replace(/\.(png|jpg|jpeg)$/, '.webp');
+            }
+            return path;
+        };
+
+        return getOptimizedPath(src);
+    };
+
+    // 초기 이미지 프리로드
+    useEffect(() => {
+        if (!isInitialLoad) return;
+
+        const loadAllImages = async () => {
+            const allImages = [
+                '/start_장원영.png',
+                '/hof/1_박정민.png',
+                '/hof/2_장원영.png',
+                '/hof/3_장원영.png',
+                '/hof/4_장원영.png',
+                '/home/1_박정민.png',
+                '/home/2_장원영.png',
+                '/home/3_장원영.png',
+                '/home/4_박정민.png',
+                '/party/1_박정민.png',
+                '/party/2_장원영.png',
+                '/party/3_장원영.png',
+                '/party/4_박정민.png',
+                '/party/5_박정민.png',
+                '/party/6_장원영.png',
+                '/party/7_장원영.png',
+                '/party/8_단체.png',
+                '/reward/박정민_진저.png',
+                '/reward/박정민_레몬.png',
+                '/reward/박정민_자몽.png',
+                '/reward/박정민_플레인.png',
+                '/reward/장원영_레몬.png',
+                '/reward/장원영_자몽.png',
+                '/reward/장원영_진저.png',
+                '/reward/장원영_플레인.png',
+                '/romance/1_박정민.png',
+                '/romance/2_박정민.png',
+                '/romance/3_박정민.png',
+                '/romance/4_박정민.png',
+                '/romance/5_박정민.png',
+                '/romance/6_박정민.png',
+                '/romance/7_박정민.png',
+                '/romance/8_박정민.png',
+                '/romance/9_박정민.png',
+                '/romance/10_박정민.png',
+                '/romance/11_박정민.png',
+                '/romance/12_박정민.png',
+                '/ending/1_장원영.png',
+                '/ending/2_같이.png',
+                '/ending/3_같이.png',
+            ];
+
+            setLoadingState({
+                isLoading: true,
+                progress: 0,
+                totalImages: allImages.length,
+                loadedImages: 0
+            });
+
+            const preloadImage = (src: string): Promise<void> => {
+                return new Promise((resolve) => {
+                    if (imageCache.has(src)) {
+                        setLoadingState(prev => {
+                            const newLoadedImages = Math.min(prev.loadedImages + 1, prev.totalImages);
+                            const newProgress = Math.round((newLoadedImages / prev.totalImages) * 100);
+                            return {
+                                ...prev,
+                                loadedImages: newLoadedImages,
+                                progress: newProgress
+                            };
+                        });
+                        resolve();
+                        return;
+                    }
+
+                    const img = new Image();
+                    img.onload = () => {
+                        imageCache.set(src, img);
+                        setLoadingState(prev => {
+                            const newLoadedImages = Math.min(prev.loadedImages + 1, prev.totalImages);
+                            const newProgress = Math.round((newLoadedImages / prev.totalImages) * 100);
+                            return {
+                                ...prev,
+                                loadedImages: newLoadedImages,
+                                progress: newProgress
+                            };
+                        });
+                        resolve();
+                    };
+                    img.onerror = () => {
+                        // 이미지 로드 실패 시 원본 경로로 재시도
+                        const originalSrc = src.replace('.webp', '.png');
+                        if (originalSrc !== src) {
+                            const fallbackImg = new Image();
+                            fallbackImg.onload = () => {
+                                imageCache.set(originalSrc, fallbackImg);
+                                setLoadingState(prev => {
+                                    const newLoadedImages = Math.min(prev.loadedImages + 1, prev.totalImages);
+                                    const newProgress = Math.round((newLoadedImages / prev.totalImages) * 100);
+                                    return {
+                                        ...prev,
+                                        loadedImages: newLoadedImages,
+                                        progress: newProgress
+                                    };
+                                });
+                                resolve();
+                            };
+                            fallbackImg.onerror = () => {
+                                console.warn(`이미지 로드 실패 (원본): ${originalSrc}`);
+                                setLoadingState(prev => {
+                                    const newLoadedImages = Math.min(prev.loadedImages + 1, prev.totalImages);
+                                    const newProgress = Math.round((newLoadedImages / prev.totalImages) * 100);
+                                    return {
+                                        ...prev,
+                                        loadedImages: newLoadedImages,
+                                        progress: newProgress
+                                    };
+                                });
+                                resolve();
+                            };
+                            fallbackImg.src = originalSrc;
+                        } else {
+                            console.warn(`이미지 로드 실패: ${src}`);
+                            setLoadingState(prev => {
+                                const newLoadedImages = Math.min(prev.loadedImages + 1, prev.totalImages);
+                                const newProgress = Math.round((newLoadedImages / prev.totalImages) * 100);
+                                return {
+                                    ...prev,
+                                    loadedImages: newLoadedImages,
+                                    progress: newProgress
+                                };
+                            });
+                            resolve();
+                        }
+                    };
+                    img.src = src;
+                });
+            };
+
+            try {
+                // 배치 단위로 이미지 로드
+                const batchSize = 5;
+                for (let i = 0; i < allImages.length; i += batchSize) {
+                    const batch = allImages.slice(i, i + batchSize);
+                    await Promise.all(batch.map(preloadImage));
+                }
+
+                setLoadingState(prev => ({
+                    ...prev,
+                    isLoading: false
+                }));
+                isInitialLoad = false;
+            } catch (error) {
+                console.error('이미지 로딩 중 오류 발생:', error);
+                setLoadingState(prev => ({
+                    ...prev,
+                    isLoading: false
+                }));
+                isInitialLoad = false;
+            }
+        };
+
+        loadAllImages();
+    }, []);
+
+    // 현재 배경 이미지가 캐시에 없을 경우에만 로드
+    useEffect(() => {
+        if (!imageCache.has(bg)) {
             const img = new Image();
-            img.src = src;
-        })
-    }, [])
+            img.onload = () => {
+                imageCache.set(bg, img);
+            };
+            img.src = bg;
+        }
+    }, [bg]);
 
     const { initial, animate, exit } = variantMap[effect]
 
@@ -215,6 +377,21 @@ export default function SceneLayout({
                 animate={animate as TargetAndTransition}
                 exit={exit as TargetAndTransition}
             >
+                {loadingState.isLoading && (
+                    <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+                        <div className="text-white text-center">
+                            <div className="text-xl mb-2">로딩 중...</div>
+                            <div className="w-48 h-2 bg-gray-700 rounded-full">
+                                <div
+                                    className="h-full bg-white rounded-full transition-all duration-300"
+                                    style={{ width: `${loadingState.progress}%` }}
+                                />
+                            </div>
+                            <div className="mt-2">{loadingState.progress}%</div>
+                        </div>
+                    </div>
+                )}
+
                 {!hideTitle && (
                     <img
                         src={`/logo-${logoColor}.png`}

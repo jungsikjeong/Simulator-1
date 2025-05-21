@@ -52,9 +52,9 @@ export default function Part1({
           inline
           variant="light"
           choices={[
+            { key: 'fail2', label: '친구들과 가서 말 걸어보기' },
             { key: 'success', label: '짐빔 하이볼 플레인 건네주기' },
             { key: 'fail1', label: '무시하기' },
-            { key: 'fail2', label: '친구들과 가서 말 걸어보기' },
           ]}
           onSelect={k => {
             switch (k) {
