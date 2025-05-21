@@ -171,27 +171,6 @@ export default function SceneLayout({
         return () => window.removeEventListener('keydown', h)
     }, [onSkip])
 
-    // 이미지 최적화를 위한 설정
-    const optimizeImage = (src: string) => {
-        // WebP 지원 확인
-        const supportsWebP = () => {
-            const elem = document.createElement('canvas');
-            if (elem.getContext && elem.getContext('2d')) {
-                return elem.toDataURL('image/webp').indexOf('data:image/webp') === 0;
-            }
-            return false;
-        };
-
-        // 이미지 경로에서 WebP 버전 생성
-        const getOptimizedPath = (path: string) => {
-            if (supportsWebP()) {
-                return path.replace(/\.(png|jpg|jpeg)$/, '.webp');
-            }
-            return path;
-        };
-
-        return getOptimizedPath(src);
-    };
 
     // 초기 이미지 프리로드
     useEffect(() => {
@@ -200,14 +179,6 @@ export default function SceneLayout({
         const loadAllImages = async () => {
             const allImages = [
                 '/start_장원영.png',
-                '/hof/1_박정민.png',
-                '/hof/2_장원영.png',
-                '/hof/3_장원영.png',
-                '/hof/4_장원영.png',
-                '/home/1_박정민.png',
-                '/home/2_장원영.png',
-                '/home/3_장원영.png',
-                '/home/4_박정민.png',
                 '/party/1_박정민.png',
                 '/party/2_장원영.png',
                 '/party/3_장원영.png',
@@ -216,6 +187,14 @@ export default function SceneLayout({
                 '/party/6_장원영.png',
                 '/party/7_장원영.png',
                 '/party/8_단체.png',
+                '/hof/1_박정민.png',
+                '/hof/2_장원영.png',
+                '/hof/3_장원영.png',
+                '/hof/4_장원영.png',
+                '/home/1_박정민.png',
+                '/home/2_장원영.png',
+                '/home/3_장원영.png',
+                '/home/4_박정민.png',
                 '/reward/박정민_진저.png',
                 '/reward/박정민_레몬.png',
                 '/reward/박정민_자몽.png',

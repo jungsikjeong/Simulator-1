@@ -41,7 +41,7 @@ export default function FailScene({
 
     return (
         <SceneLayout bg={bgImage} effect="shake">
-            <div className={`relative flex h-screen flex-col justify-end overflow-hidden ${isMobile ? 'pb-6' : 'pb-12'}`}>
+            <div className={`relative flex h-screen flex-col justify-end overflow-hidden ${isMobile ? 'pb-6' : 'pb-6'}`}>
                 <div className="absolute inset-0 pointer-events-none" />
 
                 <motion.div
@@ -59,8 +59,8 @@ export default function FailScene({
                         typingDelay={0.5}
                         variant="fail"
                         className={cn(
-                            typingDone && !showFailMessage ? "mb-0" : isMobile ? "mb-4" : "mb-6",
-                            isMobile ? "p-2" : "p-5"
+                            typingDone && !showFailMessage ? "mb-0" : isMobile ? "mb-4" : "mb-4",
+                            isMobile ? "p-2" : "p-3"
                         )}
                         typingTextClassName={`${isMobile ? 'text-xs' : 'text-base'} leading-relaxed`}
                         onComplete={() => setTypingDone(true)}
@@ -89,7 +89,7 @@ export default function FailScene({
                                     onClick={() => onSceneChange(nextScene)}
                                     whileHover={{ scale: 1.03 }}
                                     whileTap={{ scale: 0.97 }}
-                                    className={`bg-[#ffc000] text-white ${isMobile ? 'px-15 py-1.5' : 'px-20 py-3'} rounded-full shadow-lg hover:bg-amber-600 transition-all duration-300 font-bold`}
+                                    className={`bg-[#ffc000] text-white ${isMobile ? 'px-15 py-1.5' : 'px-20 py-2'} rounded-full shadow-lg hover:bg-amber-600 transition-all duration-300 font-bold`}
                                 >
                                     <span className={`${isMobile ? 'text-xs' : 'text-base'}`}>다시하기 &gt;&gt;</span>
                                 </motion.button>
