@@ -1,3 +1,4 @@
+// src/components/SuccessScene.tsx
 'use client'
 
 import DialogueBox from '@/components/DialogueBox'

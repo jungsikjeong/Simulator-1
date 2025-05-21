@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import SceneLayout from '@/components/SceneLayout'
 import type { SceneKey } from '@/modules/scene-key.type'
-import { AnimatePresence, motion } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { useIsMobile } from '@/hooks/use-mobile'
 
 // SceneLayout와 동일한 allImages 배열을 임포트하거나 재정의하세요.
