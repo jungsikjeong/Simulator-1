@@ -54,7 +54,7 @@ export default function FailScene({
 
     return (
         <SceneLayout bg={bgImage} effect="shake">
-            <div className={`relative flex h-screen flex-col justify-end overflow-hidden ${isMobile ? 'pb-6' : 'pb-6'}`}>
+            <div className={`relative flex h-screen flex-col justify-end overflow-hidden ${isMobile ? 'pb-7' : 'pb-9'}`}>
                 <div className="absolute inset-0 pointer-events-none" />
 
                 <motion.div
@@ -72,8 +72,8 @@ export default function FailScene({
                         typingDelay={0.5}
                         variant="fail"
                         className={cn(
-                            typingDone && !showFailMessage ? "mb-0" : isMobile ? "mb-4" : "mb-4",
-                            isMobile ? "p-2" : "p-3"
+                            typingDone && !showFailMessage ? "mb-1.5" : isMobile ? "mb-1.5" : "mb-1.5",
+                            isMobile ? "p-4.5" : "p-4.5"
                         )}
                         typingTextClassName={`${isMobile ? 'text-xs' : 'text-base'} leading-relaxed`}
                         onComplete={() => {

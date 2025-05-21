@@ -17,7 +17,7 @@ export default function Part3SceneAFail({ onSceneChange }: SceneProps) {
                 { content: '잊은거야ㅠㅠ?"\n' },
                 { content: '\n' },
                 { content: '경쟁사는 말할 수 없다구.\n' },
-                { content: '꼭 기억해줘ㅠㅠㅠ' },
+                { content: '꼭 기억해줘ㅠㅠ' },
             ]}
             nextScene="part3SceneAMain"
             showFailMessage={false}

@@ -2,7 +2,7 @@
 
 import SuccessScene from '@/components/SuccessScene'
 import type { SceneKey } from '@/modules/scene-key.type'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 type SceneProps = {
     onSceneChange: (scene: SceneKey) => void
@@ -11,6 +11,16 @@ type SceneProps = {
 export default function Part3({ onSceneChange }: SceneProps) {
     const [isTypingComplete, setIsTypingComplete] = useState(false)
     const [isTouchable, setIsTouchable] = useState(true)
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            if (navigator.vibrate) {
+                navigator.vibrate(300)
+            }
+        }, 100)
+
+        return () => clearTimeout(timer)
+    }, [])
 
     return (
         <SuccessScene
@@ -21,6 +31,7 @@ export default function Part3({ onSceneChange }: SceneProps) {
                     content: '여유 없는데?',
                 },
             ]}
+            effect='shake'
             soundEffect={null}
             nextScene="part3SceneAMain"
             isTypingComplete={isTypingComplete}

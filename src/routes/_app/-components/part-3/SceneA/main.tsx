@@ -58,9 +58,9 @@ export default function Part3SceneAMain({ onSceneChange }: SceneProps) {
                     inline
                     variant="light"
                     choices={[
-                        { key: 'success', label: '고된 하루의 끝은 짐빔 하이볼!' },
                         { key: 'fail', label: '고된 하루의 끝은 생맥주!' },
                         { key: 'fail', label: '고된 하루의 끝은 소주!' },
+                        { key: 'success', label: '고된 하루의 끝은 짐빔 하이볼!' },
                     ]}
                     onSelect={k => {
                         switch (k) {

@@ -24,7 +24,7 @@ export default function Part4SceneASuccess1({ onSceneChange }: SceneProps) {
     return (
         <RomanceScene
             onSceneChange={onSceneChange}
-            bgImage="/romance/2_박정민.png"
+            bgImage="/romance/4_박정민.png"
             chunks={[
                 {
                     content: '힘들지?\n',

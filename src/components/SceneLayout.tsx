@@ -206,6 +206,7 @@ export default function SceneLayout({
                 '/romance/1_박정민.png',
                 '/romance/2_박정민.png',
                 '/romance/3_박정민.png',
+                '/romance/4_박정민.png',
                 '/romance/5_박정민.png',
                 '/romance/6_박정민.png',
                 '/romance/7_박정민.png',
