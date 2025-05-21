@@ -143,8 +143,8 @@ export default function MultiBgRomanceScene({
                     typingSpeed={typingSpeed}
                     typingDelay={0.1}
                     variant="romance"
-                    className="mx-auto cursor-pointer px-0 py-6"
-                    typingTextClassName="text-base sm:text-xl leading-relaxed"
+                    className="mx-auto cursor-pointer px-0 py-6 shadow-none"
+                    typingTextClassName="leading-relaxed"
                     isTouchable={isTouchable}
                     setIsTouchable={setIsTouchable}
                     onTouchSceneChange={handleTouch}

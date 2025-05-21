@@ -30,7 +30,7 @@ export default function Ending({ onSceneChange }: SceneProps) {
                     content: '...\n', className: 'font-bold text-black/70'
                 },
                 {
-                    content: '그것 참 잘됐다', className: 'font-bold text-black/70'
+                    content: '그거 정말 정말 잘됐다', className: 'font-bold text-black/70'
                 },
             ]}
             soundEffect={null}
@@ -40,6 +40,7 @@ export default function Ending({ onSceneChange }: SceneProps) {
             setIsTypingComplete={setIsTypingComplete}
             isTouchable={isTouchable}
             setIsTouchable={setIsTouchable}
+            dialogClassName="bg-white/75 rounded-lg px-4"
         />
     )
 }

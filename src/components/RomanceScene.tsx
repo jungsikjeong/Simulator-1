@@ -18,6 +18,7 @@ type SuccessSceneProps = {
     sceneEffect?: 'smoothFade' | 'shake' | 'trueBlend'
     isTouchable?: boolean
     setIsTouchable?: (isTouchable: boolean) => void
+    dialogClassName?: string
 }
 
 export default function RomanceScene({
@@ -32,6 +33,7 @@ export default function RomanceScene({
     sceneEffect = 'trueBlend',
     isTouchable = true,
     setIsTouchable,
+    dialogClassName,
 }: SuccessSceneProps) {
     return (
         <SceneLayout bg={bgImage} effect={sceneEffect as 'smoothFade' | 'shake' | 'trueBlend'} soundEffect={soundEffect as SoundEffect}>
@@ -45,8 +47,8 @@ export default function RomanceScene({
                     typingDelay={0.5}
                     typingSpeed={8}
                     variant="romance"
-                    className="mx-auto cursor-pointer px-0 py-6"
-                    typingTextClassName="text-base sm:text-xl leading-relaxed"
+                    className={`mx-auto cursor-pointer px-0 py-6 shadow-none ${dialogClassName || ''}`}
+                    typingTextClassName="leading-relaxed"
                     isTouchable={isTouchable}
                     setIsTouchable={setIsTouchable}
                     onTouchSceneChange={() => onSceneChange(nextScene)}
