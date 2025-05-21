@@ -36,6 +36,7 @@ export default function Part1SceneBSuccess({ onSceneChange }: SceneProps) {
       setIsTouchable={setIsTouchable}
       showGlitter={true}
       faceArea={modelFaceArea}
+      logoColor='black'
     />
   )
 }

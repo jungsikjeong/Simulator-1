@@ -20,7 +20,7 @@ export default function Part1SceneBMain({ onSceneChange }: SceneProps) {
   return (
     <SceneLayout bg="/party/6_장원영.png" effect="trueBlend">
 
-      <div className="absolute" style={{ top: '2%', right: '15%', transform: 'rotate(220deg)' }}>
+      <div className="absolute" style={{ top: isMobile ? '2%' : '3%', right: isMobile ? '15%' : '12%', transform: isMobile ? 'rotate(220deg)' : 'rotate(235deg)' }}>
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -42,7 +42,7 @@ export default function Part1SceneBMain({ onSceneChange }: SceneProps) {
                   ease: "easeOut"
                 }}
               >
-                <svg width={isMobile ? "10" : "14"} height={isMobile ? "12" : "16"} viewBox="0 0 10 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <svg width={isMobile ? "10" : "16"} height={isMobile ? "12" : "18"} viewBox="0 0 10 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M2 2 C2 8, 8 8, 8 2" stroke="white" strokeWidth="2" strokeLinecap="round" />
                 </svg>
               </motion.div>
@@ -162,9 +162,9 @@ export default function Part1SceneBMain({ onSceneChange }: SceneProps) {
           inline
           variant="light"
           choices={[
-            { key: 'success', label: '나 혼자 집에서 짐빔 하이볼!' },
             { key: 'fail1', label: '친구가 없구나 내가 도와줄게!' },
             { key: 'fail2', label: '짐빔 하이볼 마실래?' },
+            { key: 'success', label: '나 혼자 집에서 짐빔 하이볼!' },
           ]}
           onSelect={k => {
             switch (k) {

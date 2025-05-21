@@ -375,7 +375,7 @@ export default function SceneLayout({
                     <img
                         src={`/logo-${logoColor}.png`}
                         alt="Greatest Marketer of Jim Beam"
-                        className={`${isMobile ? 'w-20' : 'w-32'} absolute top-2 right-2 z-50`}
+                        className={`${isMobile ? 'w-20' : 'w-26'} absolute top-2 right-2 z-50`}
                     />
                 )}
 

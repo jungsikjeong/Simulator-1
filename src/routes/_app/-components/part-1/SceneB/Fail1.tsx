@@ -13,7 +13,7 @@ export default function Part1SceneBFail1({ onSceneChange }: SceneProps) {
       onSceneChange={onSceneChange}
       bgImage="/party/8_단체.png"
       chunks={[
-        { content: '친구 지금 왔는데?\n', className: 'font-bold' },
+        { content: '친구 지금 왔는데?\n' },
       ]}
       nextScene="part1SceneBMain"
       showFailMessage={true}

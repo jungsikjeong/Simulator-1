@@ -2,7 +2,7 @@
 
 import SuccessScene from '@/components/SuccessScene'
 import type { SceneKey } from '@/modules/scene-key.type'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 type SceneProps = {
     onSceneChange: (scene: SceneKey) => void
@@ -10,6 +10,17 @@ type SceneProps = {
 
 export default function Part2({ onSceneChange }: SceneProps) {
     const [isTypingComplete, setIsTypingComplete] = useState(false)
+    const [isTouchable, setIsTouchable] = useState(true)
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            if (navigator.vibrate) {
+                navigator.vibrate(300)
+            }
+        }, 100) // 타이핑 시작 전에 진동이 울리도록 약간의 지연 추가
+
+        return () => clearTimeout(timer)
+    }, [])
 
     return (
         <SuccessScene
@@ -21,9 +32,13 @@ export default function Part2({ onSceneChange }: SceneProps) {
                 },
             ]}
             soundEffect={null}
+            effect='shake'
             nextScene="part2SceneAMain"
             isTypingComplete={isTypingComplete}
             setIsTypingComplete={setIsTypingComplete}
+            isTouchable={isTouchable}
+            setIsTouchable={setIsTouchable}
+
         />
     )
 }

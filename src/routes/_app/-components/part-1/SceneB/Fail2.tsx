@@ -14,9 +14,6 @@ export default function Part1SceneBFail2({ onSceneChange }: SceneProps) {
       bgImage="/party/5_박정민.png"
       chunks={[
         { content: '"마시고 있는데?"\n' },
-        { content: '\n' },
-        { content: '아...벌써 마시고 있구나\n' },
-        { content: '맛있게 마셔! 안녕!' },
       ]}
       nextScene="part1SceneBMain"
       failMessage={

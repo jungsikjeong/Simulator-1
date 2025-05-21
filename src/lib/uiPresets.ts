@@ -5,8 +5,8 @@ export type UIPreset = 'light' | 'start' | 'fail' | 'romance' | 'success'
 export const dialoguePreset: Record<UIPreset, string> = {
   light: 'bg-gradient-to-r from-amber-50/70 via-white/70 to-amber-50/70 border-none rounded-xl text-gray-800 shadow-sm ring-1 ring-white/30',
 
-  start: 'bg-gradient-to-r from-[#ffffcd] via-white to-[#ffffcd] border-2 border-black rounded-xl text-gray-800 shadow-sm ring-1 ring-white/30',
-  fail: 'bg-white/90 border-none rounded-sm text-gray-700 shadow-md ring-1 ring-gray-200/50',
+  start: 'bg-gradient-to-r from-[#ffffcd] via-white to-[#ffffcd] border-2 border-black rounded-xl text-gray-800 shadow-sm',
+  fail: 'bg-white/75 border-none rounded-sm text-gray-700 shadow-md ring-1 ring-gray-200/50',
   romance: ' border-none rounded-xl text-white',
   success: ' bg-white/90 border-none rounded-sm text-gray-700 shadow-md ring-1 ring-gray-200/50',
 }

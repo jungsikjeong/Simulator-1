@@ -10,6 +10,7 @@ type SceneProps = {
 
 export default function Part1SceneASuccess2({ onSceneChange }: SceneProps) {
   const [isTypingComplete, setIsTypingComplete] = useState(false)
+  const [isTouchable, setIsTouchable] = useState(true)
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -35,6 +36,8 @@ export default function Part1SceneASuccess2({ onSceneChange }: SceneProps) {
       nextScene="part1SceneBMain"
       isTypingComplete={isTypingComplete}
       setIsTypingComplete={setIsTypingComplete}
+      isTouchable={isTouchable}
+      setIsTouchable={setIsTouchable}
     />
   )
 }

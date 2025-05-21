@@ -78,8 +78,8 @@ export default function FailScene({
                             className="w-[80%] max-w-xl"
                         >
                             <div className={cn(
-                                "w-full rounded-xl px-5 py-4 shadow",
-                                showFailMessage ? "bg-white/80 backdrop-blur-sm" : ""
+                                "w-full rounded-sm px-5 py-4 shadow-md  ",
+                                showFailMessage ? "bg-white/75 border-1 border-black ring-1 ring-black/20" : ""
                             )}>
                                 {showFailMessage && <div className="mb-4 text-center text-gray-700 text-sm sm:text-base whitespace-pre-line">
                                     {failMessage}
@@ -89,7 +89,7 @@ export default function FailScene({
                                     onClick={() => onSceneChange(nextScene)}
                                     whileHover={{ scale: 1.03 }}
                                     whileTap={{ scale: 0.97 }}
-                                    className={`bg-[#ffc000] text-white ${isMobile ? 'px-15 py-1.5' : 'px-20 py-2'} rounded-full shadow-lg hover:bg-amber-600 transition-all duration-300 font-bold`}
+                                    className={`bg-[#ffc000] text-white ${isMobile ? 'px-15 py-1.5' : 'px-20 py-2'} rounded-full shadow-lg hover:bg-[#ffb000] transition-all duration-300 font-bold`}
                                 >
                                     <span className={`${isMobile ? 'text-xs' : 'text-base'}`}>다시하기 &gt;&gt;</span>
                                 </motion.button>
