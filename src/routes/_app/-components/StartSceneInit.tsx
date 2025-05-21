@@ -49,7 +49,7 @@ export default function StartSceneInit({
     // 모두 로드되면, 잠시 딜레이 후 진입
     useEffect(() => {
         if (loaded >= total) {
-            const t = setTimeout(() => setReady(true), 300) // UX를 위해 짧게 대기
+            const t = setTimeout(() => setReady(true), 100) // UX를 위해 짧게 대기
             return () => clearTimeout(t)
         }
     }, [loaded, total])
