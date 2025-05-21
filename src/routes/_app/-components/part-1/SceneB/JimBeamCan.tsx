@@ -1,5 +1,6 @@
 import React from 'react'
 import { motion } from 'framer-motion'
+import { useIsMobile } from '@/hooks/use-mobile'
 
 interface JimBeamCanProps {
     show: boolean
@@ -7,6 +8,7 @@ interface JimBeamCanProps {
 
 const JimBeamCan: React.FC<JimBeamCanProps> = React.memo(({ show }) => {
     if (!show) return null
+    const isMobile = useIsMobile()
     return (
         <motion.img
             src="/jim-beam-can.png"
@@ -15,8 +17,8 @@ const JimBeamCan: React.FC<JimBeamCanProps> = React.memo(({ show }) => {
             animate={{ y: 0, opacity: 1 }}
             transition={{ type: 'tween', duration: 0.9, ease: 'easeInOut' }}
             style={{
-                position: 'fixed',
-                left: '7%',
+                position: 'absolute',
+                left: isMobile ? '-30%' : '-25%',
                 bottom: -65,
                 transform: 'translateX(-50%)',
                 width: 450,

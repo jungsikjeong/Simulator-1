@@ -29,7 +29,9 @@ export default function Part1SceneBFail2({ onSceneChange }: SceneProps) {
         }
         onFailMessageEnd={() => setShowCan(true)}
       />
-      <JimBeamCan show={showCan} />
+      <div className="absolute inset-0 pointer-events-none">
+        <JimBeamCan show={showCan} />
+      </div>
     </>
   )
 }
