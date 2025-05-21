@@ -1,7 +1,7 @@
 'use client'
 
 import { AnimatePresence, motion, type TargetAndTransition, type Variants } from 'framer-motion'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import type { PropsWithChildren } from 'react'
 import { useIsMobile } from '@/hooks/use-mobile'
 
@@ -23,11 +23,11 @@ interface SceneLayoutProps extends PropsWithChildren {
     soundEffect?: SoundEffect
     hideTitle?: boolean
     logoColor?: 'white' | 'black'
-    nextBgList?: string[]  // 다음 씬의 배경 이미지 리스트
+    nextBgList?: string[]  // 다음 씬 배경 이미지 리스트
 }
 
+// variantMap: 기존 그대로 유지
 const variantMap: Record<TransitionEffect, Variants> = {
-    // ... 기존 variantMap 그대로 유지
     fade: { initial: { opacity: 0 }, animate: { opacity: 1, transition: { duration: 0.8, ease: 'easeInOut' } }, exit: { opacity: 0, transition: { duration: 0.6, ease: 'easeInOut' } } },
     zoom: { initial: { opacity: 0, scale: 1.1 }, animate: { opacity: 1, scale: 1 }, exit: { opacity: 0, scale: 0.9 } },
     flash: { initial: { opacity: 0 }, animate: { opacity: [0, 1, 0.8, 1] as number[] }, exit: { opacity: 0 } },
@@ -38,9 +38,8 @@ const variantMap: Record<TransitionEffect, Variants> = {
     trueBlend: { initial: { opacity: 0 }, animate: { opacity: 1, transition: { duration: 0.8, ease: [0.33, 1, 0.68, 1] } }, exit: { opacity: 0, transition: { duration: 0.8, ease: [0.32, 0, 0.67, 0] } } },
 }
 
-// 전역 캐시
+// 전역 캐시 및 전체 이미지 리스트
 const imageCache = new Map<string, HTMLImageElement>()
-// 모든 씬 이미지 리스트 (fallback 용)
 const allImages = [
     '/start_장원영.png',
     '/party/1_박정민.png',
@@ -82,12 +81,12 @@ const allImages = [
     '/ending/1_장원영.png',
     '/ending/2_같이.png',
     '/ending/3_같이.png',
-];
+]
 
 // 이미지 프리로드 유틸
 async function preloadImage(src: string): Promise<void> {
+    if (imageCache.has(src)) return Promise.resolve()
     return new Promise(resolve => {
-        if (imageCache.has(src)) return resolve()
         const img = new Image()
         img.onload = () => { imageCache.set(src, img); resolve() }
         img.onerror = () => resolve()
@@ -106,30 +105,9 @@ export default function SceneLayout({
     nextBgList = [],
 }: SceneLayoutProps) {
     const isMobile = useIsMobile()
-    const [initialLoading, setInitialLoading] = useState(true)
-    const [loadingState, setLoadingState] = useState({ total: 0, loaded: 0, progress: 0 })
 
-    // 1) 처음 마운트 시: bg + nextBgList(최대2장) 초기 로드 및 프로그레스
+    // 1) idle 시 전체 이미지 백그라운드 로드
     useEffect(() => {
-        const critical = [bg, ...nextBgList.slice(0, 2)]
-        const total = critical.length
-        setLoadingState({ total, loaded: 0, progress: 0 })
-        Promise.all(
-            critical.map(src =>
-                preloadImage(src).then(() => {
-                    setLoadingState(prev => ({
-                        total,
-                        loaded: prev.loaded + 1,
-                        progress: Math.round(((prev.loaded + 1) / total) * 100),
-                    }))
-                })
-            )
-        ).then(() => setInitialLoading(false))
-    }, [])
-
-    // 2) idle 콜백으로 나머지 이미지 백그라운드 로드
-    useEffect(() => {
-        if (initialLoading) return
         if ('requestIdleCallback' in window) {
             const id = (window as any).requestIdleCallback(() => {
                 allImages.forEach(src => { if (!imageCache.has(src)) preloadImage(src) })
@@ -140,9 +118,9 @@ export default function SceneLayout({
             allImages.forEach(src => { if (!imageCache.has(src)) preloadImage(src) })
         }, 3000)
         return () => clearTimeout(timer)
-    }, [initialLoading])
+    }, [])
 
-    // 3) bg 변경될 때마다 nextBgList 이미지만 프리로드
+    // 2) 씬 전환 시 nextBgList만 즉시 프리로드
     useEffect(() => {
         nextBgList.forEach(src => { if (!imageCache.has(src)) preloadImage(src) })
     }, [bg, nextBgList])
@@ -150,8 +128,7 @@ export default function SceneLayout({
     // 사운드 재생
     useEffect(() => {
         if (!soundEffect) return
-        const audio = new Audio(`/sounds/${soundEffect}.mp3`)
-        audio.play().catch(() => { })
+        new Audio(`/sounds/${soundEffect}.mp3`).play().catch(() => { })
     }, [soundEffect])
 
     // Esc 스킵
@@ -181,25 +158,10 @@ export default function SceneLayout({
                 animate={animate as TargetAndTransition}
                 exit={exit as TargetAndTransition}
             >
-                {initialLoading && (
-                    <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-                        <div className="text-white text-center">
-                            <div className="text-xl mb-2">로딩 중...</div>
-                            <div className="w-48 h-2 bg-gray-700 rounded-full">
-                                <div
-                                    className="h-full bg-white rounded-full transition-all duration-300"
-                                    style={{ width: `${loadingState.progress}%` }}
-                                />
-                            </div>
-                            <div className="mt-2">{loadingState.progress}%</div>
-                        </div>
-                    </div>
-                )}
-
                 {!hideTitle && (
                     <img
                         src={`/logo-${logoColor}.png`}
-                        alt="Greatest Marketer of Jim Beam"
+                        alt="Game Logo"
                         className={`${isMobile ? 'w-20' : 'w-26'} absolute top-2 right-2 z-50`}
                     />
                 )}

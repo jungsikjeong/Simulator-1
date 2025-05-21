@@ -36,24 +36,32 @@ const RewardSceneLayout = ({
     borderColor = 'border-yellow-400',
     textColor = 'text-yellow-700',
     sceneText = '',
-    guideTextMobile = '아래로 스와이프하여 다운로드',
-    guideTextDesktop = '클릭하여 다운로드',
+    guideTextMobile = '길게 눌러 다운로드',
+    guideTextDesktop = '길게 눌러 다운로드',
     onSceneChange = () => { }
 }: RewardSceneLayoutProps) => {
     const [selectedCard, setSelectedCard] = useState<number>(0); // Default to showing first card
     const [isDownloading, setIsDownloading] = useState<boolean>(false);
     const [isSwipeAnimating, setIsSwipeAnimating] = useState<boolean>(false);
     const [swipeProgress, setSwipeProgress] = useState<number>(0);
+    const [isLongPress, setIsLongPress] = useState<boolean>(false);
+    const [longPressProgress, setLongPressProgress] = useState<number>(0);
+    const [swipeDirection, setSwipeDirection] = useState<string | null>(null);
+
     const startY = useRef<number>(0);
+    const startX = useRef<number>(0);
     const currentY = useRef<number>(0);
+    const currentX = useRef<number>(0);
+    const longPressTimer = useRef<NodeJS.Timeout | null>(null);
     const swipeThreshold = 80;
+    const longPressThreshold = 800; // 길게 누르는 시간 (ms)
+
     const isMobile = useIsMobile();
     const cardRef = useRef<HTMLDivElement>(null);
     const [cardDimensions, setCardDimensions] = useState({ width: 280, height: 420 });
     const containerRef = useRef<HTMLDivElement>(null);
 
     const { data: currentMemberName } = useGetCurrentMemberName()
-
 
     const tabTexts = tabs.map(tab => tab.text);
 
@@ -92,20 +100,13 @@ const RewardSceneLayout = ({
     const handleCardClick = (index: number): void => {
         if (isSwipeAnimating) return;
 
-        if (selectedCard === index) {
-            if (!isMobile) {
-                // On desktop, clicking the selected card triggers download
-                downloadCard(images[index]);
-            } else {
-                // No longer setting to null, instead keep the selected state
-                // setSelectedCard(null);
-            }
-        } else {
+        // 카드 선택 상태 변경
+        if (selectedCard !== index) {
             setSelectedCard(index);
         }
     };
 
-    // 탭 클릭 핸들러 추가
+    // 탭 클릭 핸들러
     const handleTabClick = (index: number): void => {
         if (isSwipeAnimating) return;
         setSelectedCard(index);
@@ -127,51 +128,136 @@ const RewardSceneLayout = ({
                 setIsDownloading(false);
                 setIsSwipeAnimating(false);
                 setSwipeProgress(0);
-                // Keep the card selected after download
-                // setSelectedCard(null);
+                setLongPressProgress(0);
             }, 500);
         }, 300);
     };
 
-    const handleTouchStart = (e: TouchEvent, _card: CardImage): void => {
-        if (selectedCard === null || isSwipeAnimating || !isMobile) return;
+    // 길게 누르기 시작
+    const handleLongPressStart = (index: number): void => {
+        if (selectedCard !== index || isDownloading) return;
+
+        setIsLongPress(true);
+        setLongPressProgress(0);
+
+        const startTime = Date.now();
+        const interval = 50; // 업데이트 간격 (ms)
+
+        const updateProgress = () => {
+            const elapsed = Date.now() - startTime;
+            const progress = Math.min(100, (elapsed / longPressThreshold) * 100);
+            setLongPressProgress(progress);
+
+            if (elapsed < longPressThreshold && isLongPress) {
+                longPressTimer.current = setTimeout(updateProgress, interval);
+            } else if (isLongPress && progress >= 100) {
+                // 다운로드 실행
+                downloadCard(images[index]);
+                setIsLongPress(false);
+            }
+        };
+
+        longPressTimer.current = setTimeout(updateProgress, interval);
+    };
+
+    // 길게 누르기 취소
+    const handleLongPressCancel = (): void => {
+        if (longPressTimer.current) {
+            clearTimeout(longPressTimer.current);
+            longPressTimer.current = null;
+        }
+        setIsLongPress(false);
+        setLongPressProgress(0);
+    };
+
+    const handleTouchStart = (e: TouchEvent, index: number): void => {
+        if (isSwipeAnimating || isDownloading) return;
 
         startY.current = 'touches' in e
             ? e.touches[0].clientY
             : e.clientY;
+        startX.current = 'touches' in e
+            ? e.touches[0].clientX
+            : e.clientX;
         currentY.current = startY.current;
+        currentX.current = startX.current;
+
         setSwipeProgress(0);
+        setSwipeDirection(null);
+
+        // 길게 누르기 시작
+        handleLongPressStart(index);
     };
 
     const handleTouchMove = (e: TouchEvent): void => {
-        if (selectedCard === null || isSwipeAnimating || !isMobile) return;
+        if (isSwipeAnimating || isDownloading) return;
 
         currentY.current = 'touches' in e
             ? e.touches[0].clientY
             : e.clientY;
+        currentX.current = 'touches' in e
+            ? e.touches[0].clientX
+            : e.clientX;
 
-        const swipeDiff = currentY.current - startY.current;
+        const swipeDiffY = currentY.current - startY.current;
+        const swipeDiffX = currentX.current - startX.current;
 
-        // Only track downward swipes
-        if (swipeDiff > 0) {
-            // Calculate progress percentage (0-100)
-            const progress = Math.min(100, (swipeDiff / swipeThreshold) * 100);
+        // 움직임이 감지되면 길게 누르기 취소
+        if (Math.abs(swipeDiffX) > 10 || Math.abs(swipeDiffY) > 10) {
+            handleLongPressCancel();
+        }
+
+        // 좌우 스와이프 감지 (수평 움직임이 수직보다 더 클 때)
+        if (Math.abs(swipeDiffX) > Math.abs(swipeDiffY) && Math.abs(swipeDiffX) > 10) {
+            // 방향 결정
+            const direction = swipeDiffX > 0 ? 'right' : 'left';
+            setSwipeDirection(direction);
+
+            // 스와이프 진행률 계산 (0-100)
+            const progress = Math.min(100, (Math.abs(swipeDiffX) / swipeThreshold) * 100);
             setSwipeProgress(progress);
         }
     };
 
-    const handleTouchEnd = (card: CardImage): void => {
-        if (selectedCard === null || isSwipeAnimating || !isMobile) return;
+    const handleTouchEnd = (): void => {
+        if (isSwipeAnimating || isDownloading) return;
 
-        const swipeDistance = currentY.current - startY.current;
+        // 길게 누르기 취소
+        handleLongPressCancel();
 
-        if (swipeDistance > swipeThreshold) {
-            // Complete the downward animation
-            setSwipeProgress(100);
-            downloadCard(card);
-        } else {
-            // Reset if threshold not met
-            setSwipeProgress(0);
+        // 스와이프 처리
+        if (swipeDirection) {
+            const diffX = Math.abs(currentX.current - startX.current);
+
+            if (diffX > swipeThreshold) {
+                // 스와이프 애니메이션 시작
+                setIsSwipeAnimating(true);
+
+                // 완료 애니메이션 표시
+                setSwipeProgress(100);
+
+                setTimeout(() => {
+                    // 이전/다음 카드로 이동
+                    if (swipeDirection === 'left') {
+                        // 다음 카드로 이동 (순환)
+                        setSelectedCard((prev) => (prev + 1) % images.length);
+                    } else if (swipeDirection === 'right') {
+                        // 이전 카드로 이동 (순환)
+                        setSelectedCard((prev) => (prev - 1 + images.length) % images.length);
+                    }
+
+                    // 애니메이션 상태 초기화
+                    setTimeout(() => {
+                        setIsSwipeAnimating(false);
+                        setSwipeProgress(0);
+                        setSwipeDirection(null);
+                    }, 300);
+                }, 200);
+            } else {
+                // 임계값 미달시 초기화
+                setSwipeProgress(0);
+                setSwipeDirection(null);
+            }
         }
     };
 
@@ -184,23 +270,34 @@ const RewardSceneLayout = ({
         const rotationIncrement = totalCards <= 2 ? 10 : 5;
 
         let rotation = baseRotation + (index * rotationIncrement);
-        let translateX = 0; // 초기 X 이동값을 0으로 설정 (가운데 정렬)
+        let translateX = 0; // 초기 X 이동값
         let translateY = index * 5;
         let zIndex = index;
         let scale = 1;
+        let opacity = 1;
 
-        if (isSelected && isMobile && swipeProgress > 0) {
-            translateY += swipeProgress * 0.8; // Move down based on swipe progress
-            scale = 1 - (swipeProgress * 0.001); // Slightly reduce scale as swiped down
+        // 스와이프 애니메이션 적용
+        if (isSelected && swipeDirection && swipeProgress > 0) {
+            // 좌/우 스와이프에 따른 이동
+            if (swipeDirection === 'left') {
+                translateX = -swipeProgress * 1.5;
+            } else if (swipeDirection === 'right') {
+                translateX = swipeProgress * 1.5;
+            }
+
+            // 스와이프 중에는 회전 효과 추가
+            rotation = swipeDirection === 'left' ? -swipeProgress * 0.1 : swipeProgress * 0.1;
+            opacity = 1 - (swipeProgress * 0.01);
         }
 
         if (selectedCard !== null) {
             if (isSelected) {
-                rotation = 0;
-                translateX = 0;
-                translateY = isMobile && swipeProgress > 0 ? translateY : 0;
+                rotation = isSwipeAnimating && swipeDirection ? rotation : 0;
+                translateX = isSwipeAnimating && swipeDirection ? translateX : 0;
+                translateY = 0;
                 zIndex = 100;
-                scale = isMobile && swipeProgress > 0 ? scale : 1.05;
+                scale = isLongPress ? 1.02 : 1.05; // 길게 누를 때 약간 축소
+                opacity = isSwipeAnimating && swipeDirection ? opacity : 1;
             } else {
                 if (index < selectedCard) {
                     rotation = baseRotation - 10;
@@ -212,6 +309,7 @@ const RewardSceneLayout = ({
                 translateY = 10;
                 zIndex = 10;
                 scale = 0.9;
+                opacity = 0.7;
             }
         }
 
@@ -219,14 +317,11 @@ const RewardSceneLayout = ({
             transform: `rotate(${rotation}deg) translateX(${translateX}px) translateY(${translateY}px) scale(${scale})`,
             zIndex,
             transition: isSwipeAnimating ? 'all 0.5s ease' : swipeProgress > 0 ? 'none' : 'all 0.3s ease',
-            opacity: selectedCard !== null && !isSelected ? 0.7 : 1,
+            opacity,
             width: `${cardDimensions.width}px`,
             height: `${cardDimensions.height}px`,
         };
     };
-
-
-
 
     return (
         <div className={`w-full h-screen flex flex-col items-center ${isMobile ? 'justify-between' : 'justify-center py-10'} ${bgColor} p-4 overflow-hidden`}>
@@ -256,12 +351,13 @@ const RewardSceneLayout = ({
                                 marginLeft: `-${cardDimensions.width / 2}px`,
                             }}
                             onClick={() => handleCardClick(index)}
-                            onTouchStart={(e) => handleTouchStart(e, card)}
-                            onMouseDown={(e) => handleTouchStart(e, card)}
+                            onTouchStart={(e) => handleTouchStart(e, index)}
+                            onMouseDown={(e) => handleTouchStart(e, index)}
                             onTouchMove={handleTouchMove}
                             onMouseMove={handleTouchMove}
-                            onTouchEnd={() => handleTouchEnd(card)}
-                            onMouseUp={() => handleTouchEnd(card)}
+                            onTouchEnd={handleTouchEnd}
+                            onMouseUp={handleTouchEnd}
+                            onMouseLeave={handleTouchEnd}
                         >
                             <div className="w-full h-full p-2 flex flex-col bg-white rounded-lg overflow-hidden">
                                 <div className="w-full h-full overflow-hidden flex items-center justify-center bg-gray-50">
@@ -276,15 +372,22 @@ const RewardSceneLayout = ({
                                 {selectedCard === index && (
                                     <div className="absolute bottom-3 left-0 right-0 flex flex-col items-center">
                                         <div className={`mb-1 text-sm text-center ${textColor} bg-opacity-70 ${bgColor} py-1 px-3 rounded-full mx-auto shadow-sm`}>
-                                            {isDownloading ? '다운로드중...' : isMobile ? guideTextMobile : guideTextDesktop}
+                                            {isDownloading ? '다운로드중...' : guideTextMobile}
                                         </div>
 
-                                        {isMobile && selectedCard === index && !isDownloading && (
+                                        {selectedCard === index && !isDownloading && (
                                             <div className="w-16 h-1.5 bg-gray-200 rounded-full overflow-hidden">
-                                                <div
-                                                    className={`h-full ${borderColor} ${bgColor} rounded-full transition-all duration-300`}
-                                                    style={{ width: `${swipeProgress}%` }}
-                                                />
+                                                {isLongPress ? (
+                                                    <div
+                                                        className={`h-full ${borderColor} ${bgColor} rounded-full transition-all duration-100`}
+                                                        style={{ width: `${longPressProgress}%` }}
+                                                    />
+                                                ) : swipeDirection && (
+                                                    <div
+                                                        className={`h-full ${borderColor} ${bgColor} rounded-full transition-all duration-300`}
+                                                        style={{ width: `${swipeProgress}%` }}
+                                                    />
+                                                )}
                                             </div>
                                         )}
                                     </div>
@@ -314,13 +417,11 @@ const RewardSceneLayout = ({
             {/* 가이드텍스트 */}
             <div className={`text-center ${textColor} text-xs md:text-sm max-w-xs mt-4 ${isMobile ? 'mb-4' : 'mb-6'}`}>
                 {selectedCard !== null
-                    ? (isMobile
-                        ? '다운로드하려면 카드를 아래로 스와이프하세요'
-                        : '다운로드하려면 카드를 클릭하세요')
+                    ? '길게 눌러 다운로드하거나 좌우로 스와이프하여 카드 변경'
                     : '카드를 선택해주세요'}
             </div>
 
-            {/* 번튼 */}
+            {/* 버튼 */}
             <div className="flex flex-col sm:flex-row gap-3 mt-2 w-full max-w-md px-4">
                 <motion.button
                     onClick={() => onSceneChange('startInit')}
@@ -336,7 +437,7 @@ const RewardSceneLayout = ({
 
                 <ShareButton
                     currentMemberName={currentMemberName}
-                    selectedCard={images[selectedCard].src}
+                    selectedCard={images[selectedCard]?.src || ''}
                     title="공유하기"
                     textColor={textColor}
                     borderColor={borderColor}
