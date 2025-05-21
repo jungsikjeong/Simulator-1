@@ -37,7 +37,7 @@ const RewardSceneLayout = ({
     textColor = 'text-yellow-700',
     sceneText = '',
     guideTextMobile = '길게 눌러 다운로드',
-    guideTextDesktop = '길게 눌러 다운로드',
+    // guideTextDesktop = '길게 눌러 다운로드',
     onSceneChange = () => { }
 }: RewardSceneLayoutProps) => {
     const [selectedCard, setSelectedCard] = useState<number>(0); // Default to showing first card
