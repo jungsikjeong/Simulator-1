@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import SceneLayout from '@/components/SceneLayout'
 import type { SceneKey } from '@/modules/scene-key.type'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import { useIsMobile } from '@/hooks/use-mobile'
 
 // SceneLayout와 동일한 allImages 배열을 임포트하거나 재정의하세요.
@@ -75,15 +75,50 @@ export default function StartSceneInit({
         <SceneLayout bg="/start_장원영.png" effect="trueBlend" hideTitle={false}>
             {/* 클릭 시 다음 씬으로 */}
             <div className="absolute inset-0 cursor-pointer" onClick={() => onSceneChange('start')} />
-            {/* 타이틀, 터치 안내 등 기존 UI */}
+            {/* 타이틀 */}
             <motion.div
-                className="absolute bottom-8 w-full flex justify-center"
+                className="absolute bottom-8 md:bottom-14 w-full text-center"
                 initial={{ y: -20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
-                transition={{ duration: 1, ease: 'easeOut' }}
+                transition={{ duration: 1, ease: "easeOut" }}
             >
-                <img src="/title_bright.png" alt="짐빔 위대한 마케터" className={`${isMobile ? 'w-60' : 'w-80'}`} />
+                <motion.div
+                    animate={{
+                        y: [0, -10, 0],
+                        rotate: [0, 1, 0, -1, 0]
+                    }}
+                    transition={{
+                        repeat: Infinity,
+                        duration: 4,
+                        ease: 'easeInOut'
+                    }}
+                >
+                    <div className="flex flex-col items-center">
+                        <img
+                            src="/title_bright.png"
+                            alt="짐빔 위대한 마케터"
+                            className={`${isMobile ? 'w-60' : 'w-80'}`}
+                        />
+                    </div>
+                </motion.div>
             </motion.div>
+            <AnimatePresence>
+                <motion.div
+                    className="absolute right-4 bottom-2 flex items-center justify-end text-sm opacity-70 text-white"
+                    animate={{
+                        opacity: [0.7, 0.4, 0.7],
+                        transition: {
+                            duration: 1.5,
+                            repeat: Infinity,
+                            ease: 'easeInOut',
+                        },
+                    }}
+                    initial={{ opacity: 0 }}
+                    exit={{ opacity: 0, transition: { duration: 0.5 } }}
+                >
+                    <span className="mr-1">▶︎</span> touch
+                </motion.div>
+            </AnimatePresence>
         </SceneLayout>
     )
 }
