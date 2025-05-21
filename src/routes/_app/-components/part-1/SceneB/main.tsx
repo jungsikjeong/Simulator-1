@@ -65,7 +65,7 @@ export default function Part1SceneBMain({ onSceneChange }: SceneProps) {
                   ease: "easeOut"
                 }}
               >
-                <svg width={isMobile ? "12" : "16"} height={isMobile ? "14" : "18"} viewBox="0 0 12 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <svg width={isMobile ? "12" : "18"} height={isMobile ? "14" : "20"} viewBox="0 0 12 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M2 2 C2 10, 10 10, 10 2" stroke="white" strokeWidth="2" strokeLinecap="round" />
                 </svg>
               </motion.div>
@@ -88,7 +88,7 @@ export default function Part1SceneBMain({ onSceneChange }: SceneProps) {
                   ease: "easeOut"
                 }}
               >
-                <svg width={isMobile ? "14" : "18"} height={isMobile ? "16" : "20"} viewBox="0 0 14 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <svg width={isMobile ? "14" : "20"} height={isMobile ? "16" : "22"} viewBox="0 0 14 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M2 2 C2 12, 12 12, 12 2" stroke="white" strokeWidth="2" strokeLinecap="round" />
                 </svg>
               </motion.div>
@@ -111,7 +111,7 @@ export default function Part1SceneBMain({ onSceneChange }: SceneProps) {
                   ease: "easeOut"
                 }}
               >
-                <svg width={isMobile ? "16" : "20"} height={isMobile ? "18" : "22"} viewBox="0 0 16 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <svg width={isMobile ? "16" : "22"} height={isMobile ? "18" : "24"} viewBox="0 0 16 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M2 2 C2 14, 14 14, 14 2" stroke="white" strokeWidth="2" strokeLinecap="round" />
                 </svg>
               </motion.div>
