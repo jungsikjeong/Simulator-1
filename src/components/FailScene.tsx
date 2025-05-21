@@ -15,6 +15,8 @@ type FailSceneProps = {
     nextScene: SceneKey
     failMessage?: React.ReactNode
     showFailMessage?: boolean
+    onTypingEnd?: () => void
+    onFailMessageEnd?: () => void
 }
 
 export default function FailScene({
@@ -24,6 +26,8 @@ export default function FailScene({
     nextScene,
     failMessage = (<><div>아차차...</div><div>조금 더 분발해보자!!</div></>),
     showFailMessage = true,
+    onTypingEnd,
+    onFailMessageEnd,
 }: FailSceneProps) {
     const [typingDone, setTypingDone] = useState(false)
     const [isTouchable, setIsTouchable] = useState(true)
@@ -38,6 +42,15 @@ export default function FailScene({
 
         return () => clearTimeout(timer)
     }, [])
+
+    useEffect(() => {
+        if (typingDone) {
+            const timer = setTimeout(() => {
+                onFailMessageEnd?.()
+            }, 1100)
+            return () => clearTimeout(timer)
+        }
+    }, [typingDone, onFailMessageEnd])
 
     return (
         <SceneLayout bg={bgImage} effect="shake">
@@ -63,7 +76,10 @@ export default function FailScene({
                             isMobile ? "p-2" : "p-3"
                         )}
                         typingTextClassName={`${isMobile ? 'text-xs' : 'text-base'} leading-relaxed`}
-                        onComplete={() => setTypingDone(true)}
+                        onComplete={() => {
+                            setTypingDone(true)
+                            onTypingEnd?.()
+                        }}
                         isTouchable={isTouchable}
                         setIsTouchable={setIsTouchable}
                     />
