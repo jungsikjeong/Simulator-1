@@ -380,7 +380,7 @@ const RewardSceneLayout = ({
                                 </div>
                                 {selectedCard === index && (
                                     <div className="absolute bottom-3 left-0 right-0 flex flex-col items-center">
-                                        <div className={`mb-1 text-sm text-center ${textColor} bg-opacity-70 ${bgColor} py-1 px-3 rounded-full mx-auto shadow-sm`}>
+                                        <div className={`mb-1 text-sm text-center ${textColor} bg-opacity-70 ${bgColor} py-1 px-3 rounded-full mx-auto shadow-sm select-none`}>
                                             {isDownloading ? '다운로드중...' : guideTextMobile}
                                         </div>
                                         {/* 프로그레스 바 영역 */}
