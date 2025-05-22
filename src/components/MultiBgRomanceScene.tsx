@@ -85,6 +85,7 @@ interface MultiBgRomanceSceneProps {
     typingSpeed?: number
     isTouchable?: boolean
     setIsTouchable?: (isTouchable: boolean) => void
+    dialogClassName?: string
 }
 
 export default function MultiBgRomanceScene({
@@ -102,6 +103,7 @@ export default function MultiBgRomanceScene({
     typingSpeed = 10,
     isTouchable = true,
     setIsTouchable,
+    dialogClassName,
 }: MultiBgRomanceSceneProps) {
     // 사운드 이펙트 재생
     useEffect(() => {
@@ -150,6 +152,7 @@ export default function MultiBgRomanceScene({
                     onTouchSceneChange={handleTouch}
                     isTypingComplete={isTypingComplete}
                     setIsTypingComplete={setIsTypingComplete}
+                    hideIndicatorWhenTouchable={dialogClassName === 'hideIndicatorWhenTouchable'}
                 />
             </div>
         </div>

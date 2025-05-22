@@ -13,8 +13,8 @@ export default function Part3SceneAFail({ onSceneChange }: SceneProps) {
             onSceneChange={onSceneChange}
             bgImage="/party/3_장원영.png"
             chunks={[
-                { content: '"나 짐빔 광고 모델인거\n' },
-                { content: '잊은거야ㅠㅠ?"\n' },
+                { content: '나 짐빔 광고 모델인거\n' },
+                { content: '잊은거야ㅠㅠ?\n' },
                 { content: '\n' },
                 { content: '경쟁사는 말할 수 없다구.\n' },
                 { content: '꼭 기억해줘ㅠㅠ' },

@@ -42,6 +42,7 @@ export default function Ending({ onSceneChange }: SceneProps) {
             setIsTouchable={setIsTouchable}
             dialogClassName="bg-white/75 rounded-lg px-4"
             nextBgList={['/ending/2_같이.png']}
+            indicatorTextColor="text-black"
         />
     )
 }

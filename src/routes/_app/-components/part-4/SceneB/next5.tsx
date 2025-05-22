@@ -38,6 +38,7 @@ export default function Part4SceneBNext5({ onSceneChange }: SceneProps) {
             imageTransitionInterval={1500}  // 1.5초마다 이미지 전환
             initialImageDelay={1500}
             transitionDuration={800}  // 전환 애니메이션 0.5초
+            dialogClassName="hideIndicatorWhenTouchable"
         />
     )
 }

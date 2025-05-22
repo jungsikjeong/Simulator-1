@@ -78,6 +78,7 @@ export default function Part4SceneBNext4({ onSceneChange }: SceneProps) {
                     isTouchable={isTouchable}
                     setIsTouchable={setIsTouchable}
                     nextBgList={['/romance/10_박정민.png', '/romance/11_박정민.png', '/romance/12_박정민.png']}
+                    dialogClassName="hideIndicatorWhenTouchable"
                 />
             </div>
         </div>

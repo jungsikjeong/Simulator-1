@@ -20,6 +20,7 @@ type SuccessSceneProps = {
     setIsTouchable?: (isTouchable: boolean) => void
     dialogClassName?: string
     nextBgList?: string[]
+    indicatorTextColor?: string
 }
 
 export default function RomanceScene({
@@ -36,6 +37,7 @@ export default function RomanceScene({
     setIsTouchable,
     dialogClassName,
     nextBgList = [],
+    indicatorTextColor,
 }: SuccessSceneProps) {
     return (
         <SceneLayout
@@ -61,6 +63,8 @@ export default function RomanceScene({
                     onTouchSceneChange={() => onSceneChange(nextScene)}
                     isTypingComplete={isTypingComplete}
                     setIsTypingComplete={setIsTypingComplete}
+                    hideIndicatorWhenTouchable={dialogClassName === 'hideIndicatorWhenTouchable'}
+                    indicatorTextColor={indicatorTextColor}
                 />
             </div>
         </SceneLayout>

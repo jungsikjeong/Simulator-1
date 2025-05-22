@@ -47,6 +47,7 @@ export default function EndingNext1({ onSceneChange }: SceneProps) {
                 isTouchable={isTouchable}
                 setIsTouchable={setIsTouchable}
                 nextBgList={['/ending/3_같이.png']}
+                dialogClassName="hideIndicatorWhenTouchable"
             />
 
             {/* 하단 성공 메시지 */}

@@ -29,6 +29,7 @@ export default function Part4SceneBMain({ onSceneChange }: SceneProps) {
             isTouchable={isTouchable}
             setIsTouchable={setIsTouchable}
             nextBgList={['/romance/6_박정민.png']}
+            dialogClassName="hideIndicatorWhenTouchable"
         />
     )
 }
