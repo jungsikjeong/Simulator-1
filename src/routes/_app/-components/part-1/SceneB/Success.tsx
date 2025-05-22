@@ -37,6 +37,7 @@ export default function Part1SceneBSuccess({ onSceneChange }: SceneProps) {
       showGlitter={true}
       faceArea={modelFaceArea}
       logoColor='black'
+      nextBgList={['/home/1_박정민.png']}
     />
   )
 }

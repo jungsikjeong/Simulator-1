@@ -46,6 +46,7 @@ export default function EndingNext1({ onSceneChange }: SceneProps) {
                 setIsTypingComplete={setIsTypingComplete}
                 isTouchable={isTouchable}
                 setIsTouchable={setIsTouchable}
+                nextBgList={['/ending/3_같이.png']}
             />
 
             {/* 하단 성공 메시지 */}

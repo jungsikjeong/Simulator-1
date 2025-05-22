@@ -19,6 +19,7 @@ type SuccessSceneProps = {
     isTouchable?: boolean
     setIsTouchable?: (isTouchable: boolean) => void
     dialogClassName?: string
+    nextBgList?: string[]
 }
 
 export default function RomanceScene({
@@ -34,9 +35,15 @@ export default function RomanceScene({
     isTouchable = true,
     setIsTouchable,
     dialogClassName,
+    nextBgList = [],
 }: SuccessSceneProps) {
     return (
-        <SceneLayout bg={bgImage} effect={sceneEffect as 'smoothFade' | 'shake' | 'trueBlend'} soundEffect={soundEffect as SoundEffect}>
+        <SceneLayout
+            bg={bgImage}
+            effect={sceneEffect as 'smoothFade' | 'shake' | 'trueBlend'}
+            soundEffect={soundEffect as SoundEffect}
+            nextBgList={nextBgList}
+        >
             <div
                 className="relative flex h-screen flex-col justify-center overflow-hidden bg-cover bg-center"
                 onClick={() => isTypingComplete && onSceneChange(nextScene)}

@@ -16,7 +16,7 @@ export default function Part2SceneAMain({
     const [isTouchable, setIsTouchable] = useState(true)
 
     return (
-        <SceneLayout bg="/home/2_장원영.png" effect="trueBlend">
+        <SceneLayout bg="/home/2_장원영.png" effect="trueBlend" nextBgList={['/home/3_장원영.png', '/home/4_박정민.png', '/home/5_박정민.png']}>
             <SweatAnimation
                 mobileTop="13%"
                 mobileRight="15%"

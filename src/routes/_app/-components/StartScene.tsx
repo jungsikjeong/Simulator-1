@@ -61,7 +61,7 @@ export default function StartScene({
   }
 
   return (
-    <SceneLayout bg="/start_장원영.png" effect="trueBlend" hideTitle={false}>
+    <SceneLayout bg="/start_장원영.png" effect="trueBlend" hideTitle={false} nextBgList={['/party/1_박정민.png']}>
       {/* Background overlay */}
       <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent pointer-events-none" />
 

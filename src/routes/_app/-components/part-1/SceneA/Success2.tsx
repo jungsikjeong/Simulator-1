@@ -38,6 +38,7 @@ export default function Part1SceneASuccess2({ onSceneChange }: SceneProps) {
       setIsTypingComplete={setIsTypingComplete}
       isTouchable={isTouchable}
       setIsTouchable={setIsTouchable}
+      nextBgList={['/party/6_장원영.png']}
     />
   )
 }

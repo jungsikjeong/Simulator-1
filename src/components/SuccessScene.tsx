@@ -30,6 +30,7 @@ type SuccessSceneProps = {
     showGlitter?: boolean
     faceArea?: FaceArea
     logoColor?: 'white' | 'black'
+    nextBgList?: string[]  // 다음 씬 배경 이미지 리스트 추가
 }
 
 export default function SuccessScene({
@@ -46,6 +47,7 @@ export default function SuccessScene({
     showGlitter = false,
     faceArea = { top: 8, left: 40, width: 20, height: 25 }, // 기본 얼굴 영역 좌표
     logoColor = 'white',
+    nextBgList = [],  // 기본값 빈 배열로 설정
 }: SuccessSceneProps) {
     return (
         <SceneLayout
@@ -53,6 +55,7 @@ export default function SuccessScene({
             effect={effect}
             soundEffect={soundEffect as SoundEffect}
             logoColor={logoColor}
+            nextBgList={nextBgList}  // nextBgList 전달
         >
             <div className="relative flex h-screen flex-col justify-end overflow-hidden bg-cover bg-center">
                 {/* 글리터 효과 (showGlitter가 true일 때만 보여짐) */}

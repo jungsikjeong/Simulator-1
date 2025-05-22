@@ -38,6 +38,7 @@ export default function Part3({ onSceneChange }: SceneProps) {
             setIsTypingComplete={setIsTypingComplete}
             isTouchable={isTouchable}
             setIsTouchable={setIsTouchable}
+            nextBgList={['/hof/2_장원영.png']}
         />
     )
 }

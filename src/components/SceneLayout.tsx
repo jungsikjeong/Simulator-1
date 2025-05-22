@@ -41,6 +41,7 @@ const variantMap: Record<TransitionEffect, Variants> = {
 // 전역 캐시 및 전체 이미지 리스트
 const imageCache = new Map<string, HTMLImageElement>()
 const allImages = [
+    '/title.png',
     '/start_장원영.png',
     '/party/1_박정민.png',
     '/party/2_장원영.png',
@@ -83,14 +84,39 @@ const allImages = [
 ]
 
 // 이미지 프리로드 유틸
-async function preloadImage(src: string): Promise<void> {
+async function preloadImage(src: string, priority: boolean = false): Promise<void> {
     if (imageCache.has(src)) return Promise.resolve()
+
     return new Promise(resolve => {
         const img = new Image()
-        img.onload = () => { imageCache.set(src, img); resolve() }
+        img.onload = () => {
+            imageCache.set(src, img)
+            resolve()
+        }
         img.onerror = () => resolve()
         img.src = src
+        img.fetchPriority = priority ? 'high' : 'low'
     })
+}
+
+// 우선순위 기반 이미지 프리로드
+async function preloadImagesWithPriority(images: string[], currentBg: string) {
+    const highPriority = images.filter(img => img === currentBg)
+    const mediumPriority = images.filter(img => img !== currentBg)
+
+    // 현재 배경 이미지 즉시 로드
+    await Promise.all(highPriority.map(img => preloadImage(img, true)))
+
+    // 나머지 이미지들은 requestIdleCallback을 사용하여 백그라운드에서 로드
+    if ('requestIdleCallback' in window) {
+        (window as any).requestIdleCallback(() => {
+            mediumPriority.forEach(img => preloadImage(img, false))
+        })
+    } else {
+        setTimeout(() => {
+            mediumPriority.forEach(img => preloadImage(img, false))
+        }, 100)
+    }
 }
 
 export default function SceneLayout({
@@ -105,23 +131,27 @@ export default function SceneLayout({
 }: SceneLayoutProps) {
     const isMobile = useIsMobile()
 
-    // 1) idle 시 전체 이미지 백그라운드 로드
+    // 1) 현재 배경과 다음 배경 우선 로드
     useEffect(() => {
+        const imagesToLoad = [bg, ...nextBgList]
+        preloadImagesWithPriority(imagesToLoad, bg)
+    }, [bg, nextBgList])
+
+    // 2) 나머지 이미지들은 idle 시간에 로드
+    useEffect(() => {
+        const remainingImages = allImages.filter(img => img !== bg && !nextBgList.includes(img))
+
         if ('requestIdleCallback' in window) {
             const id = (window as any).requestIdleCallback(() => {
-                allImages.forEach(src => { if (!imageCache.has(src)) preloadImage(src) })
+                remainingImages.forEach(src => preloadImage(src, false))
             })
             return () => (window as any).cancelIdleCallback(id)
         }
-        const timer = setTimeout(() => {
-            allImages.forEach(src => { if (!imageCache.has(src)) preloadImage(src) })
-        }, 3000)
-        return () => clearTimeout(timer)
-    }, [])
 
-    // 2) 씬 전환 시 nextBgList만 즉시 프리로드
-    useEffect(() => {
-        nextBgList.forEach(src => { if (!imageCache.has(src)) preloadImage(src) })
+        const timer = setTimeout(() => {
+            remainingImages.forEach(src => preloadImage(src, false))
+        }, 1000)
+        return () => clearTimeout(timer)
     }, [bg, nextBgList])
 
     // 사운드 재생

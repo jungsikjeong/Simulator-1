@@ -74,6 +74,7 @@ export default function Part4SceneBNext3({ onSceneChange }: SceneProps) {
                     setIsTypingComplete={setIsTypingComplete}
                     isTouchable={isTouchable}
                     setIsTouchable={setIsTouchable}
+                    nextBgList={['/romance/9_박정민.png']}
                 />
             </div>
         </div>
