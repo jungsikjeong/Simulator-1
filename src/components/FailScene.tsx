@@ -31,6 +31,7 @@ export default function FailScene({
 }: FailSceneProps) {
     const [typingDone, setTypingDone] = useState(false)
     const [isTouchable, setIsTouchable] = useState(true)
+    const [showDialogue, setShowDialogue] = useState(false)
     const isMobile = useIsMobile()
 
     useEffect(() => {
@@ -38,7 +39,8 @@ export default function FailScene({
             if (navigator.vibrate) {
                 navigator.vibrate(300)
             }
-        }, 100) // 타이핑 시작 전에 진동이 울리도록 약간의 지연 추가
+            setShowDialogue(true)
+        }, 1000) // 짐빔 캔 애니메이션 시간(0.4초) + 추가 지연시간
 
         return () => clearTimeout(timer)
     }, [])
@@ -57,33 +59,35 @@ export default function FailScene({
             <div className={`relative flex h-screen flex-col justify-end overflow-hidden ${isMobile ? 'pb-7' : 'pb-9'}`}>
                 <div className="absolute inset-0 pointer-events-none" />
 
-                <motion.div
-                    initial={{ opacity: 0, y: 50, scale: 0.9 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    transition={{
-                        duration: 0.8,
-                        ease: 'easeOut',
-                        y: { type: 'spring', damping: 15, stiffness: 100 },
-                        scale: { type: 'spring', damping: 20, stiffness: 100 },
-                    }}
-                >
-                    <DialogueBox
-                        chunks={chunks}
-                        typingDelay={0.5}
-                        variant="fail"
-                        className={cn(
-                            typingDone && !showFailMessage ? "mb-1.5" : isMobile ? "mb-1.5" : "mb-1.5",
-                            isMobile ? "p-4.5" : "p-4.5"
-                        )}
-                        typingTextClassName={`${isMobile ? 'text-xs' : 'text-base'} leading-relaxed`}
-                        onComplete={() => {
-                            setTypingDone(true)
-                            onTypingEnd?.()
+                {showDialogue && (
+                    <motion.div
+                        initial={{ opacity: 0, y: 50, scale: 0.9 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        transition={{
+                            duration: 0.8,
+                            ease: 'easeOut',
+                            y: { type: 'spring', damping: 15, stiffness: 100 },
+                            scale: { type: 'spring', damping: 20, stiffness: 100 },
                         }}
-                        isTouchable={isTouchable}
-                        setIsTouchable={setIsTouchable}
-                    />
-                </motion.div>
+                    >
+                        <DialogueBox
+                            chunks={chunks}
+                            typingDelay={0.5}
+                            variant="fail"
+                            className={cn(
+                                typingDone && !showFailMessage ? "mb-1.5" : isMobile ? "mb-1.5" : "mb-1.5",
+                                isMobile ? "p-4.5" : "p-4.5"
+                            )}
+                            typingTextClassName={`${isMobile ? 'text-xs' : 'text-base'} leading-relaxed`}
+                            onComplete={() => {
+                                setTypingDone(true)
+                                onTypingEnd?.()
+                            }}
+                            isTouchable={isTouchable}
+                            setIsTouchable={setIsTouchable}
+                        />
+                    </motion.div>
+                )}
 
                 {typingDone && (
                     <div className="flex justify-center">

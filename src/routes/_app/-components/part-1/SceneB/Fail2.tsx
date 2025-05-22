@@ -10,7 +10,7 @@ type SceneProps = {
 }
 
 export default function Part1SceneBFail2({ onSceneChange }: SceneProps) {
-  const [showCan, setShowCan] = useState(false)
+  const [showCan, setShowCan] = useState(true)
 
   return (
     <>
@@ -27,7 +27,6 @@ export default function Part1SceneBFail2({ onSceneChange }: SceneProps) {
             <div>맛있게 마셔! 안녕!</div>
           </>
         }
-        onFailMessageEnd={() => setShowCan(true)}
       />
       <div className="absolute inset-0 pointer-events-none">
         <JimBeamCan show={showCan} />

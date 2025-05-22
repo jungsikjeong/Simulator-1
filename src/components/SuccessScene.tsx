@@ -76,7 +76,7 @@ export default function SuccessScene({
                         chunks={chunks}
                         typingDelay={0.5}
                         variant="success"
-                        className="mb-20 cursor-pointer px-0 py-6 transition-transform duration-200"
+                        className="mb-20 cursor-pointer px-0 py-6 transition-transform duration-200 z-10"
                         typingTextClassName="leading-relaxed"
                         isTouchable={isTouchable}
                         setIsTouchable={setIsTouchable}
