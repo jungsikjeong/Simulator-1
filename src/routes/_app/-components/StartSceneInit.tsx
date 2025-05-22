@@ -74,7 +74,7 @@ export default function StartSceneInit({
     return (
         <SceneLayout bg="/start_장원영.png" effect="trueBlend" hideTitle={false}>
             {/* 클릭 시 다음 씬으로 */}
-            <div className="absolute inset-0 cursor-pointer" onClick={() => onSceneChange('start')} />
+            <div className="absolute inset-0 cursor-pointer z-10" onClick={() => onSceneChange('start')} />
             {/* 타이틀 */}
             <motion.div
                 className="absolute bottom-8 md:bottom-14 w-full text-center"
