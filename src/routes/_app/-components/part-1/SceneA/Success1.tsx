@@ -37,7 +37,6 @@ export default function Part1SceneASuccess1({ onSceneChange }: SceneProps) {
       setIsTouchable={setIsTouchable}
       showGlitter={true}
       faceArea={modelFaceArea}
-      logoColor="black"
       nextBgList={['/party/5_박정민.png']}
     />
   )
