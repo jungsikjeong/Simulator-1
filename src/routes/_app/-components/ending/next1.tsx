@@ -15,13 +15,19 @@ export default function EndingNext1({ onSceneChange }: SceneProps) {
     const [isTypingComplete, setIsTypingComplete] = useState(false)
     const [isTouchable, setIsTouchable] = useState(true)
 
+    const handleSceneChange = (scene: SceneKey) => {
+        if (!isTouchable) {
+            onSceneChange(scene)
+        }
+    }
+
     return (
         <div className="relative">
             {/* 폭죽 효과 */}
             <Fireworks isTypingComplete={isTypingComplete} />
 
             <RomanceScene
-                onSceneChange={onSceneChange}
+                onSceneChange={handleSceneChange}
                 bgImage="/ending/2_같이.png"
                 chunks={[
                     {

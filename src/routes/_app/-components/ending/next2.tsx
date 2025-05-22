@@ -4,7 +4,6 @@ import ChoiceList from '@/components/ChoiceList'
 import DialogueBox from '@/components/DialogueBox'
 import SceneLayout from '@/components/SceneLayout'
 import type { SceneKey } from '@/modules/scene-key.type'
-import { motion } from 'framer-motion'
 import { useState } from 'react'
 import { useGetCurrentMemberName, useUpdateMemberStatus, useGetCurrentMemberId } from '@/service/member/useGetMember'
 
@@ -23,11 +22,7 @@ export default function EndingNext2({ onSceneChange }: SceneProps) {
         <SceneLayout bg="/ending/3_같이.png" effect="trueBlend">
             <div className={`absolute ${choiceOpen ? 'bottom-2' : 'bottom-20'} flex w-full flex-col items-center gap-4`}>
                 <div className="w-full max-w-xl">
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ duration: 0.5 }}
-                    >
+                    <div className="opacity-100">
                         <DialogueBox
                             chunks={[
                                 {
@@ -52,7 +47,7 @@ export default function EndingNext2({ onSceneChange }: SceneProps) {
                                     content: 'CHEERS~!\n',
                                 },
                             ]}
-                            typingDelay={0.5}
+                            typingDelay={0}
                             variant="light"
                             className='p-5'
                             typingTextClassName="leading-relaxed"
@@ -60,7 +55,7 @@ export default function EndingNext2({ onSceneChange }: SceneProps) {
                             isTouchable={isTouchable}
                             setIsTouchable={setIsTouchable}
                         />
-                    </motion.div>
+                    </div>
                 </div>
 
                 <ChoiceList
