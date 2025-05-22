@@ -10,7 +10,7 @@ type SceneProps = {
 }
 
 export default function Part1SceneBFail2({ onSceneChange }: SceneProps) {
-  const [showCan, setShowCan] = useState(true)
+  const [showCan, _setShowCan] = useState(true)
 
   return (
     <>

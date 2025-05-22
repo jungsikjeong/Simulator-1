@@ -18,10 +18,10 @@ const JimBeamCan: React.FC<JimBeamCanProps> = React.memo(({ show }) => {
             transition={{ type: 'tween', duration: 0.9, ease: 'easeInOut' }}
             style={{
                 position: 'absolute',
-                left: isMobile ? '-30%' : '-25%',
-                bottom: -65,
+                left: isMobile ? '3%' : '5%',
+                bottom: isMobile ? -35 : -65,
                 transform: 'translateX(-50%)',
-                width: 450,
+                width: isMobile ? 120 : 150,
                 zIndex: 30,
                 pointerEvents: 'none',
                 willChange: 'transform, opacity',
