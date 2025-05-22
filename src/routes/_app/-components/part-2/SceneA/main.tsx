@@ -21,9 +21,9 @@ export default function Part2SceneAMain({
                 mobileTop="13%"
                 mobileRight="15%"
                 mobileRotation="220deg"
-                desktopTop="14%"
-                desktopRight="15%"
-                desktopRotation="235deg"
+                desktopTop="9%"
+                desktopRight="18%"
+                desktopRotation="225deg"
                 mobileSizes={{
                     first: { width: "6", height: "8" },
                     second: { width: "8", height: "10" },
