@@ -98,8 +98,8 @@ export default function GlitterEffect({ faceArea = { top: 8, left: 40, width: 20
                 position: 'absolute',
                 top: `${top}%`,
                 left: `${left}%`,
-                opacity: 0, // 시작은 투명하게
-                transform: `rotate(${random(0, 360)}deg) scale(${random(0.8, 1.2)})`,
+                opacity: 0,
+                transform: `rotate(${random(0, 360)}deg) scale(${random(0.8, 1.2)}) translateZ(0)`,
                 animation: `
                     sparkle-fade-in ${fadeInDuration}s ease-out forwards,
                     sparkle-float ${duration}s ease-in-out ${delay}s infinite alternate,
@@ -107,17 +107,19 @@ export default function GlitterEffect({ faceArea = { top: 8, left: 40, width: 20
                 `,
                 zIndex: Math.floor(random(1, 5)),
                 filter,
-                transition: 'all 3s cubic-bezier(0.4, 0, 0.2, 1)', // 더 부드러운 베지어 커브
-                willChange: 'transform, opacity', // 성능 최적화
+                transition: 'all 3s cubic-bezier(0.4, 0, 0.2, 1)',
+                willChange: 'transform, opacity',
+                backfaceVisibility: 'hidden', // 성능 최적화
+                perspective: '1000px', // 3D 가속 활성화
             }
         };
     };
 
     useEffect(() => {
-        const SPARKLE_LIMIT = 150; // 최대 반짝임 수
+        const SPARKLE_LIMIT = 50; // 최대 반짝임 수를 150에서 50으로 감소
 
-        // 초기에 즉시 반짝임 추가 (50개)
-        const initialSparkles = Array.from({ length: 50 }, () => createSparkle());
+        // 초기에 즉시 반짝임 추가 (20개로 감소)
+        const initialSparkles = Array.from({ length: 20 }, () => createSparkle());
         setSparkles(initialSparkles);
 
         // 개별 타이머로 랜덤하게 반짝임 추가
@@ -129,16 +131,15 @@ export default function GlitterEffect({ faceArea = { top: 8, left: 40, width: 20
 
                     // 최대 개수 초과 시 가장 오래된 것부터 제거
                     if (prev.length >= SPARKLE_LIMIT) {
-                        // 가장 오래된 것 몇 개 제거 (1~3개 랜덤하게)
-                        const removeCount = Math.floor(random(1, 4));
-                        return [...prev.slice(removeCount), newSparkle];
+                        // 가장 오래된 것 1개만 제거
+                        return [...prev.slice(1), newSparkle];
                     }
                     return [...prev, newSparkle];
                 });
 
-                // 재귀적으로 다음 추가 예약 (랜덤 간격)
+                // 재귀적으로 다음 추가 예약 (랜덤 간격 증가)
                 addSparkleRandomly();
-            }, random(200, 800)); // 추가 간격을 랜덤하게 설정
+            }, random(300, 1000)); // 추가 간격을 더 길게 설정
 
             return timeout;
         };
