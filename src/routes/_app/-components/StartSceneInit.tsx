@@ -6,14 +6,50 @@ import type { SceneKey } from '@/modules/scene-key.type'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useIsMobile } from '@/hooks/use-mobile'
 
-const allImages = [
-    '/title.png',
+const initialImages = [
     '/start_장원영.png',
+    '/title_bright.png',
+]
+
+const backgroundImages = [
     '/party/1_박정민.png',
     '/party/2_장원영.png',
     '/party/3_장원영.png',
     '/party/4_박정민.png',
-
+    '/party/5_박정민.png',
+    '/party/6_장원영.png',
+    '/party/7_장원영.png',
+    '/party/8_단체.png',
+    '/hof/1_박정민.png',
+    '/hof/2_장원영.png',
+    '/hof/3_장원영.png',
+    '/home/1_박정민.png',
+    '/home/2_장원영.png',
+    '/home/3_장원영.png',
+    '/home/4_박정민.png',
+    '/reward/박정민_진저.png',
+    '/reward/박정민_레몬.png',
+    '/reward/박정민_자몽.png',
+    '/reward/박정민_플레인.png',
+    '/reward/장원영_레몬.png',
+    '/reward/장원영_자몽.png',
+    '/reward/장원영_진저.png',
+    '/reward/장원영_플레인.png',
+    '/romance/1_박정민.png',
+    '/romance/2_박정민.png',
+    '/romance/3_박정민.png',
+    '/romance/4_박정민.png',
+    '/romance/5_박정민.png',
+    '/romance/6_박정민.png',
+    '/romance/7_박정민.png',
+    '/romance/8_박정민.png',
+    '/romance/9_박정민.png',
+    '/romance/10_박정민.png',
+    '/romance/11_박정민.png',
+    '/romance/12_박정민.png',
+    '/ending/1_장원영.png',
+    '/ending/2_같이.png',
+    '/ending/3_같이.png',
 ]
 
 async function preloadImage(src: string): Promise<void> {
@@ -33,12 +69,13 @@ export default function StartSceneInit({
     const isMobile = useIsMobile()
     const [progress, setProgress] = useState(0)
     const [loaded, setLoaded] = useState(0)
-    const total = allImages.length
+    const total = initialImages.length
     const [ready, setReady] = useState(false)
 
     // 초기 프리로드
     useEffect(() => {
-        allImages.forEach(src => {
+        // 시작 화면에 필요한 이미지만 먼저 로드
+        initialImages.forEach(src => {
             preloadImage(src).then(() => {
                 setLoaded(prev => {
                     const next = prev + 1
@@ -46,6 +83,11 @@ export default function StartSceneInit({
                     return next
                 })
             })
+        })
+
+        // 백그라운드에서 나머지 이미지 로드
+        backgroundImages.forEach(src => {
+            preloadImage(src)
         })
     }, [])
 
