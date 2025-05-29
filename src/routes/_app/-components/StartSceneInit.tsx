@@ -171,7 +171,7 @@ export default function StartSceneInit({
           *경고 : 지나친 음주는 뇌졸중, 기억력 손상이나 치매를 유발합니다.
         </span>
         <br />
-        임신 중 음주는 기형아 출생 위험을 높입니다람쥐
+        임신 중 음주는 기형아 출생 위험을 높입니다
       </div>
     </SceneLayout>
   )
