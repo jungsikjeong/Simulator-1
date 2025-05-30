@@ -110,35 +110,71 @@ const variantMap: Record<TransitionEffect, Variants> = {
   },
 }
 
-// 이미지 캐시를 위한 Map
+// 전역 캐시 및 전체 이미지 리스트
 const imageCache = new Map<string, HTMLImageElement>()
+const allImages = [
+  '/title.png',
+  '/start_장원영.png',
+  '/party/1_박정민.png',
+  '/party/2_장원영.png',
+  '/party/3_장원영.png',
+  '/party/4_박정민.png',
+  '/party/5_박정민.png',
+  '/party/6_장원영.png',
+  '/party/7_장원영.png',
+  '/party/8_단체.png',
+  '/hof/1_박정민.png',
+  '/hof/2_장원영.png',
+  '/hof/3_장원영.png',
+  '/home/1_박정민.png',
+  '/home/2_장원영.png',
+  '/home/3_장원영.png',
+  '/home/4_박정민.png',
+  '/reward/박정민_진저.png',
+  '/reward/박정민_레몬.png',
+  '/reward/박정민_자몽.png',
+  '/reward/박정민_플레인.png',
+  '/reward/장원영_레몬.png',
+  '/reward/장원영_자몽.png',
+  '/reward/장원영_진저.png',
+  '/reward/장원영_플레인.png',
+  '/romance/1_박정민.png',
+  '/romance/2_박정민.png',
+  '/romance/3_박정민.png',
+  '/romance/4_박정민.png',
+  '/romance/5_박정민.png',
+  '/romance/6_박정민.png',
+  '/romance/7_박정민.png',
+  '/romance/8_박정민.png',
+  '/romance/9_박정민.png',
+  '/romance/10_박정민.png',
+  '/romance/11_박정민.png',
+  '/romance/12_박정민.png',
+  '/ending/1_장원영.png',
+  '/ending/2_같이.png',
+  '/ending/3_같이.png',
+]
 
-// 이미지 프리로드 함수 개선
-async function preloadImage(src: string, highPriority: boolean = false): Promise<void> {
-  if (imageCache.has(src)) return
+// 이미지 프리로드 유틸
+async function preloadImage(
+  src: string,
+  priority: boolean = false
+): Promise<void> {
+  if (imageCache.has(src)) return Promise.resolve()
 
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     const img = new Image()
-
-    if (highPriority) {
-      img.fetchPriority = 'high'
-    }
-
     img.onload = () => {
       imageCache.set(src, img)
       resolve()
     }
-
-    img.onerror = () => {
-      console.warn(`Failed to load image: ${src}`)
-      resolve()
-    }
-
+    img.onerror = () => resolve()
     img.src = src
+    img.fetchPriority = priority ? 'high' : 'low'
   })
 }
 
-// 우선순위 기반 이미지 프리로드 개선
+// 우선순위 기반 이미지 프리로드
 async function preloadImagesWithPriority(images: string[], currentBg: string) {
   const highPriority = images.filter(img => img === currentBg)
   const mediumPriority = images.filter(img => img !== currentBg)
@@ -150,7 +186,7 @@ async function preloadImagesWithPriority(images: string[], currentBg: string) {
   if ('requestIdleCallback' in window) {
     ; (window as any).requestIdleCallback(() => {
       mediumPriority.forEach(img => preloadImage(img, false))
-    }, { timeout: 2000 }) // 2초 타임아웃 설정
+    })
   } else {
     setTimeout(() => {
       mediumPriority.forEach(img => preloadImage(img, false))
@@ -171,10 +207,29 @@ export default function SceneLayout({
 }: SceneLayoutProps) {
   const isMobile = useIsMobile()
 
-  // 이미지 프리로딩 최적화
+  // 1) 현재 배경과 다음 배경 우선 로드
   useEffect(() => {
     const imagesToLoad = [bg, ...nextBgList]
     preloadImagesWithPriority(imagesToLoad, bg)
+  }, [bg, nextBgList])
+
+  // 2) 나머지 이미지들은 idle 시간에 로드
+  useEffect(() => {
+    const remainingImages = allImages.filter(
+      img => img !== bg && !nextBgList.includes(img)
+    )
+
+    if ('requestIdleCallback' in window) {
+      const id = (window as any).requestIdleCallback(() => {
+        remainingImages.forEach(src => preloadImage(src, false))
+      })
+      return () => (window as any).cancelIdleCallback(id)
+    }
+
+    const timer = setTimeout(() => {
+      remainingImages.forEach(src => preloadImage(src, false))
+    }, 1000)
+    return () => clearTimeout(timer)
   }, [bg, nextBgList])
 
   // 사운드 재생
@@ -215,7 +270,6 @@ export default function SceneLayout({
           transform: 'translateZ(0)',
           WebkitFontSmoothing: 'antialiased',
           MozOsxFontSmoothing: 'grayscale',
-          willChange: 'transform', // 성능 최적화
         }}
         initial={initial as TargetAndTransition}
         animate={animate as TargetAndTransition}
@@ -226,7 +280,6 @@ export default function SceneLayout({
             src={`/logo-${logoColor}.png`}
             alt="Game Logo"
             className={`${isMobile ? 'w-20' : 'w-26'} absolute top-2 right-2 z-50`}
-            loading="eager" // 로고는 즉시 로드
           />
         )}
 
