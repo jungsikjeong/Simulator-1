@@ -72,20 +72,34 @@ export default function StartSceneInit({
   // 초기 프리로드
   useEffect(() => {
     // 시작 화면에 필요한 이미지만 먼저 로드
-    initialImages.forEach(src => {
-      preloadImage(src).then(() => {
+    const loadInitialImages = async () => {
+      for (const src of initialImages) {
+        await preloadImage(src)
         setLoaded(prev => {
           const next = prev + 1
           setProgress(Math.min(Math.round((next / total) * 100), 100))
           return next
         })
-      })
-    })
+      }
+    }
 
-    // 백그라운드에서 나머지 이미지 로드
-    backgroundImages.forEach(src => {
-      preloadImage(src)
-    })
+    loadInitialImages()
+
+    // 백그라운드에서 나머지 이미지 로드 (requestIdleCallback 사용)
+    if (typeof window !== 'undefined' && 'requestIdleCallback' in window) {
+      window.requestIdleCallback(() => {
+        backgroundImages.forEach(src => {
+          preloadImage(src)
+        })
+      })
+    } else {
+      // requestIdleCallback이 지원되지 않는 경우 setTimeout 사용
+      setTimeout(() => {
+        backgroundImages.forEach(src => {
+          preloadImage(src)
+        })
+      }, 1000)
+    }
   }, [])
 
   // 모두 로드되면, 잠시 딜레이 후 진입
