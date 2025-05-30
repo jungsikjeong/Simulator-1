@@ -31,6 +31,7 @@ export default function Part3({ onSceneChange }: SceneProps) {
                     content: '여유 없는데?',
                 },
             ]}
+            bgClassName='relative h-screen w-full overflow-hidden bg-cover bg-center'
             effect='shake'
             soundEffect={null}
             nextScene="part3SceneAMain"

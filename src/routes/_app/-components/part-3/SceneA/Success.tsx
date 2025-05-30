@@ -23,6 +23,8 @@ export default function Part3SceneASuccess({ onSceneChange }: SceneProps) {
         <SuccessScene
             onSceneChange={onSceneChange}
             bgImage="/hof/3_장원영.png"
+            bgClassName='relative h-screen w-full overflow-hidden bg-cover bg-center'
+
             chunks={[
                 {
                     content: '힘든 하루를 끝내고 낭만있게\n',

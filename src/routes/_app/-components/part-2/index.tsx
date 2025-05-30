@@ -26,6 +26,7 @@ export default function Part2({ onSceneChange }: SceneProps) {
         <SuccessScene
             onSceneChange={onSceneChange}
             bgImage="/home/1_박정민.png"
+            bgClassName='relative h-screen w-full overflow-hidden bg-cover bg-center'
             chunks={[
                 {
                     content: '집 없는데?',

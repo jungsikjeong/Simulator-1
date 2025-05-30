@@ -49,11 +49,11 @@ export default function SuccessScene({
     faceArea = { top: 8, left: 40, width: 20, height: 25 }, // 기본 얼굴 영역 좌표
     logoColor = 'white',
     nextBgList = [],  // 기본값 빈 배열로 설정
-    bgClassName = '',
+    bgClassName,
 }: SuccessSceneProps) {
     return (
         <SceneLayout
-            bgClassName={bgClassName}
+
             bg={bgImage}
             effect={effect}
             soundEffect={soundEffect as SoundEffect}

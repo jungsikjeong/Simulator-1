@@ -16,6 +16,8 @@ export default function Part4({ onSceneChange }: SceneProps) {
         <SuccessScene
             onSceneChange={onSceneChange}
             bgImage="/romance/1_박정민.png"
+            bgClassName='relative h-screen w-full overflow-hidden bg-cover bg-center'
+
             chunks={[
                 {
                     content: '낭만 없는데?',

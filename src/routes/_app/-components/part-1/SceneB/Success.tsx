@@ -23,7 +23,7 @@ export default function Part1SceneBSuccess({ onSceneChange }: SceneProps) {
     <SuccessScene
       onSceneChange={onSceneChange}
       bgImage="/party/7_장원영.png"
-      bgClassName='relative h-screen w-full overflow-hidden'
+      bgClassName='relative h-screen w-full overflow-hidden bg-cover bg-center'
       chunks={[
         {
           content: '그럼 나 혼자 집에서 짐빔 하이볼!',
