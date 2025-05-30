@@ -6,48 +6,48 @@ import type { SceneKey } from '@/modules/scene-key.type'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useIsMobile } from '@/hooks/use-mobile'
 
-const initialImages = ['/start_장원영.png', '/title_bright.png']
+const initialImages = ['/start_장원영.webp', '/title_bright.png']
 
-// const backgroundImages = [
-//   '/party/1_박정민.png',
-//   '/party/2_장원영.png',
-//   '/party/3_장원영.png',
-//   '/party/4_박정민.png',
-//   '/party/5_박정민.png',
-//   '/party/6_장원영.png',
-//   '/party/7_장원영.png',
-//   '/party/8_단체.png',
-//   '/hof/1_박정민.png',
-//   '/hof/2_장원영.png',
-//   '/hof/3_장원영.png',
-//   '/home/1_박정민.png',
-//   '/home/2_장원영.png',
-//   '/home/3_장원영.png',
-//   '/home/4_박정민.png',
-//   '/reward/박정민_진저.png',
-//   '/reward/박정민_레몬.png',
-//   '/reward/박정민_자몽.png',
-//   '/reward/박정민_플레인.png',
-//   '/reward/장원영_레몬.png',
-//   '/reward/장원영_자몽.png',
-//   '/reward/장원영_진저.png',
-//   '/reward/장원영_플레인.png',
-//   '/romance/1_박정민.png',
-//   '/romance/2_박정민.png',
-//   '/romance/3_박정민.png',
-//   '/romance/4_박정민.png',
-//   '/romance/5_박정민.png',
-//   '/romance/6_박정민.png',
-//   '/romance/7_박정민.png',
-//   '/romance/8_박정민.png',
-//   '/romance/9_박정민.png',
-//   '/romance/10_박정민.png',
-//   '/romance/11_박정민.png',
-//   '/romance/12_박정민.png',
-//   '/ending/1_장원영.png',
-//   '/ending/2_같이.png',
-//   '/ending/3_같이.png',
-// ]
+const backgroundImages = [
+  '/party/1_박정민.webp',
+  '/party/2_장원영.png',
+  '/party/3_장원영.png',
+  '/party/4_박정민.png',
+  '/party/5_박정민.png',
+  '/party/6_장원영.png',
+  '/party/7_장원영.png',
+  '/party/8_단체.png',
+  '/hof/1_박정민.png',
+  '/hof/2_장원영.png',
+  '/hof/3_장원영.png',
+  '/home/1_박정민.png',
+  '/home/2_장원영.png',
+  '/home/3_장원영.png',
+  '/home/4_박정민.png',
+  '/reward/박정민_진저.png',
+  '/reward/박정민_레몬.png',
+  '/reward/박정민_자몽.png',
+  '/reward/박정민_플레인.png',
+  '/reward/장원영_레몬.png',
+  '/reward/장원영_자몽.png',
+  '/reward/장원영_진저.png',
+  '/reward/장원영_플레인.png',
+  '/romance/1_박정민.png',
+  '/romance/2_박정민.png',
+  '/romance/3_박정민.png',
+  '/romance/4_박정민.png',
+  '/romance/5_박정민.png',
+  '/romance/6_박정민.png',
+  '/romance/7_박정민.png',
+  '/romance/8_박정민.png',
+  '/romance/9_박정민.png',
+  '/romance/10_박정민.png',
+  '/romance/11_박정민.png',
+  '/romance/12_박정민.png',
+  '/ending/1_장원영.png',
+  '/ending/2_같이.png',
+  '/ending/3_같이.png',
+]
 
 async function preloadImage(src: string): Promise<void> {
   return new Promise(resolve => {
@@ -83,9 +83,9 @@ export default function StartSceneInit({
     })
 
     // 백그라운드에서 나머지 이미지 로드
-    // backgroundImages.forEach(src => {
-    //   preloadImage(src)
-    // })
+    backgroundImages.forEach(src => {
+      preloadImage(src)
+    })
   }, [])
 
   // 모두 로드되면, 잠시 딜레이 후 진입
