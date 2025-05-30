@@ -53,10 +53,7 @@ async function preloadImage(src: string): Promise<void> {
   return new Promise(resolve => {
     const img = new Image()
     img.onload = () => resolve()
-    img.onerror = () => {
-      console.warn(`Failed to load image: ${src}`)
-      resolve() // 에러가 발생해도 resolve
-    }
+    img.onerror = () => resolve()
     img.src = src
   })
 }
@@ -68,71 +65,36 @@ export default function StartSceneInit({
 }) {
   const isMobile = useIsMobile()
   const [progress, setProgress] = useState(0)
-  const [_loaded, setLoaded] = useState(0)
+  const [loaded, setLoaded] = useState(0)
   const total = initialImages.length
   const [ready, setReady] = useState(false)
-  const [loadTimeout, setLoadTimeout] = useState<NodeJS.Timeout | null>(null)
 
   // 초기 프리로드
   useEffect(() => {
-    // 타임아웃 설정 - 5초 후에는 강제로 로딩 완료
-    const timeout = setTimeout(() => {
-      setReady(true)
-    }, 5000)
-    setLoadTimeout(timeout)
-
     // 시작 화면에 필요한 이미지만 먼저 로드
-    const loadInitialImages = async () => {
-      for (const src of initialImages) {
-        try {
-          await Promise.race([
-            preloadImage(src),
-            new Promise(resolve => setTimeout(resolve, 1000)) // 각 이미지당 1초 타임아웃
-          ])
-        } catch (error) {
-          console.warn(`Error loading image ${src}:`, error)
-        }
-
+    initialImages.forEach(src => {
+      preloadImage(src).then(() => {
         setLoaded(prev => {
           const next = prev + 1
-          const newProgress = Math.min(Math.round((next / total) * 100), 100)
-          setProgress(newProgress)
-          // 100%가 되면 바로 ready 상태로 변경
-          if (newProgress === 100) {
-            setReady(true)
-          }
+          setProgress(Math.min(Math.round((next / total) * 100), 100))
           return next
         })
-      }
-    }
-
-    loadInitialImages()
+      })
+    })
 
     // 백그라운드에서 나머지 이미지 로드
-    if (typeof window !== 'undefined' && 'requestIdleCallback' in window) {
-      window.requestIdleCallback(() => {
-        backgroundImages.forEach(src => {
-          preloadImage(src).catch(error => {
-            console.warn(`Error loading background image ${src}:`, error)
-          })
-        })
-      })
-    } else {
-      setTimeout(() => {
-        backgroundImages.forEach(src => {
-          preloadImage(src).catch(error => {
-            console.warn(`Error loading background image ${src}:`, error)
-          })
-        })
-      }, 1000)
-    }
-
-    return () => {
-      if (loadTimeout) {
-        clearTimeout(loadTimeout)
-      }
-    }
+    backgroundImages.forEach(src => {
+      preloadImage(src)
+    })
   }, [])
+
+  // 모두 로드되면, 잠시 딜레이 후 진입
+  useEffect(() => {
+    if (loaded >= total) {
+      const t = setTimeout(() => setReady(true), 100) // UX를 위해 짧게 대기
+      return () => clearTimeout(t)
+    }
+  }, [loaded, total])
 
   if (!ready) {
     // 게임 시작 전 로딩 스크린
