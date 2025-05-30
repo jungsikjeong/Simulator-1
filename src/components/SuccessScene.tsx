@@ -53,7 +53,7 @@ export default function SuccessScene({
 }: SuccessSceneProps) {
     return (
         <SceneLayout
-
+            bgClassName={bgClassName}
             bg={bgImage}
             effect={effect}
             soundEffect={soundEffect as SoundEffect}
