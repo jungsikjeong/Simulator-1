@@ -6,10 +6,10 @@ import type { SceneKey } from '@/modules/scene-key.type'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useIsMobile } from '@/hooks/use-mobile'
 
-const initialImages = ['/start_장원영.webp', '/title_bright.png']
+const initialImages = ['/start_장원영.png', '/title_bright.png']
 
 const backgroundImages = [
-  '/party/1_박정민.webp',
+  '/party/1_박정민.png',
   '/party/2_장원영.png',
   '/party/3_장원영.png',
   '/party/4_박정민.png',

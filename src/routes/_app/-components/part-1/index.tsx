@@ -18,7 +18,7 @@ export default function Part1({
   const { data: memberId } = useGetCurrentMemberId()
 
   return (
-    <SceneLayout bg="/party/1_박정민.webp" effect="smoothFade" nextBgList={['/party/2_장원영.png', '/party/3_장원영.png', '/party/4_박정민.png']}>
+    <SceneLayout bg="/party/1_박정민.png" effect="smoothFade" nextBgList={['/party/2_장원영.png', '/party/3_장원영.png', '/party/4_박정민.png']}>
       <div
         className={`absolute ${choiceOpen ? 'bottom-2' : 'bottom-20'} flex w-full flex-col items-center gap-4`}
       >
