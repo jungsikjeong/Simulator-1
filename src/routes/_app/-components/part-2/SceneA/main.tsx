@@ -18,12 +18,12 @@ export default function Part2SceneAMain({
     return (
         <SceneLayout bg="/home/2_장원영.png" effect="trueBlend" nextBgList={['/home/3_장원영.png', '/home/4_박정민.png', '/home/5_박정민.png']}>
             <SweatAnimation
-                mobileTop="13%"
-                mobileRight="15%"
+                mobileTop="11%"
+                mobileRight="19%"
                 mobileRotation="220deg"
-                desktopTop="9%"
-                desktopRight="18%"
-                desktopRotation="225deg"
+                desktopTop="7%"
+                desktopRight="23%"
+                desktopRotation="230deg"
                 mobileSizes={{
                     first: { width: "6", height: "8" },
                     second: { width: "8", height: "10" },
