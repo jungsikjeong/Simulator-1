@@ -166,7 +166,7 @@ export default function StartSceneInit({
       </AnimatePresence>
 
       {/* 음주 경고 메시지 */}
-      <div className="absolute right-0 bottom-0 left-0 mb-8 px-2 py-1 text-center text-xs text-white">
+      <div className="absolute right-0 bottom-2.5 sm:bottom-0 left-0 mb-8 px-2 py-1 text-center text-xs text-white">
         <span className="text tracking-tighter">
           *경고 : 지나친 음주는 뇌졸중, 기억력 손상이나 치매를 유발합니다.
         </span>

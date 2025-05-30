@@ -29,6 +29,7 @@ interface SceneLayoutProps extends PropsWithChildren {
   hideTitle?: boolean
   logoColor?: 'white' | 'black'
   nextBgList?: string[] // 다음 씬 배경 이미지 리스트
+  bgClassName?: string
 }
 
 // variantMap: 기존 그대로 유지
@@ -183,7 +184,7 @@ async function preloadImagesWithPriority(images: string[], currentBg: string) {
 
   // 나머지 이미지들은 requestIdleCallback을 사용하여 백그라운드에서 로드
   if ('requestIdleCallback' in window) {
-    ;(window as any).requestIdleCallback(() => {
+    ; (window as any).requestIdleCallback(() => {
       mediumPriority.forEach(img => preloadImage(img, false))
     })
   } else {
@@ -202,6 +203,7 @@ export default function SceneLayout({
   hideTitle = false,
   logoColor = 'white',
   nextBgList = [],
+  bgClassName = 'relative h-screen w-full overflow-hidden bg-cover bg-center',
 }: SceneLayoutProps) {
   const isMobile = useIsMobile()
 
@@ -233,7 +235,7 @@ export default function SceneLayout({
   // 사운드 재생
   useEffect(() => {
     if (!soundEffect) return
-    new Audio(`/sounds/${soundEffect}.mp3`).play().catch(() => {})
+    new Audio(`/sounds/${soundEffect}.mp3`).play().catch(() => { })
   }, [soundEffect])
 
   // Esc 스킵
@@ -257,7 +259,7 @@ export default function SceneLayout({
     <AnimatePresence mode="sync">
       <motion.div
         key={`${bg}-${effect}`}
-        className="relative h-screen w-full overflow-hidden bg-cover bg-center"
+        className={`${bgClassName}`}
         style={{
           backgroundImage: `url(${bg})`,
           filter: 'none',
