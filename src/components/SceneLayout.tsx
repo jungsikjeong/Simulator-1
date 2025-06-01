@@ -113,7 +113,7 @@ const variantMap: Record<TransitionEffect, Variants> = {
 // 전역 캐시 및 전체 이미지 리스트
 const imageCache = new Map<string, HTMLImageElement>()
 const allImages = [
-  '/title.png',
+  '/title_bright.png',
   '/start_장원영.png',
   '/party/1_박정민.png',
   '/party/2_장원영.png',
