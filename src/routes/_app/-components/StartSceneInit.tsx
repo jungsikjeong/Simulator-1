@@ -71,6 +71,7 @@ export default function StartSceneInit({
   const [loaded, setLoaded] = useState(0)
   const total = initialImages.length
   const [ready, setReady] = useState(false)
+  const [isLoadingComplete, setIsLoadingComplete] = useState(false)
 
   // 초기 프리로드
   useEffect(() => {
@@ -85,14 +86,20 @@ export default function StartSceneInit({
 
       const successCount = results.filter(Boolean).length
       setLoaded(successCount)
-      setProgress(Math.min(Math.round((successCount / total) * 100), 100))
+      const newProgress = Math.min(Math.round((successCount / total) * 100), 100)
+      setProgress(newProgress)
+
+      // 모든 초기 이미지가 로드되었을 때만 완료 상태로 변경
+      if (successCount === total) {
+        setIsLoadingComplete(true)
+      }
     }
 
     loadInitialImages()
 
     // 백그라운드에서 나머지 이미지 로드
     const loadBackgroundImages = async () => {
-      const chunkSize = 5 // 한 번에 5개씩 로드
+      const chunkSize = 5
       for (let i = 0; i < backgroundImages.length; i += chunkSize) {
         const chunk = backgroundImages.slice(i, i + chunkSize)
         await Promise.all(chunk.map(src => preloadImage(src)))
@@ -108,11 +115,11 @@ export default function StartSceneInit({
 
   // 모두 로드되면, 잠시 딜레이 후 진입
   useEffect(() => {
-    if (loaded >= total) {
+    if (isLoadingComplete) {
       const t = setTimeout(() => setReady(true), 100)
       return () => clearTimeout(t)
     }
-  }, [loaded, total])
+  }, [isLoadingComplete])
 
   if (!ready) {
     // 게임 시작 전 로딩 스크린
