@@ -76,22 +76,48 @@ export default function StartSceneInit({
   // 초기 프리로드
   useEffect(() => {
     let isMounted = true
+    let retryCount = 0
+    const MAX_RETRIES = 3
 
     const loadInitialImages = async () => {
-      const results = await Promise.all(
-        initialImages.map(src => preloadImage(src))
-      )
+      try {
+        // 모바일에서는 한 번에 하나씩 로드
+        if (isMobile) {
+          for (let i = 0; i < initialImages.length; i++) {
+            if (!isMounted) return
 
-      if (!isMounted) return
+            const success = await preloadImage(initialImages[i])
+            if (success) {
+              setLoaded(prev => prev + 1)
+              setProgress(Math.min(Math.round(((i + 1) / total) * 100), 100))
+            }
 
-      const successCount = results.filter(Boolean).length
-      setLoaded(successCount)
-      const newProgress = Math.min(Math.round((successCount / total) * 100), 100)
-      setProgress(newProgress)
+            // 모바일에서는 각 이미지 로드 사이에 약간의 딜레이를 줌
+            await new Promise(resolve => setTimeout(resolve, 50))
+          }
+        } else {
+          // PC에서는 병렬 로드
+          const results = await Promise.all(
+            initialImages.map(src => preloadImage(src))
+          )
 
-      // 모든 초기 이미지가 로드되었을 때만 완료 상태로 변경
-      if (successCount === total) {
-        setIsLoadingComplete(true)
+          if (!isMounted) return
+
+          const successCount = results.filter(Boolean).length
+          setLoaded(successCount)
+          setProgress(Math.min(Math.round((successCount / total) * 100), 100))
+        }
+
+        if (isMounted) {
+          setIsLoadingComplete(true)
+        }
+      } catch (error) {
+        console.error('이미지 로딩 실패:', error)
+        if (retryCount < MAX_RETRIES) {
+          retryCount++
+          console.log(`재시도 ${retryCount}/${MAX_RETRIES}`)
+          setTimeout(loadInitialImages, 1000)
+        }
       }
     }
 
@@ -99,10 +125,17 @@ export default function StartSceneInit({
 
     // 백그라운드에서 나머지 이미지 로드
     const loadBackgroundImages = async () => {
-      const chunkSize = 5
+      const chunkSize = isMobile ? 2 : 5 // 모바일에서는 더 작은 청크 사이즈 사용
       for (let i = 0; i < backgroundImages.length; i += chunkSize) {
+        if (!isMounted) return
+
         const chunk = backgroundImages.slice(i, i + chunkSize)
         await Promise.all(chunk.map(src => preloadImage(src)))
+
+        // 모바일에서는 청크 사이에 약간의 딜레이를 줌
+        if (isMobile) {
+          await new Promise(resolve => setTimeout(resolve, 100))
+        }
       }
     }
 
@@ -111,15 +144,15 @@ export default function StartSceneInit({
     return () => {
       isMounted = false
     }
-  }, [])
+  }, [isMobile])
 
   // 모두 로드되면, 잠시 딜레이 후 진입
   useEffect(() => {
     if (isLoadingComplete) {
-      const t = setTimeout(() => setReady(true), 100)
+      const t = setTimeout(() => setReady(true), isMobile ? 200 : 100)
       return () => clearTimeout(t)
     }
-  }, [isLoadingComplete])
+  }, [isLoadingComplete, isMobile])
 
   if (!ready) {
     // 게임 시작 전 로딩 스크린
