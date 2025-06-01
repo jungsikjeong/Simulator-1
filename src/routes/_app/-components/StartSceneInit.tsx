@@ -49,11 +49,14 @@ const backgroundImages = [
   '/ending/3_같이.png',
 ]
 
-async function preloadImage(src: string): Promise<void> {
+async function preloadImage(src: string): Promise<boolean> {
   return new Promise(resolve => {
     const img = new Image()
-    img.onload = () => resolve()
-    img.onerror = () => resolve()
+    img.onload = () => resolve(true)
+    img.onerror = () => {
+      console.warn(`Failed to load image: ${src}`)
+      resolve(false)
+    }
     img.src = src
   })
 }
@@ -71,27 +74,42 @@ export default function StartSceneInit({
 
   // 초기 프리로드
   useEffect(() => {
-    // 시작 화면에 필요한 이미지만 먼저 로드
-    initialImages.forEach(src => {
-      preloadImage(src).then(() => {
-        setLoaded(prev => {
-          const next = prev + 1
-          setProgress(Math.min(Math.round((next / total) * 100), 100))
-          return next
-        })
-      })
-    })
+    let isMounted = true
+
+    const loadInitialImages = async () => {
+      const results = await Promise.all(
+        initialImages.map(src => preloadImage(src))
+      )
+
+      if (!isMounted) return
+
+      const successCount = results.filter(Boolean).length
+      setLoaded(successCount)
+      setProgress(Math.min(Math.round((successCount / total) * 100), 100))
+    }
+
+    loadInitialImages()
 
     // 백그라운드에서 나머지 이미지 로드
-    backgroundImages.forEach(src => {
-      preloadImage(src)
-    })
+    const loadBackgroundImages = async () => {
+      const chunkSize = 5 // 한 번에 5개씩 로드
+      for (let i = 0; i < backgroundImages.length; i += chunkSize) {
+        const chunk = backgroundImages.slice(i, i + chunkSize)
+        await Promise.all(chunk.map(src => preloadImage(src)))
+      }
+    }
+
+    loadBackgroundImages()
+
+    return () => {
+      isMounted = false
+    }
   }, [])
 
   // 모두 로드되면, 잠시 딜레이 후 진입
   useEffect(() => {
     if (loaded >= total) {
-      const t = setTimeout(() => setReady(true), 100) // UX를 위해 짧게 대기
+      const t = setTimeout(() => setReady(true), 100)
       return () => clearTimeout(t)
     }
   }, [loaded, total])
