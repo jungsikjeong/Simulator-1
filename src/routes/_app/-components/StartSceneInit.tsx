@@ -68,7 +68,7 @@ export default function StartSceneInit({
 }) {
   const isMobile = useIsMobile()
   const [progress, setProgress] = useState(0)
-  const [loaded, setLoaded] = useState(0)
+  const [_loaded, setLoaded] = useState(0)
   const total = initialImages.length
   const [ready, setReady] = useState(false)
   const [isLoadingComplete, setIsLoadingComplete] = useState(false)
