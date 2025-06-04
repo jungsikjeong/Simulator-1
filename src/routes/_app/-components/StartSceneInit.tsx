@@ -14,7 +14,7 @@ const backgroundImages = [
   '/party/3_장원영.png',
   '/party/4_박정민.png',
   '/party/5_박정민.png',
-  '/party/6_장원영.png',
+  '/party/6_장원영.jpg',
   '/party/7_장원영.png',
   '/party/8_단체.jpg',
   '/hof/1_박정민.png',
@@ -224,7 +224,7 @@ export default function StartSceneInit({
       </AnimatePresence>
 
       {/* 음주 경고 메시지 */}
-      <div className="absolute right-0 bottom-2.5 sm:bottom-0 left-0 mb-8 px-2 py-1 text-center text-xs text-white">
+      <div className="absolute right-0 bottom-2.5 left-0 mb-8 px-2 py-1 text-center text-xs text-white sm:bottom-0">
         <span className="text tracking-tighter">
           *경고 : 지나친 음주는 뇌졸중, 기억력 손상이나 치매를 유발합니다.
         </span>
