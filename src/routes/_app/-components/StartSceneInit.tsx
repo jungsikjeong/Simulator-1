@@ -9,14 +9,14 @@ import { useIsMobile } from '@/hooks/use-mobile'
 const initialImages = ['/start_장원영.png', '/title_bright.png']
 
 const backgroundImages = [
-  '/party/1_박정민.png',
+  '/party/1_박정민.jpg',
   '/party/2_장원영.png',
   '/party/3_장원영.png',
   '/party/4_박정민.png',
   '/party/5_박정민.png',
   '/party/6_장원영.png',
   '/party/7_장원영.png',
-  '/party/8_단체.png',
+  '/party/8_단체.jpg',
   '/hof/1_박정민.png',
   '/hof/2_장원영.png',
   '/hof/3_장원영.png',

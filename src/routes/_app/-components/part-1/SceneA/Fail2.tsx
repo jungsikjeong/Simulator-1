@@ -11,7 +11,7 @@ export default function Part1SceneAFail2({ onSceneChange }: SceneProps) {
   return (
     <FailScene
       onSceneChange={onSceneChange}
-      bgImage="/party/4_박정민.png"
+      bgImage="/party/4_박정민.jpg"
       chunks={[
         { content: '부담스러워...' },
       ]}

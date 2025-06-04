@@ -25,7 +25,7 @@ export default function Part1SceneASuccess2({ onSceneChange }: SceneProps) {
   return (
     <SuccessScene
       onSceneChange={onSceneChange}
-      bgImage="/party/5_박정민.png"
+      bgImage="/party/5_박정민.jpg"
       chunks={[
         {
           content: '친구 없는데?',

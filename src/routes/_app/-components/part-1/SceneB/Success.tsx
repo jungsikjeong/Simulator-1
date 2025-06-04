@@ -38,7 +38,7 @@ export default function Part1SceneBSuccess({ onSceneChange }: SceneProps) {
       setIsTouchable={setIsTouchable}
       showGlitter={true}
       faceArea={modelFaceArea}
-      nextBgList={['/home/1_박정민.png']}
+      nextBgList={['/home/1_박정민.jpg']}
     />
 
 
