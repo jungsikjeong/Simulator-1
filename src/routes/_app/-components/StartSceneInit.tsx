@@ -20,7 +20,7 @@ const backgroundImages = [
   '/hof/1_박정민.png',
   '/hof/2_장원영.png',
   '/hof/3_장원영.png',
-  '/home/1_박정민.png',
+  '/home/1_박정민.jpg',
   '/home/2_장원영.png',
   '/home/3_장원영.png',
   '/home/4_박정민.png',
