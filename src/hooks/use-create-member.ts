@@ -10,10 +10,17 @@ export const useCreateMember = () => {
 
   return useMutation<Member, Error, { name: string; id: string }>({
     mutationFn: async ({ name, id }) => {
-      const member = await memberService.createMember(name, id);
-      localStorage.setItem('currentMemberId', id);
-      localStorage.setItem('currentMemberName', name);
-      return member;
+      try {
+        const member = await memberService.createMember(name, id);
+        localStorage.setItem('currentMemberId', id);
+        localStorage.setItem('currentMemberName', name);
+        return member;
+      } catch (error) {
+        // 에러 발생 시 로컬 스토리지 비우기
+        localStorage.removeItem('currentMemberId');
+        localStorage.removeItem('currentMemberName');
+        throw error;
+      }
     },
   });
 };
