@@ -31,23 +31,51 @@ export default function StartScene({
 
   const handleNameSubmit = async () => {
     if (!playerName.trim()) return
-    try {
-      const existingId = localStorage.getItem('currentMemberId')
 
-      if (existingId) {
-        // 이미 게임했던 유저면 이름만 업데이트
-        await updateMemberName.mutateAsync({ id: existingId, name: playerName })
-        localStorage.setItem('currentMemberName', playerName)
-      } else {
-        // 새로운 유저면 새로 생성
-        const uuid = uuidv4()
-        createMember.mutate({ name: playerName, id: uuid })
-      }
+    const existingId = localStorage.getItem('currentMemberId')
 
-      onSceneChange('part1')
-    } catch (error) {
-      console.error('Failed to handle member:', error)
+    if (existingId) {
+      // 이미 게임했던 유저면 이름만 업데이트
+      await updateMemberName.mutateAsync(
+        { id: existingId, name: playerName },
+        {
+          onError: error => {
+            if ((error as any)?.code === 'PGRST116') {
+              localStorage.removeItem('currentMemberId')
+              localStorage.removeItem('currentMemberName')
+
+              const uuid = uuidv4()
+              createMember.mutate(
+                { name: playerName, id: uuid },
+                {
+                  onSuccess: () => {
+                    localStorage.setItem('currentMemberId', uuid)
+                    localStorage.setItem('currentMemberName', playerName)
+                    onSceneChange('part1')
+                  },
+                }
+              )
+              return
+            }
+          },
+        }
+      )
+      localStorage.setItem('currentMemberName', playerName)
+    } else {
+      // 새로운 유저면 새로 생성
+      const uuid = uuidv4()
+      createMember.mutate(
+        { name: playerName, id: uuid },
+        {
+          onSuccess: () => {
+            localStorage.setItem('currentMemberId', uuid)
+            localStorage.setItem('currentMemberName', playerName)
+          },
+        }
+      )
     }
+
+    onSceneChange('part1')
   }
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -61,16 +89,25 @@ export default function StartScene({
   }
 
   return (
-    <SceneLayout bg="/start_장원영.png" effect="trueBlend" hideTitle={false} nextBgList={['/party/1_박정민.jpg']}>
+    <SceneLayout
+      bg="/start_장원영.png"
+      effect="trueBlend"
+      hideTitle={false}
+      nextBgList={['/party/1_박정민.jpg']}
+    >
       {/* Background overlay */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent pointer-events-none" />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
 
       {/* Scene transition overlay */}
-      <div id="scene-transition" className="absolute inset-0 bg-black opacity-0 transition-opacity duration-800 pointer-events-none z-50" />
-
+      <div
+        id="scene-transition"
+        className="pointer-events-none absolute inset-0 z-50 bg-black opacity-0 transition-opacity duration-800"
+      />
 
       {/* Dialogue Box */}
-      <div className={`absolute ${isMobile ? 'bottom-38' : 'bottom-42'} w-full flex justify-center`}>
+      <div
+        className={`absolute ${isMobile ? 'bottom-38' : 'bottom-42'} flex w-full justify-center`}
+      >
         <DialogueBox
           chunks={[
             { content: '  안녕! 나는 짐빔 모델 장원영이야\n' },
@@ -80,7 +117,7 @@ export default function StartScene({
             { content: '도와줄래?' },
           ]}
           variant="start"
-          className='p-5'
+          className="p-5"
           typingTextClassName={`leading-relaxed`}
           onComplete={() => setTypingDone(true)}
           isTouchable={isTouchable}
@@ -91,10 +128,10 @@ export default function StartScene({
 
       {/* Name Input with animation */}
       <motion.div
-        className={`absolute ${isMobile ? 'bottom-12' : 'bottom-12'} w-full flex flex-col items-center gap-4 ${!showInput ? 'opacity-0 pointer-events-none' : ''}`}
+        className={`absolute ${isMobile ? 'bottom-12' : 'bottom-12'} flex w-full flex-col items-center gap-4 ${!showInput ? 'pointer-events-none opacity-0' : ''}`}
         initial={{ y: 20, opacity: 0 }}
         animate={showInput ? { y: 0, opacity: 1 } : {}}
-        transition={{ duration: 0.5, ease: "easeOut" }}
+        transition={{ duration: 0.5, ease: 'easeOut' }}
       >
         <div className="relative w-[80%]">
           <input
@@ -103,17 +140,17 @@ export default function StartScene({
             onChange={e => setPlayerName(e.target.value)}
             onKeyPress={handleKeyPress}
             placeholder="조언자 이름을 입력하세요"
-            className={`${isMobile ? 'px-2 py-1.5 text-sm' : 'px-4 py-3 text-base'} border-2 border-black rounded-sm focus:outline-none focus:ring-2 focus:ring-[#ffc000] w-full shadow-lg text-center bg-white/90 text-gray-800`}
+            className={`${isMobile ? 'px-2 py-1.5 text-sm' : 'px-4 py-3 text-base'} w-full rounded-sm border-2 border-black bg-white/90 text-center text-gray-800 shadow-lg focus:ring-2 focus:ring-[#ffc000] focus:outline-none`}
             maxLength={12}
           />
-          <div className="absolute right-4 top-1/2 -translate-y-1/2 text-[#ffc000] text-xs font-medium">
+          <div className="absolute top-1/2 right-4 -translate-y-1/2 text-xs font-medium text-[#ffc000]">
             {playerName.length}/12
           </div>
         </div>
 
         <motion.button
           onClick={handleNameSubmit}
-          className={`bg-[#ffc000] text-white ${isMobile ? 'px-4 py-2 text-sm' : 'px-8 py-3 text-base'} rounded-full shadow-lg hover:bg-[#ffb000] transition-all duration-300 font-bold tracking-wider`}
+          className={`bg-[#ffc000] text-white ${isMobile ? 'px-4 py-2 text-sm' : 'px-8 py-3 text-base'} rounded-full font-bold tracking-wider shadow-lg transition-all duration-300 hover:bg-[#ffb000]`}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           disabled={!playerName.trim()}
