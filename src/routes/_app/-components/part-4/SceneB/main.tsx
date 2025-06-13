@@ -15,7 +15,7 @@ export default function Part4SceneBMain({ onSceneChange }: SceneProps) {
     return (
         <RomanceScene
             onSceneChange={onSceneChange}
-            bgImage="/romance/5_박정민.png"
+            bgImage="/romance/5_박정민.jpg"
             chunks={[
                 {
                     content: '"응? 나 아무렇지 않은데?"', className: 'font-bold'

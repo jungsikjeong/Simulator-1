@@ -25,7 +25,7 @@ export default function Part3({ onSceneChange }: SceneProps) {
     return (
         <SuccessScene
             onSceneChange={onSceneChange}
-            bgImage="/hof/1_박정민.png"
+            bgImage="/hof/1_박정민.jpg"
             chunks={[
                 {
                     content: '여유 없는데?',

@@ -67,7 +67,7 @@ export default function Part4SceneASuccess1({ onSceneChange }: SceneProps) {
             setIsTypingComplete={setIsTypingComplete}
             isTouchable={isTouchable}
             setIsTouchable={setIsTouchable}
-            nextBgList={['/romance/5_박정민.png']}
+            nextBgList={['/romance/5_박정민.jpg']}
             dialogClassName="hideIndicatorWhenTouchable"
         />
     )
