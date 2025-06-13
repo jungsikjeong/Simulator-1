@@ -40,7 +40,7 @@ export default function Part4SceneBNext1({ onSceneChange }: SceneProps) {
             {/* 현재 배경 */}
             <div
                 className="absolute inset-0 h-full w-full bg-cover bg-center"
-                style={{ backgroundImage: `url('/romance/6_박정민.png')` }}
+                style={{ backgroundImage: `url('/romance/6_박정민.jpg')` }}
             />
 
             {/* 전환될 배경 */}
@@ -61,7 +61,7 @@ export default function Part4SceneBNext1({ onSceneChange }: SceneProps) {
             <div className="relative z-10">
                 <RomanceScene
                     onSceneChange={onSceneChange}
-                    bgImage="/romance/6_박정민.png"
+                    bgImage="/romance/6_박정민.jpg"
                     chunks={[
                         {
                             content: '친구도', className: 'font-bold'

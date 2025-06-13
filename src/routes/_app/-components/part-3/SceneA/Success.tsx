@@ -41,7 +41,7 @@ export default function Part3SceneASuccess({ onSceneChange }: SceneProps) {
             setIsTouchable={setIsTouchable}
             showGlitter={true}
             faceArea={modelFaceArea}
-            nextBgList={['/romance/1_박정민.png']}
+            nextBgList={['/romance/1_박정민.jpg']}
         />
     )
 }

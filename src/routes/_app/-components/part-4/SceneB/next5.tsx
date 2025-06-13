@@ -18,7 +18,7 @@ export default function Part4SceneBNext5({ onSceneChange }: SceneProps) {
             onSceneChange={onSceneChange}
             bgImages={[
                 '/romance/10_박정민.png',
-                '/romance/11_박정민.png',
+                '/romance/11_박정민.jpg',
                 '/romance/12_박정민.png'
             ]}
             // 텍스트를 하나의 chunk로 합치기

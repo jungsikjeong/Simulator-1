@@ -40,7 +40,7 @@ export default function Part4SceneBNext3({ onSceneChange }: SceneProps) {
             {/* 현재 배경 */}
             <div
                 className="absolute inset-0 h-full w-full bg-cover bg-center"
-                style={{ backgroundImage: `url('/romance/8_박정민.png')` }}
+                style={{ backgroundImage: `url('/romance/8_박정민.jpg')` }}
             />
 
             {/* 전환될 배경 */}
@@ -48,7 +48,7 @@ export default function Part4SceneBNext3({ onSceneChange }: SceneProps) {
                 <div
                     className="absolute inset-0 h-full w-full bg-cover bg-center transition-opacity transition-filter ease-in-out"
                     style={{
-                        backgroundImage: `url('/romance/9_박정민.png')`,
+                        backgroundImage: `url('/romance/9_박정민.jpg')`,
                         opacity,
                         filter: opacity ? 'blur(0px)' : 'blur(4px)',
                         transitionDuration: '600ms',
@@ -61,7 +61,7 @@ export default function Part4SceneBNext3({ onSceneChange }: SceneProps) {
             <div className="relative z-10">
                 <RomanceScene
                     onSceneChange={onSceneChange}
-                    bgImage="/romance/8_박정민.png"
+                    bgImage="/romance/8_박정민.jpg"
                     chunks={[
                         {
                             content: '낭만도 없지만', className: 'font-bold'
@@ -74,7 +74,7 @@ export default function Part4SceneBNext3({ onSceneChange }: SceneProps) {
                     setIsTypingComplete={setIsTypingComplete}
                     isTouchable={isTouchable}
                     setIsTouchable={setIsTouchable}
-                    nextBgList={['/romance/9_박정민.png']}
+                    nextBgList={['/romance/9_박정민.jpg']}
                     dialogClassName="hideIndicatorWhenTouchable"
                 />
             </div>

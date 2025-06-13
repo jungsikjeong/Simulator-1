@@ -48,7 +48,7 @@ export default function Part4SceneBNext2({ onSceneChange }: SceneProps) {
                 <div
                     className="absolute inset-0 h-full w-full bg-cover bg-center transition-opacity transition-filter ease-in-out"
                     style={{
-                        backgroundImage: `url('/romance/8_박정민.png')`,
+                        backgroundImage: `url('/romance/8_박정민.jpg')`,
                         opacity,
                         filter: opacity ? 'blur(0px)' : 'blur(4px)',
                         transitionDuration: '600ms',
@@ -74,7 +74,7 @@ export default function Part4SceneBNext2({ onSceneChange }: SceneProps) {
                     setIsTypingComplete={setIsTypingComplete}
                     isTouchable={isTouchable}
                     setIsTouchable={setIsTouchable}
-                    nextBgList={['/romance/8_박정민.png']}
+                    nextBgList={['/romance/8_박정민.jpg']}
                     dialogClassName="hideIndicatorWhenTouchable"
                 />
             </div>
