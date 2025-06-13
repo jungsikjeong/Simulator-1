@@ -120,7 +120,7 @@ const allImages = [
   '/party/3_장원영.png',
   '/party/4_박정민.jpg',
   '/party/5_박정민.jpg',
-  '/party/6_장원영.png',
+  '/party/6_장원영.jpg',
   '/party/7_장원영.png',
   '/party/8_단체.jpg',
   '/hof/1_박정민.jpg',
@@ -184,7 +184,7 @@ async function preloadImagesWithPriority(images: string[], currentBg: string) {
 
   // 나머지 이미지들은 requestIdleCallback을 사용하여 백그라운드에서 로드
   if ('requestIdleCallback' in window) {
-    ; (window as any).requestIdleCallback(() => {
+    ;(window as any).requestIdleCallback(() => {
       mediumPriority.forEach(img => preloadImage(img, false))
     })
   } else {
@@ -235,7 +235,7 @@ export default function SceneLayout({
   // 사운드 재생
   useEffect(() => {
     if (!soundEffect) return
-    new Audio(`/sounds/${soundEffect}.mp3`).play().catch(() => { })
+    new Audio(`/sounds/${soundEffect}.mp3`).play().catch(() => {})
   }, [soundEffect])
 
   // Esc 스킵

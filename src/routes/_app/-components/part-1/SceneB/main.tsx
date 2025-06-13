@@ -17,7 +17,15 @@ export default function Part1SceneBMain({ onSceneChange }: SceneProps) {
   const [isTouchable, setIsTouchable] = useState(true)
 
   return (
-    <SceneLayout bg="/party/6_장원영.png" effect="trueBlend" nextBgList={['/party/7_장원영.png', '/party/8_단체.jpg', '/party/5_박정민.jpg']}>
+    <SceneLayout
+      bg="/party/6_장원영.jpg"
+      effect="trueBlend"
+      nextBgList={[
+        '/party/7_장원영.png',
+        '/party/8_단체.jpg',
+        '/party/5_박정민.jpg',
+      ]}
+    >
       <SweatAnimation
         mobileTop="2%"
         mobileRight="15%"
@@ -26,20 +34,22 @@ export default function Part1SceneBMain({ onSceneChange }: SceneProps) {
         desktopRight="12%"
         desktopRotation="235deg"
         mobileSizes={{
-          first: { width: "10", height: "12" },
-          second: { width: "12", height: "14" },
-          third: { width: "14", height: "16" },
-          fourth: { width: "16", height: "18" }
+          first: { width: '10', height: '12' },
+          second: { width: '12', height: '14' },
+          third: { width: '14', height: '16' },
+          fourth: { width: '16', height: '18' },
         }}
         desktopSizes={{
-          first: { width: "16", height: "18" },
-          second: { width: "18", height: "20" },
-          third: { width: "20", height: "22" },
-          fourth: { width: "22", height: "24" }
+          first: { width: '16', height: '18' },
+          second: { width: '18', height: '20' },
+          third: { width: '20', height: '22' },
+          fourth: { width: '22', height: '24' },
         }}
       />
 
-      <div className={`absolute ${choiceOpen ? 'bottom-2' : 'bottom-20'} flex w-full flex-col items-center gap-4`}>
+      <div
+        className={`absolute ${choiceOpen ? 'bottom-2' : 'bottom-20'} flex w-full flex-col items-center gap-4`}
+      >
         <div className="w-full max-w-xl">
           <motion.div
             initial={{ opacity: 0 }}
@@ -66,7 +76,7 @@ export default function Part1SceneBMain({ onSceneChange }: SceneProps) {
               ]}
               typingDelay={0.5}
               variant="light"
-              className='p-5'
+              className="p-5"
               typingTextClassName="leading-relaxed"
               onComplete={() => setChoiceOpen(true)}
               isTouchable={isTouchable}
