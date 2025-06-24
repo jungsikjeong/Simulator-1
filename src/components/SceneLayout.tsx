@@ -113,7 +113,7 @@ const variantMap: Record<TransitionEffect, Variants> = {
 // 전역 캐시 및 전체 이미지 리스트
 const imageCache = new Map<string, HTMLImageElement>()
 const allImages = [
-  'https://dmfnb4l6be84v.cloudfront.net/title_bright.webp',
+  '/title_bright.png',
   'https://dmfnb4l6be84v.cloudfront.net/start_%EC%9E%A5%EC%9B%90%EC%98%81.webp',
   'https://dmfnb4l6be84v.cloudfront.net/party/1_%EB%B0%95%EC%A0%95%EB%AF%BC.webp',
   'https://dmfnb4l6be84v.cloudfront.net/party/2_%EC%9E%A5%EC%9B%90%EC%98%81.webp',

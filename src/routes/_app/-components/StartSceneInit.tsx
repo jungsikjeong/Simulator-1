@@ -8,7 +8,7 @@ import { useIsMobile } from '@/hooks/use-mobile'
 
 const initialImages = [
   'https://dmfnb4l6be84v.cloudfront.net/start_%EC%9E%A5%EC%9B%90%EC%98%81.webp',
-      'https://dmfnb4l6be84v.cloudfront.net/title_bright.webp'
+  '/title_bright.png'
 ]
 
 const backgroundImages = [
@@ -204,7 +204,7 @@ export default function StartSceneInit({
         >
           <div className="flex flex-col items-center">
             <img
-              src="https://dmfnb4l6be84v.cloudfront.net/title_bright.webp"
+              src="/title_bright.png"
               alt="짐빔 위대한 마케터"
               className={`${isMobile ? 'w-60' : 'w-80'}`}
             />
