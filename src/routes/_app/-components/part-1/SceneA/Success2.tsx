@@ -25,7 +25,7 @@ export default function Part1SceneASuccess2({ onSceneChange }: SceneProps) {
   return (
     <SuccessScene
       onSceneChange={onSceneChange}
-      bgImage="/party/5_박정민.jpg"
+      bgImage="https://dmfnb4l6be84v.cloudfront.net/party/5_%EB%B0%95%EC%A0%95%EB%AF%BC.webp"
       chunks={[
         {
           content: '친구 없는데?',
@@ -38,7 +38,7 @@ export default function Part1SceneASuccess2({ onSceneChange }: SceneProps) {
       setIsTypingComplete={setIsTypingComplete}
       isTouchable={isTouchable}
       setIsTouchable={setIsTouchable}
-      nextBgList={['/party/6_장원영.jpg']}
+      nextBgList={['https://dmfnb4l6be84v.cloudfront.net/party/6_%EC%9E%A5%EC%9B%90%EC%98%81.webp']}
     />
   )
 }

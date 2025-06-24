@@ -11,7 +11,7 @@ export default function Part1SceneBFail1({ onSceneChange }: SceneProps) {
   return (
     <FailScene
       onSceneChange={onSceneChange}
-      bgImage="/party/8_단체.jpg"
+      bgImage="https://dmfnb4l6be84v.cloudfront.net/party/8_%EB%8B%A8%EC%B2%B4.webp"
       chunks={[
         { content: '친구 지금 왔는데?\n' },
       ]}

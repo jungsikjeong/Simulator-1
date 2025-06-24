@@ -7,8 +7,8 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { useIsMobile } from '@/hooks/use-mobile'
 
 const initialImages = [
-  '/start_장원영.png',
-  '/title_bright.png'
+  'https://dmfnb4l6be84v.cloudfront.net/start_%EC%9E%A5%EC%9B%90%EC%98%81.webp',
+      'https://dmfnb4l6be84v.cloudfront.net/title_bright.webp'
 ]
 
 const backgroundImages = [
@@ -178,7 +178,7 @@ export default function StartSceneInit({
 
   // 준비 완료 시 실제 Start 씬으로 넘어감
   return (
-    <SceneLayout bg="/start_장원영.png" effect="trueBlend" hideTitle={false}>
+    <SceneLayout bg="https://dmfnb4l6be84v.cloudfront.net/start_%EC%9E%A5%EC%9B%90%EC%98%81.webp" effect="trueBlend" hideTitle={false}>
       {/* 클릭 시 다음 씬으로 */}
       <div
         className="absolute inset-0 z-10 cursor-pointer"

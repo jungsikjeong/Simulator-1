@@ -16,7 +16,7 @@ export default function Part2SceneAMain({
     const [isTouchable, setIsTouchable] = useState(true)
 
     return (
-        <SceneLayout bg="/home/2_장원영.png" effect="trueBlend" nextBgList={['/home/3_장원영.png', '/home/4_박정민.png', '/home/5_박정민.png']}>
+        <SceneLayout bg="https://dmfnb4l6be84v.cloudfront.net/home/2_%EC%9E%A5%EC%9B%90%EC%98%81.webp" effect="trueBlend" nextBgList={['https://dmfnb4l6be84v.cloudfront.net/home/3_%EC%9E%A5%EC%9B%90%EC%98%81.webp', 'https://dmfnb4l6be84v.cloudfront.net/home/4_%EB%B0%95%EC%A0%95%EB%AF%BC.webp', 'https://dmfnb4l6be84v.cloudfront.net/home/5_%EB%B0%95%EC%A0%95%EB%AF%BC.webp']}>
             <SweatAnimation
                 mobileTop="11%"
                 mobileRight="19%"

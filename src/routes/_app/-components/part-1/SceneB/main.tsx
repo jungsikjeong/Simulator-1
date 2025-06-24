@@ -18,12 +18,12 @@ export default function Part1SceneBMain({ onSceneChange }: SceneProps) {
 
   return (
     <SceneLayout
-      bg="/party/6_장원영.jpg"
+      bg="https://dmfnb4l6be84v.cloudfront.net/party/6_%EC%9E%A5%EC%9B%90%EC%98%81.webp"
       effect="trueBlend"
       nextBgList={[
-        '/party/7_장원영.png',
-        '/party/8_단체.jpg',
-        '/party/5_박정민.jpg',
+        'https://dmfnb4l6be84v.cloudfront.net/party/7_%EC%9E%A5%EC%9B%90%EC%98%81.webp',
+        'https://dmfnb4l6be84v.cloudfront.net/party/8_%EB%8B%A8%EC%B2%B4.webp',
+        'https://dmfnb4l6be84v.cloudfront.net/party/5_%EB%B0%95%EC%A0%95%EB%AF%BC.webp',
       ]}
     >
       <SweatAnimation

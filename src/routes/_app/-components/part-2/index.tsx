@@ -25,7 +25,7 @@ export default function Part2({ onSceneChange }: SceneProps) {
     return (
         <SuccessScene
             onSceneChange={onSceneChange}
-            bgImage="/home/1_박정민.jpg"
+            bgImage="https://dmfnb4l6be84v.cloudfront.net/home/1_%EB%B0%95%EC%A0%95%EB%AF%BC.webp"
             bgClassName='relative h-screen w-full overflow-hidden bg-cover bg-center'
             chunks={[
                 {
@@ -39,7 +39,7 @@ export default function Part2({ onSceneChange }: SceneProps) {
             setIsTypingComplete={setIsTypingComplete}
             isTouchable={isTouchable}
             setIsTouchable={setIsTouchable}
-            nextBgList={['/home/2_장원영.png']}
+            nextBgList={['https://dmfnb4l6be84v.cloudfront.net/home/2_%EC%9E%A5%EC%9B%90%EC%98%81.webp']}
         />
     )
 }
