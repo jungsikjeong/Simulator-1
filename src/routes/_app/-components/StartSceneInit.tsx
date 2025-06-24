@@ -8,7 +8,7 @@ import { useIsMobile } from '@/hooks/use-mobile'
 
 const initialImages = [
   'https://dmfnb4l6be84v.cloudfront.net/start_%EC%9E%A5%EC%9B%90%EC%98%81.webp',
-  '/title_bright.png'
+  'https://dmfnb4l6be84v.cloudfront.net/title_bright.webp',
 ]
 
 const backgroundImages = [
@@ -59,7 +59,7 @@ async function preloadImage(src: string): Promise<boolean> {
       console.log(`Successfully loaded: ${src}`)
       resolve(true)
     }
-    img.onerror = (e) => {
+    img.onerror = e => {
       console.error(`Failed to load image: ${src}`, e)
       resolve(false)
     }
@@ -178,7 +178,11 @@ export default function StartSceneInit({
 
   // 준비 완료 시 실제 Start 씬으로 넘어감
   return (
-    <SceneLayout bg="https://dmfnb4l6be84v.cloudfront.net/start_%EC%9E%A5%EC%9B%90%EC%98%81.webp" effect="trueBlend" hideTitle={false}>
+    <SceneLayout
+      bg="https://dmfnb4l6be84v.cloudfront.net/start_%EC%9E%A5%EC%9B%90%EC%98%81.webp"
+      effect="trueBlend"
+      hideTitle={false}
+    >
       {/* 클릭 시 다음 씬으로 */}
       <div
         className="absolute inset-0 z-10 cursor-pointer"
@@ -204,7 +208,7 @@ export default function StartSceneInit({
         >
           <div className="flex flex-col items-center">
             <img
-              src="/title_bright.png"
+              src="https://dmfnb4l6be84v.cloudfront.net/title_bright.webp"
               alt="짐빔 위대한 마케터"
               className={`${isMobile ? 'w-60' : 'w-80'}`}
             />
