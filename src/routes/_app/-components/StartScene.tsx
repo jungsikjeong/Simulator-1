@@ -90,10 +90,10 @@ export default function StartScene({
 
   return (
     <SceneLayout
-      bg="/start_장원영.png"
+      bg="https://dmfnb4l6be84v.cloudfront.net/start_%EC%9E%A5%EC%9B%90%EC%98%81.webp"
       effect="trueBlend"
       hideTitle={false}
-      nextBgList={['/party/1_박정민.jpg']}
+      nextBgList={['https://dmfnb4l6be84v.cloudfront.net/party/1_%EB%B0%95%EC%A0%95%EB%AF%BC.webp']}
     >
       {/* Background overlay */}
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />

@@ -204,7 +204,7 @@ export default function StartSceneInit({
         >
           <div className="flex flex-col items-center">
             <img
-              src="/title_bright.png"
+              src="https://dmfnb4l6be84v.cloudfront.net/title_bright.webp"
               alt="짐빔 위대한 마케터"
               className={`${isMobile ? 'w-60' : 'w-80'}`}
             />
