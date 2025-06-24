@@ -16,7 +16,7 @@ export default function Part3SceneAMain({ onSceneChange }: SceneProps) {
     const [isTouchable, setIsTouchable] = useState(true)
 
     return (
-        <SceneLayout bg="/hof/2_장원영.png" effect="trueBlend" nextBgList={['/hof/3_장원영.png', '/party/3_장원영.png',]}>
+        <SceneLayout bg="https://dmfnb4l6be84v.cloudfront.net/hof/2_%EC%9E%A5%EC%9B%90%EC%98%81.webp" effect="trueBlend" nextBgList={['https://dmfnb4l6be84v.cloudfront.net/hof/3_%EC%9E%A5%EC%9B%90%EC%98%81.webp', 'https://dmfnb4l6be84v.cloudfront.net/party/3_%EC%9E%A5%EC%9B%90%EC%98%81.webp']}>
             <div className={`absolute ${choiceOpen ? 'bottom-2' : 'bottom-20'} flex w-full flex-col items-center gap-4`}>
                 <div className="w-full max-w-xl">
                     <motion.div

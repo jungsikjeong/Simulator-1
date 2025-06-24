@@ -15,7 +15,7 @@ export default function Part4SceneBMain({ onSceneChange }: SceneProps) {
     return (
         <RomanceScene
             onSceneChange={onSceneChange}
-            bgImage="/romance/5_박정민.jpg"
+            bgImage="https://dmfnb4l6be84v.cloudfront.net/romance/5_%EB%B0%95%EC%A0%95%EB%AF%BC.webp"
             chunks={[
                 {
                     content: '"응? 나 아무렇지 않은데?"', className: 'font-bold'
@@ -28,7 +28,7 @@ export default function Part4SceneBMain({ onSceneChange }: SceneProps) {
             setIsTypingComplete={setIsTypingComplete}
             isTouchable={isTouchable}
             setIsTouchable={setIsTouchable}
-            nextBgList={['/romance/6_박정민.jpg']}
+            nextBgList={['https://dmfnb4l6be84v.cloudfront.net/romance/6_%EB%B0%95%EC%A0%95%EB%AF%BC.webp']}
             dialogClassName="hideIndicatorWhenTouchable"
         />
     )

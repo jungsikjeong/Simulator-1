@@ -24,7 +24,7 @@ export default function Ending({ onSceneChange }: SceneProps) {
     return (
         <RomanceScene
             onSceneChange={onSceneChange}
-            bgImage="/ending/1_장원영.png"
+            bgImage="https://dmfnb4l6be84v.cloudfront.net/ending/1_%EC%9E%A5%EC%9B%90%EC%98%81.webp"
             chunks={[
                 {
                     content: '...\n', className: 'font-bold text-black/70'
@@ -41,7 +41,7 @@ export default function Ending({ onSceneChange }: SceneProps) {
             isTouchable={isTouchable}
             setIsTouchable={setIsTouchable}
             dialogClassName="bg-white/75 rounded-lg px-4"
-            nextBgList={['/ending/2_같이.png']}
+            nextBgList={['https://dmfnb4l6be84v.cloudfront.net/ending/2_%EA%B0%99%EC%9D%B4.webp']}
             indicatorTextColor="text-black"
         />
     )

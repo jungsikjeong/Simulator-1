@@ -17,9 +17,9 @@ export default function Part4SceneAMain({ onSceneChange }: SceneProps) {
 
   return (
     <SceneLayout
-      bg="/romance/2_박정민.png"
+      bg="https://dmfnb4l6be84v.cloudfront.net/romance/2_%EB%B0%95%EC%A0%95%EB%AF%BC.webp"
       effect="trueBlend"
-      nextBgList={['/romance/3_박정민.jpg', '/romance/4_박정민.png']}
+      nextBgList={['https://dmfnb4l6be84v.cloudfront.net/romance/3_%EB%B0%95%EC%A0%95%EB%AF%BC.webp', 'https://dmfnb4l6be84v.cloudfront.net/romance/4_%EB%B0%95%EC%A0%95%EB%AF%BC.webp']}
     >
       <div
         className={`absolute ${choiceOpen ? 'bottom-2' : 'bottom-20'} flex w-full flex-col items-center gap-4`}

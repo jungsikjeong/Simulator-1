@@ -22,7 +22,7 @@ export default function Part3SceneASuccess({ onSceneChange }: SceneProps) {
     return (
         <SuccessScene
             onSceneChange={onSceneChange}
-            bgImage="/hof/3_장원영.png"
+            bgImage="https://dmfnb4l6be84v.cloudfront.net/hof/3_%EC%9E%A5%EC%9B%90%EC%98%81.webp"
             bgClassName='relative h-screen w-full overflow-hidden bg-cover bg-center'
 
             chunks={[
@@ -41,7 +41,7 @@ export default function Part3SceneASuccess({ onSceneChange }: SceneProps) {
             setIsTouchable={setIsTouchable}
             showGlitter={true}
             faceArea={modelFaceArea}
-            nextBgList={['/romance/1_박정민.jpg']}
+            nextBgList={['https://dmfnb4l6be84v.cloudfront.net/romance/1_%EB%B0%95%EC%A0%95%EB%AF%BC.webp']}
         />
     )
 }

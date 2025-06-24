@@ -11,7 +11,7 @@ export default function Part4SceneAFail({ onSceneChange }: SceneProps) {
     return (
         <FailScene
             onSceneChange={onSceneChange}
-            bgImage="/romance/3_박정민.jpg"
+            bgImage="https://dmfnb4l6be84v.cloudfront.net/romance/3_%EB%B0%95%EC%A0%95%EB%AF%BC.webp"
             chunks={[
                 { content: '"편의점이 너무 멀어..."' },
             ]}

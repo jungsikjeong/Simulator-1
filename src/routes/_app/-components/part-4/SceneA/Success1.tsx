@@ -24,7 +24,7 @@ export default function Part4SceneASuccess1({ onSceneChange }: SceneProps) {
     return (
         <RomanceScene
             onSceneChange={onSceneChange}
-            bgImage="/romance/4_박정민.png"
+            bgImage="https://dmfnb4l6be84v.cloudfront.net/romance/4_%EB%B0%95%EC%A0%95%EB%AF%BC.webp"
             chunks={[
                 {
                     content: '힘들지?\n',
@@ -67,7 +67,7 @@ export default function Part4SceneASuccess1({ onSceneChange }: SceneProps) {
             setIsTypingComplete={setIsTypingComplete}
             isTouchable={isTouchable}
             setIsTouchable={setIsTouchable}
-            nextBgList={['/romance/5_박정민.jpg']}
+            nextBgList={['https://dmfnb4l6be84v.cloudfront.net/romance/5_%EB%B0%95%EC%A0%95%EB%AF%BC.webp']}
             dialogClassName="hideIndicatorWhenTouchable"
         />
     )

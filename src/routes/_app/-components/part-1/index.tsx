@@ -18,7 +18,7 @@ export default function Part1({
   const { data: memberId } = useGetCurrentMemberId()
 
   return (
-    <SceneLayout bg="/party/1_박정민.jpg" effect="smoothFade" nextBgList={['/party/2_장원영.png', '/party/3_장원영.png', '/party/4_박정민.jpg']}>
+    <SceneLayout bg="https://dmfnb4l6be84v.cloudfront.net/party/1_%EB%B0%95%EC%A0%95%EB%AF%BC.webp" effect="smoothFade" nextBgList={['https://dmfnb4l6be84v.cloudfront.net/party/2_%EC%9E%A5%EC%9B%90%EC%98%81.webp', 'https://dmfnb4l6be84v.cloudfront.net/party/3_%EC%9E%A5%EC%9B%90%EC%98%81.webp', 'https://dmfnb4l6be84v.cloudfront.net/party/4_%EB%B0%95%EC%A0%95%EB%AF%BC.webp']}>
       <div
         className={`absolute ${choiceOpen ? 'bottom-2' : 'bottom-20'} flex w-full flex-col items-center gap-4`}
       >

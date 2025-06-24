@@ -17,9 +17,9 @@ export default function Part4SceneBNext5({ onSceneChange }: SceneProps) {
         <MultiBgRomanceScene
             onSceneChange={onSceneChange}
             bgImages={[
-                '/romance/10_박정민.png',
-                '/romance/11_박정민.jpg',
-                '/romance/12_박정민.png'
+                'https://dmfnb4l6be84v.cloudfront.net/romance/10_%EB%B0%95%EC%A0%95%EB%AF%BC.webp',
+                'https://dmfnb4l6be84v.cloudfront.net/romance/11_%EB%B0%95%EC%A0%95%EB%AF%BC.webp',
+                'https://dmfnb4l6be84v.cloudfront.net/romance/12_%EB%B0%95%EC%A0%95%EB%AF%BC.webp'
             ]}
             // 텍스트를 하나의 chunk로 합치기
             chunks={[

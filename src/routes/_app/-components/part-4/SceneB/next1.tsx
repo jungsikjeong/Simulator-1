@@ -40,7 +40,7 @@ export default function Part4SceneBNext1({ onSceneChange }: SceneProps) {
             {/* 현재 배경 */}
             <div
                 className="absolute inset-0 h-full w-full bg-cover bg-center"
-                style={{ backgroundImage: `url('/romance/6_박정민.jpg')` }}
+                style={{ backgroundImage: `url('https://dmfnb4l6be84v.cloudfront.net/romance/6_%EB%B0%95%EC%A0%95%EB%AF%BC.webp')` }}
             />
 
             {/* 전환될 배경 */}
@@ -48,7 +48,7 @@ export default function Part4SceneBNext1({ onSceneChange }: SceneProps) {
                 <div
                     className="absolute inset-0 h-full w-full bg-cover bg-center transition-opacity transition-filter ease-in-out"
                     style={{
-                        backgroundImage: `url('/romance/7_박정민.png')`,
+                        backgroundImage: `url('https://dmfnb4l6be84v.cloudfront.net/romance/7_%EB%B0%95%EC%A0%95%EB%AF%BC.webp')`,
                         opacity,
                         filter: opacity ? 'blur(0px)' : 'blur(4px)',
                         transitionDuration: '600ms',
@@ -61,7 +61,7 @@ export default function Part4SceneBNext1({ onSceneChange }: SceneProps) {
             <div className="relative z-10">
                 <RomanceScene
                     onSceneChange={onSceneChange}
-                    bgImage="/romance/6_박정민.jpg"
+                    bgImage="https://dmfnb4l6be84v.cloudfront.net/romance/6_%EB%B0%95%EC%A0%95%EB%AF%BC.webp"
                     chunks={[
                         {
                             content: '친구도', className: 'font-bold'
@@ -74,7 +74,7 @@ export default function Part4SceneBNext1({ onSceneChange }: SceneProps) {
                     setIsTypingComplete={setIsTypingComplete}
                     isTouchable={isTouchable}
                     setIsTouchable={setIsTouchable}
-                    nextBgList={['/romance/7_박정민.png']}
+                    nextBgList={['https://dmfnb4l6be84v.cloudfront.net/romance/7_%EB%B0%95%EC%A0%95%EB%AF%BC.webp']}
                     dialogClassName="hideIndicatorWhenTouchable"
                 />
             </div>

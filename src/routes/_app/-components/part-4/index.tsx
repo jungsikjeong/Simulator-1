@@ -15,7 +15,7 @@ export default function Part4({ onSceneChange }: SceneProps) {
     return (
         <SuccessScene
             onSceneChange={onSceneChange}
-            bgImage="/romance/1_박정민.jpg"
+            bgImage="https://dmfnb4l6be84v.cloudfront.net/romance/1_%EB%B0%95%EC%A0%95%EB%AF%BC.webp"
             bgClassName='relative h-screen w-full overflow-hidden bg-cover bg-center'
 
             chunks={[
@@ -29,7 +29,7 @@ export default function Part4({ onSceneChange }: SceneProps) {
             setIsTypingComplete={setIsTypingComplete}
             isTouchable={isTouchable}
             setIsTouchable={setIsTouchable}
-            nextBgList={['/romance/2_박정민.png']}
+            nextBgList={['https://dmfnb4l6be84v.cloudfront.net/romance/2_%EB%B0%95%EC%A0%95%EB%AF%BC.webp']}
         />
     )
 }

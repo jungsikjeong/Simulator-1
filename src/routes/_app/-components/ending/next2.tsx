@@ -19,7 +19,7 @@ export default function EndingNext2({ onSceneChange }: SceneProps) {
     const { data: memberId } = useGetCurrentMemberId()
 
     return (
-        <SceneLayout bg="/ending/3_같이.png" effect="trueBlend">
+        <SceneLayout bg="https://dmfnb4l6be84v.cloudfront.net/ending/3_%EA%B0%99%EC%9D%B4.webp" effect="trueBlend">
             <div className={`absolute ${choiceOpen ? 'bottom-2' : 'bottom-20'} flex w-full flex-col items-center gap-4`}>
                 <div className="w-full max-w-xl">
                     <div className="opacity-100">

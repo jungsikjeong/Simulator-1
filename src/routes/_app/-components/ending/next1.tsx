@@ -28,7 +28,7 @@ export default function EndingNext1({ onSceneChange }: SceneProps) {
 
             <RomanceScene
                 onSceneChange={handleSceneChange}
-                bgImage="/ending/2_같이.png"
+                bgImage="https://dmfnb4l6be84v.cloudfront.net/ending/2_%EA%B0%99%EC%9D%B4.webp"
                 chunks={[
                     {
                         content: '각기 다른 청춘의 일상에 정답은 없지!\n',
@@ -46,7 +46,7 @@ export default function EndingNext1({ onSceneChange }: SceneProps) {
                 setIsTypingComplete={setIsTypingComplete}
                 isTouchable={isTouchable}
                 setIsTouchable={setIsTouchable}
-                nextBgList={['/ending/3_같이.png']}
+                nextBgList={['https://dmfnb4l6be84v.cloudfront.net/ending/3_%EA%B0%99%EC%9D%B4.webp']}
                 dialogClassName="hideIndicatorWhenTouchable"
             />
 

@@ -6,55 +6,61 @@ import type { SceneKey } from '@/modules/scene-key.type'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useIsMobile } from '@/hooks/use-mobile'
 
-const initialImages = ['/start_장원영.png', '/title_bright.png']
+const initialImages = [
+  '/start_장원영.png',
+  '/title_bright.png'
+]
 
 const backgroundImages = [
-  '/party/1_박정민.jpg',
-  '/party/2_장원영.png',
-  '/party/3_장원영.png',
-  '/party/4_박정민.jpg',
-  '/party/5_박정민.jpg',
-  '/party/6_장원영.jpg',
-  '/party/7_장원영.png',
-  '/party/8_단체.jpg',
-  '/hof/1_박정민.jpg',
-  '/hof/2_장원영.png',
-  '/hof/3_장원영.png',
-  '/home/1_박정민.jpg',
-  '/home/2_장원영.png',
-  '/home/3_장원영.png',
-  '/home/4_박정민.png',
-  '/reward/박정민_진저.png',
-  '/reward/박정민_레몬.png',
-  '/reward/박정민_자몽.png',
-  '/reward/박정민_플레인.png',
-  '/reward/장원영_레몬.png',
-  '/reward/장원영_자몽.png',
-  '/reward/장원영_진저.png',
-  '/reward/장원영_플레인.png',
-  '/romance/1_박정민.jpg',
-  '/romance/2_박정민.png',
-  '/romance/3_박정민.jpg',
-  '/romance/4_박정민.png',
-  '/romance/5_박정민.jpg',
-  '/romance/6_박정민.jpg',
-  '/romance/7_박정민.png',
-  '/romance/8_박정민.jpg',
-  '/romance/9_박정민.jpg',
-  '/romance/10_박정민.png',
-  '/romance/11_박정민.jpg',
-  '/romance/12_박정민.png',
-  '/ending/1_장원영.png',
-  '/ending/2_같이.png',
-  '/ending/3_같이.png',
+  'https://dmfnb4l6be84v.cloudfront.net/party/1_%EB%B0%95%EC%A0%95%EB%AF%BC.webp',
+  'https://dmfnb4l6be84v.cloudfront.net/party/2_%EC%9E%A5%EC%9B%90%EC%98%81.webp',
+  'https://dmfnb4l6be84v.cloudfront.net/party/3_%EC%9E%A5%EC%9B%90%EC%98%81.webp',
+  'https://dmfnb4l6be84v.cloudfront.net/party/4_%EB%B0%95%EC%A0%95%EB%AF%BC.webp',
+  'https://dmfnb4l6be84v.cloudfront.net/party/5_%EB%B0%95%EC%A0%95%EB%AF%BC.webp',
+  'https://dmfnb4l6be84v.cloudfront.net/party/6_%EC%9E%A5%EC%9B%90%EC%98%81.webp',
+  'https://dmfnb4l6be84v.cloudfront.net/party/7_%EC%9E%A5%EC%9B%90%EC%98%81.webp',
+  'https://dmfnb4l6be84v.cloudfront.net/party/8_%EB%8B%A8%EC%B2%B4.webp',
+  'https://dmfnb4l6be84v.cloudfront.net/hof/1_%EB%B0%95%EC%A0%95%EB%AF%BC.webp',
+  'https://dmfnb4l6be84v.cloudfront.net/hof/2_%EC%9E%A5%EC%9B%90%EC%98%81.webp',
+  'https://dmfnb4l6be84v.cloudfront.net/hof/3_%EC%9E%A5%EC%9B%90%EC%98%81.webp',
+  'https://dmfnb4l6be84v.cloudfront.net/home/1_%EB%B0%95%EC%A0%95%EB%AF%BC.webp',
+  'https://dmfnb4l6be84v.cloudfront.net/home/2_%EC%9E%A5%EC%9B%90%EC%98%81.webp',
+  'https://dmfnb4l6be84v.cloudfront.net/home/3_%EC%9E%A5%EC%9B%90%EC%98%81.webp',
+  'https://dmfnb4l6be84v.cloudfront.net/home/4_%EB%B0%95%EC%A0%95%EB%AF%BC.webp',
+  'https://dmfnb4l6be84v.cloudfront.net/reward/%EB%B0%95%EC%A0%95%EB%AF%BC_%EC%A7%84%EC%A0%80.webp',
+  'https://dmfnb4l6be84v.cloudfront.net/reward/%EB%B0%95%EC%A0%95%EB%AF%BC_%EB%A0%88%EB%AA%AC.webp',
+  'https://dmfnb4l6be84v.cloudfront.net/reward/%EB%B0%95%EC%A0%95%EB%AF%BC_%EC%9E%90%EB%AA%BD.webp',
+  'https://dmfnb4l6be84v.cloudfront.net/reward/%EB%B0%95%EC%A0%95%EB%AF%BC_%ED%94%8C%EB%A0%88%EC%9D%B8.webp',
+  'https://dmfnb4l6be84v.cloudfront.net/reward/%EC%9E%A5%EC%9B%90%EC%98%81_%EB%A0%88%EB%AA%AC.webp',
+  'https://dmfnb4l6be84v.cloudfront.net/reward/%EC%9E%A5%EC%9B%90%EC%98%81_%EC%9E%90%EB%AA%BD.webp',
+  'https://dmfnb4l6be84v.cloudfront.net/reward/%EC%9E%A5%EC%9B%90%EC%98%81_%EC%A7%84%EC%A0%80.webp',
+  'https://dmfnb4l6be84v.cloudfront.net/reward/%EC%9E%A5%EC%9B%90%EC%98%81_%ED%94%8C%EB%A0%88%EC%9D%B8.webp',
+  'https://dmfnb4l6be84v.cloudfront.net/romance/1_%EB%B0%95%EC%A0%95%EB%AF%BC.webp',
+  'https://dmfnb4l6be84v.cloudfront.net/romance/2_%EB%B0%95%EC%A0%95%EB%AF%BC.webp',
+  'https://dmfnb4l6be84v.cloudfront.net/romance/3_%EB%B0%95%EC%A0%95%EB%AF%BC.webp',
+  'https://dmfnb4l6be84v.cloudfront.net/romance/4_%EB%B0%95%EC%A0%95%EB%AF%BC.webp',
+  'https://dmfnb4l6be84v.cloudfront.net/romance/5_%EB%B0%95%EC%A0%95%EB%AF%BC.webp',
+  'https://dmfnb4l6be84v.cloudfront.net/romance/6_%EB%B0%95%EC%A0%95%EB%AF%BC.webp',
+  'https://dmfnb4l6be84v.cloudfront.net/romance/7_%EB%B0%95%EC%A0%95%EB%AF%BC.webp',
+  'https://dmfnb4l6be84v.cloudfront.net/romance/8_%EB%B0%95%EC%A0%95%EB%AF%BC.webp',
+  'https://dmfnb4l6be84v.cloudfront.net/romance/9_%EB%B0%95%EC%A0%95%EB%AF%BC.webp',
+  'https://dmfnb4l6be84v.cloudfront.net/romance/10_%EB%B0%95%EC%A0%95%EB%AF%BC.webp',
+  'https://dmfnb4l6be84v.cloudfront.net/romance/11_%EB%B0%95%EC%A0%95%EB%AF%BC.webp',
+  'https://dmfnb4l6be84v.cloudfront.net/romance/12_%EB%B0%95%EC%A0%95%EB%AF%BC.webp',
+  'https://dmfnb4l6be84v.cloudfront.net/ending/1_%EC%9E%A5%EC%9B%90%EC%98%81.webp',
+  'https://dmfnb4l6be84v.cloudfront.net/ending/2_%EA%B0%99%EC%9D%B4.webp',
+  'https://dmfnb4l6be84v.cloudfront.net/ending/3_%EA%B0%99%EC%9D%B4.webp',
 ]
 
 async function preloadImage(src: string): Promise<boolean> {
   return new Promise(resolve => {
     const img = new Image()
-    img.onload = () => resolve(true)
-    img.onerror = () => {
-      console.warn(`Failed to load image: ${src}`)
+    img.onload = () => {
+      console.log(`Successfully loaded: ${src}`)
+      resolve(true)
+    }
+    img.onerror = (e) => {
+      console.error(`Failed to load image: ${src}`, e)
       resolve(false)
     }
     img.src = src

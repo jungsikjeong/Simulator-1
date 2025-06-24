@@ -25,7 +25,7 @@ export default function Part3({ onSceneChange }: SceneProps) {
     return (
         <SuccessScene
             onSceneChange={onSceneChange}
-            bgImage="/hof/1_박정민.jpg"
+            bgImage="https://dmfnb4l6be84v.cloudfront.net/hof/1_%EB%B0%95%EC%A0%95%EB%AF%BC.webp"
             chunks={[
                 {
                     content: '여유 없는데?',
@@ -39,7 +39,7 @@ export default function Part3({ onSceneChange }: SceneProps) {
             setIsTypingComplete={setIsTypingComplete}
             isTouchable={isTouchable}
             setIsTouchable={setIsTouchable}
-            nextBgList={['/hof/2_장원영.png']}
+            nextBgList={['https://dmfnb4l6be84v.cloudfront.net/hof/2_%EC%9E%A5%EC%9B%90%EC%98%81.webp']}
         />
     )
 }

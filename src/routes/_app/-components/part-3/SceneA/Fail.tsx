@@ -11,7 +11,7 @@ export default function Part3SceneAFail({ onSceneChange }: SceneProps) {
     return (
         <FailScene
             onSceneChange={onSceneChange}
-            bgImage="/party/3_장원영.png"
+            bgImage="https://dmfnb4l6be84v.cloudfront.net/party/3_%EC%9E%A5%EC%9B%90%EC%98%81.webp"
             chunks={[
                 { content: '나 짐빔 광고 모델인거\n' },
                 { content: '잊은거야ㅠㅠ?\n' },
